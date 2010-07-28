@@ -1,0 +1,190 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		048B07331200DBF1004E1344 /* Compound */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 048B073F1200DC27004E1344 /* Build configuration list for PBXAggregateTarget "Compound" */;
+			buildPhases = (
+				048B07321200DBF1004E1344 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Compound;
+			productName = Compound;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXContainerItemProxy section */
+		048B073D1200DC27004E1344 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 048B07361200DC27004E1344 /* EngineRoom-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libEngineRoom.a */;
+			remoteInfo = "EngineRoom-iOS";
+		};
+		048B07441200DC43004E1344 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 048B07401200DC43004E1344 /* EngineRoom-OSX.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* EngineRoom.framework */;
+			remoteInfo = "EngineRoom-OSX";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		048B07361200DC27004E1344 /* EngineRoom-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "EngineRoom-iOS.xcodeproj"; path = "EngineRoom-iOS/EngineRoom-iOS.xcodeproj"; sourceTree = "<group>"; };
+		048B07401200DC43004E1344 /* EngineRoom-OSX.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "EngineRoom-OSX.xcodeproj"; path = "EngineRoom-OSX/EngineRoom-OSX.xcodeproj"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0422136311FF5B5F0011C415 = {
+			isa = PBXGroup;
+			children = (
+				048B07401200DC43004E1344 /* EngineRoom-OSX.xcodeproj */,
+				048B07361200DC27004E1344 /* EngineRoom-iOS.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		048B07371200DC27004E1344 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				048B073E1200DC27004E1344 /* libEngineRoom.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		048B07411200DC43004E1344 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				048B07451200DC43004E1344 /* EngineRoom.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		0422136511FF5B5F0011C415 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0422136811FF5B5F0011C415 /* Build configuration list for PBXProject "EngineRoom" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 0422136311FF5B5F0011C415;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 048B07371200DC27004E1344 /* Products */;
+					ProjectRef = 048B07361200DC27004E1344 /* EngineRoom-iOS.xcodeproj */;
+				},
+				{
+					ProductGroup = 048B07411200DC43004E1344 /* Products */;
+					ProjectRef = 048B07401200DC43004E1344 /* EngineRoom-OSX.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				048B07331200DBF1004E1344 /* Compound */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		048B073E1200DC27004E1344 /* libEngineRoom.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libEngineRoom.a;
+			remoteRef = 048B073D1200DC27004E1344 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		048B07451200DC43004E1344 /* EngineRoom.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EngineRoom.framework;
+			remoteRef = 048B07441200DC43004E1344 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		048B07321200DBF1004E1344 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here\nset -e\nset -x\nenv\nexit 0\n./build.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0422136611FF5B5F0011C415 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		0422136711FF5B5F0011C415 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		048B07341200DBF1004E1344 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Compound;
+			};
+			name = Debug;
+		};
+		048B07351200DBF1004E1344 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Compound;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0422136811FF5B5F0011C415 /* Build configuration list for PBXProject "EngineRoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0422136611FF5B5F0011C415 /* Debug */,
+				0422136711FF5B5F0011C415 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		048B073F1200DC27004E1344 /* Build configuration list for PBXAggregateTarget "Compound" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				048B07341200DBF1004E1344 /* Debug */,
+				048B07351200DBF1004E1344 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0422136511FF5B5F0011C415 /* Project object */;
+}

@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'EngineRoom' target in the 'EngineRoom' project.
+//
+
+#ifdef __OBJC__
+    #import <EngineRoom/CrossPlatform.h>
+#endif

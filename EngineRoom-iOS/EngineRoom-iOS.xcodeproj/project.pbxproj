@@ -1,0 +1,326 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04221536120071E90011C415 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04221535120071E90011C415 /* UIKit.framework */; };
+		0422155D120072700011C415 /* CrossPlatform.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221548120072700011C415 /* CrossPlatform.h */; };
+		0422155E120072700011C415 /* CrossPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 04221549120072700011C415 /* CrossPlatform.m */; };
+		04221560120072700011C415 /* EngineRoom.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 0422154B120072700011C415 /* EngineRoom.h */; };
+		04221561120072700011C415 /* EngineRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422154C120072700011C415 /* EngineRoom.m */; };
+		04221562120072700011C415 /* er_compat.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 0422154D120072700011C415 /* er_compat.h */; };
+		04221563120072700011C415 /* er_util.c in Sources */ = {isa = PBXBuildFile; fileRef = 0422154E120072700011C415 /* er_util.c */; };
+		04221564120072700011C415 /* er_util.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 0422154F120072700011C415 /* er_util.h */; };
+		04221565120072700011C415 /* LogPoint.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221550120072700011C415 /* LogPoint.h */; };
+		04221566120072700011C415 /* LogPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 04221551120072700011C415 /* LogPoint.m */; };
+		04221567120072700011C415 /* logpoints_api.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221552120072700011C415 /* logpoints_api.h */; };
+		04221568120072700011C415 /* logpoints_bk.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221553120072700011C415 /* logpoints_bk.h */; };
+		04221569120072700011C415 /* logpoints_default.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221554120072700011C415 /* logpoints_default.h */; };
+		0422156A120072700011C415 /* logpoints_private.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221555120072700011C415 /* logpoints_private.h */; };
+		0422156B120072700011C415 /* logpoints_types.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221556120072700011C415 /* logpoints_types.h */; };
+		0422156D120072700011C415 /* logpoints.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221558120072700011C415 /* logpoints.h */; };
+		0422156E120072700011C415 /* logpoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 04221559120072700011C415 /* logpoints.m */; };
+		04221570120072700011C415 /* tracer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 0422155B120072700011C415 /* tracer.h */; };
+		04221571120072700011C415 /* tracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422155C120072700011C415 /* tracer.m */; };
+		04221577120073CA0011C415 /* EngineRoomController.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221575120073CA0011C415 /* EngineRoomController.h */; };
+		04221578120073CA0011C415 /* EngineRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04221576120073CA0011C415 /* EngineRoomController.m */; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		048B07711200E8EA004E1344 /* Copy Headers */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = include/EngineRoom;
+			dstSubfolderSpec = 16;
+			files = (
+				0422155D120072700011C415 /* CrossPlatform.h in Copy Headers */,
+				04221560120072700011C415 /* EngineRoom.h in Copy Headers */,
+				04221562120072700011C415 /* er_compat.h in Copy Headers */,
+				04221564120072700011C415 /* er_util.h in Copy Headers */,
+				04221565120072700011C415 /* LogPoint.h in Copy Headers */,
+				04221567120072700011C415 /* logpoints_api.h in Copy Headers */,
+				04221568120072700011C415 /* logpoints_bk.h in Copy Headers */,
+				04221569120072700011C415 /* logpoints_default.h in Copy Headers */,
+				0422156A120072700011C415 /* logpoints_private.h in Copy Headers */,
+				0422156B120072700011C415 /* logpoints_types.h in Copy Headers */,
+				0422156D120072700011C415 /* logpoints.h in Copy Headers */,
+				04221570120072700011C415 /* tracer.h in Copy Headers */,
+				04221577120073CA0011C415 /* EngineRoomController.h in Copy Headers */,
+			);
+			name = "Copy Headers";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		04221535120071E90011C415 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		04221548120072700011C415 /* CrossPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform.h; sourceTree = "<group>"; };
+		04221549120072700011C415 /* CrossPlatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossPlatform.m; sourceTree = "<group>"; };
+		0422154A120072700011C415 /* EngineRoom_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoom_Prefix.pch; sourceTree = "<group>"; };
+		0422154B120072700011C415 /* EngineRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoom.h; sourceTree = "<group>"; };
+		0422154C120072700011C415 /* EngineRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoom.m; sourceTree = "<group>"; };
+		0422154D120072700011C415 /* er_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_compat.h; sourceTree = "<group>"; };
+		0422154E120072700011C415 /* er_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = er_util.c; sourceTree = "<group>"; };
+		0422154F120072700011C415 /* er_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_util.h; sourceTree = "<group>"; };
+		04221550120072700011C415 /* LogPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogPoint.h; sourceTree = "<group>"; };
+		04221551120072700011C415 /* LogPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogPoint.m; sourceTree = "<group>"; };
+		04221552120072700011C415 /* logpoints_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_api.h; sourceTree = "<group>"; };
+		04221553120072700011C415 /* logpoints_bk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_bk.h; sourceTree = "<group>"; };
+		04221554120072700011C415 /* logpoints_default.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default.h; sourceTree = "<group>"; };
+		04221555120072700011C415 /* logpoints_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_private.h; sourceTree = "<group>"; };
+		04221556120072700011C415 /* logpoints_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_types.h; sourceTree = "<group>"; };
+		04221557120072700011C415 /* logpoints.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = logpoints.c; sourceTree = "<group>"; };
+		04221558120072700011C415 /* logpoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints.h; sourceTree = "<group>"; };
+		04221559120072700011C415 /* logpoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = logpoints.m; sourceTree = "<group>"; };
+		0422155A120072700011C415 /* tracer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tracer.c; sourceTree = "<group>"; };
+		0422155B120072700011C415 /* tracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tracer.h; sourceTree = "<group>"; };
+		0422155C120072700011C415 /* tracer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tracer.m; sourceTree = "<group>"; };
+		04221575120073CA0011C415 /* EngineRoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoomController.h; sourceTree = "<group>"; };
+		04221576120073CA0011C415 /* EngineRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoomController.m; sourceTree = "<group>"; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* libEngineRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngineRoom.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+				04221536120071E90011C415 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* libEngineRoom.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		04221547120072320011C415 /* Sources-Common */ = {
+			isa = PBXGroup;
+			children = (
+				04221575120073CA0011C415 /* EngineRoomController.h */,
+				04221576120073CA0011C415 /* EngineRoomController.m */,
+				04221548120072700011C415 /* CrossPlatform.h */,
+				04221549120072700011C415 /* CrossPlatform.m */,
+				0422154A120072700011C415 /* EngineRoom_Prefix.pch */,
+				0422154B120072700011C415 /* EngineRoom.h */,
+				0422154C120072700011C415 /* EngineRoom.m */,
+				0422154D120072700011C415 /* er_compat.h */,
+				0422154E120072700011C415 /* er_util.c */,
+				0422154F120072700011C415 /* er_util.h */,
+				04221550120072700011C415 /* LogPoint.h */,
+				04221551120072700011C415 /* LogPoint.m */,
+				04221552120072700011C415 /* logpoints_api.h */,
+				04221553120072700011C415 /* logpoints_bk.h */,
+				04221554120072700011C415 /* logpoints_default.h */,
+				04221555120072700011C415 /* logpoints_private.h */,
+				04221556120072700011C415 /* logpoints_types.h */,
+				04221557120072700011C415 /* logpoints.c */,
+				04221558120072700011C415 /* logpoints.h */,
+				04221559120072700011C415 /* logpoints.m */,
+				0422155A120072700011C415 /* tracer.c */,
+				0422155B120072700011C415 /* tracer.h */,
+				0422155C120072700011C415 /* tracer.m */,
+			);
+			name = "Sources-Common";
+			path = ../EngineRoom;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* EngineRoom-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				04221547120072320011C415 /* Sources-Common */,
+				08FB77AEFE84172EC02AAC07 /* Sources-iOS */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = "EngineRoom-iOS";
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+				04221535120071E90011C415 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Sources-iOS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Sources-iOS";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC07D0554694100DB518D /* EngineRoom-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "EngineRoom-iOS" */;
+			buildPhases = (
+				048B07711200E8EA004E1344 /* Copy Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EngineRoom-iOS";
+			productName = "EngineRoom-iOS";
+			productReference = D2AAC07E0554694100DB518D /* libEngineRoom.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "EngineRoom-iOS" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* EngineRoom-iOS */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* EngineRoom-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0422155E120072700011C415 /* CrossPlatform.m in Sources */,
+				04221561120072700011C415 /* EngineRoom.m in Sources */,
+				04221563120072700011C415 /* er_util.c in Sources */,
+				04221566120072700011C415 /* LogPoint.m in Sources */,
+				0422156E120072700011C415 /* logpoints.m in Sources */,
+				04221571120072700011C415 /* tracer.m in Sources */,
+				04221578120073CA0011C415 /* EngineRoomController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/EngineRoom_iOS.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
+				GCC_VERSION = "";
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = EngineRoom;
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/EngineRoom_iOS.dst;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
+				GCC_VERSION = "";
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = EngineRoom;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DEPLOYMENT_LOCATION = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = .;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DEPLOYMENT_LOCATION = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = .;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "EngineRoom-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "EngineRoom-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

@@ -1,0 +1,486 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		042213AA11FF62E20011C415 /* LogPointsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042213A811FF62E20011C415 /* LogPointsWindow.xib */; };
+		042213AD11FF631D0011C415 /* EngineRoom.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042213AB11FF631D0011C415 /* EngineRoom.xib */; };
+		042213B011FF63440011C415 /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042213AE11FF63440011C415 /* ConsoleWindow.xib */; };
+		042213E71200581A0011C415 /* ConsoleWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213DF1200581A0011C415 /* ConsoleWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042213E81200581A0011C415 /* ConsoleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042213E01200581A0011C415 /* ConsoleWindowController.m */; };
+		042213EB1200581A0011C415 /* LogPointArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213E31200581A0011C415 /* LogPointArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042213EC1200581A0011C415 /* LogPointArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042213E41200581A0011C415 /* LogPointArrayController.m */; };
+		042213ED1200581A0011C415 /* LogPointsWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213E51200581A0011C415 /* LogPointsWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042213EE1200581A0011C415 /* LogPointsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042213E61200581A0011C415 /* LogPointsWindowController.m */; };
+		042214041200584D0011C415 /* CrossPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213EF1200584D0011C415 /* CrossPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214051200584D0011C415 /* CrossPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 042213F01200584D0011C415 /* CrossPlatform.m */; };
+		042214071200584D0011C415 /* EngineRoom.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213F21200584D0011C415 /* EngineRoom.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214081200584D0011C415 /* EngineRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 042213F31200584D0011C415 /* EngineRoom.m */; };
+		042214091200584D0011C415 /* er_compat.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213F41200584D0011C415 /* er_compat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0422140A1200584D0011C415 /* er_util.c in Sources */ = {isa = PBXBuildFile; fileRef = 042213F51200584D0011C415 /* er_util.c */; };
+		0422140B1200584D0011C415 /* er_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213F61200584D0011C415 /* er_util.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0422140C1200584D0011C415 /* LogPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213F71200584D0011C415 /* LogPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0422140D1200584D0011C415 /* LogPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 042213F81200584D0011C415 /* LogPoint.m */; };
+		0422140E1200584D0011C415 /* logpoints_api.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213F91200584D0011C415 /* logpoints_api.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0422140F1200584D0011C415 /* logpoints_bk.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213FA1200584D0011C415 /* logpoints_bk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214101200584D0011C415 /* logpoints_default.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213FB1200584D0011C415 /* logpoints_default.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214111200584D0011C415 /* logpoints_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213FC1200584D0011C415 /* logpoints_private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214121200584D0011C415 /* logpoints_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213FD1200584D0011C415 /* logpoints_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214141200584D0011C415 /* logpoints.h in Headers */ = {isa = PBXBuildFile; fileRef = 042213FF1200584D0011C415 /* logpoints.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214151200584D0011C415 /* logpoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 042214001200584D0011C415 /* logpoints.m */; };
+		042214171200584D0011C415 /* tracer.h in Headers */ = {isa = PBXBuildFile; fileRef = 042214021200584D0011C415 /* tracer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		042214181200584D0011C415 /* tracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 042214031200584D0011C415 /* tracer.m */; };
+		0422157B120073E60011C415 /* EngineRoomController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04221579120073E60011C415 /* EngineRoomController.h */; };
+		0422157C120073E60011C415 /* EngineRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422157A120073E60011C415 /* EngineRoomController.m */; };
+		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
+		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		042213A911FF62E20011C415 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/LogPointsWindow.xib; sourceTree = "<group>"; };
+		042213AC11FF631D0011C415 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/EngineRoom.xib; sourceTree = "<group>"; };
+		042213AF11FF63440011C415 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ConsoleWindow.xib; sourceTree = "<group>"; };
+		042213DF1200581A0011C415 /* ConsoleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleWindowController.h; sourceTree = "<group>"; };
+		042213E01200581A0011C415 /* ConsoleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleWindowController.m; sourceTree = "<group>"; };
+		042213E31200581A0011C415 /* LogPointArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogPointArrayController.h; sourceTree = "<group>"; };
+		042213E41200581A0011C415 /* LogPointArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogPointArrayController.m; sourceTree = "<group>"; };
+		042213E51200581A0011C415 /* LogPointsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogPointsWindowController.h; sourceTree = "<group>"; };
+		042213E61200581A0011C415 /* LogPointsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogPointsWindowController.m; sourceTree = "<group>"; };
+		042213EF1200584D0011C415 /* CrossPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform.h; sourceTree = "<group>"; };
+		042213F01200584D0011C415 /* CrossPlatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossPlatform.m; sourceTree = "<group>"; };
+		042213F11200584D0011C415 /* EngineRoom_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoom_Prefix.pch; sourceTree = "<group>"; };
+		042213F21200584D0011C415 /* EngineRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoom.h; sourceTree = "<group>"; };
+		042213F31200584D0011C415 /* EngineRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoom.m; sourceTree = "<group>"; };
+		042213F41200584D0011C415 /* er_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_compat.h; sourceTree = "<group>"; };
+		042213F51200584D0011C415 /* er_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = er_util.c; sourceTree = "<group>"; };
+		042213F61200584D0011C415 /* er_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_util.h; sourceTree = "<group>"; };
+		042213F71200584D0011C415 /* LogPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogPoint.h; sourceTree = "<group>"; };
+		042213F81200584D0011C415 /* LogPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogPoint.m; sourceTree = "<group>"; };
+		042213F91200584D0011C415 /* logpoints_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_api.h; sourceTree = "<group>"; };
+		042213FA1200584D0011C415 /* logpoints_bk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_bk.h; sourceTree = "<group>"; };
+		042213FB1200584D0011C415 /* logpoints_default.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default.h; sourceTree = "<group>"; };
+		042213FC1200584D0011C415 /* logpoints_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_private.h; sourceTree = "<group>"; };
+		042213FD1200584D0011C415 /* logpoints_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_types.h; sourceTree = "<group>"; };
+		042213FE1200584D0011C415 /* logpoints.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = logpoints.c; sourceTree = "<group>"; };
+		042213FF1200584D0011C415 /* logpoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints.h; sourceTree = "<group>"; };
+		042214001200584D0011C415 /* logpoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = logpoints.m; sourceTree = "<group>"; };
+		042214011200584D0011C415 /* tracer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tracer.c; sourceTree = "<group>"; };
+		042214021200584D0011C415 /* tracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tracer.h; sourceTree = "<group>"; };
+		042214031200584D0011C415 /* tracer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tracer.m; sourceTree = "<group>"; };
+		04221579120073E60011C415 /* EngineRoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoomController.h; sourceTree = "<group>"; };
+		0422157A120073E60011C415 /* EngineRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoomController.m; sourceTree = "<group>"; };
+		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DC2EF5B0486A6940098B216 /* EngineRoom.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EngineRoom.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* EngineRoom.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		042213D8120057360011C415 /* Sources-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				042213DF1200581A0011C415 /* ConsoleWindowController.h */,
+				042213E01200581A0011C415 /* ConsoleWindowController.m */,
+				042213E31200581A0011C415 /* LogPointArrayController.h */,
+				042213E41200581A0011C415 /* LogPointArrayController.m */,
+				042213E51200581A0011C415 /* LogPointsWindowController.h */,
+				042213E61200581A0011C415 /* LogPointsWindowController.m */,
+			);
+			path = "Sources-OSX";
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* EngineRoom-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				042213D8120057360011C415 /* Sources-OSX */,
+				08FB77AEFE84172EC02AAC07 /* Sources-Common */,
+				089C1665FE841158C02AAC07 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = "EngineRoom-OSX";
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
+				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C1665FE841158C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				042213A811FF62E20011C415 /* LogPointsWindow.xib */,
+				042213AB11FF631D0011C415 /* EngineRoom.xib */,
+				042213AE11FF63440011C415 /* ConsoleWindow.xib */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Sources-Common */ = {
+			isa = PBXGroup;
+			children = (
+				04221579120073E60011C415 /* EngineRoomController.h */,
+				0422157A120073E60011C415 /* EngineRoomController.m */,
+				042213EF1200584D0011C415 /* CrossPlatform.h */,
+				042213F01200584D0011C415 /* CrossPlatform.m */,
+				042213F11200584D0011C415 /* EngineRoom_Prefix.pch */,
+				042213F21200584D0011C415 /* EngineRoom.h */,
+				042213F31200584D0011C415 /* EngineRoom.m */,
+				042213F41200584D0011C415 /* er_compat.h */,
+				042213F51200584D0011C415 /* er_util.c */,
+				042213F61200584D0011C415 /* er_util.h */,
+				042213F71200584D0011C415 /* LogPoint.h */,
+				042213F81200584D0011C415 /* LogPoint.m */,
+				042213F91200584D0011C415 /* logpoints_api.h */,
+				042213FA1200584D0011C415 /* logpoints_bk.h */,
+				042213FB1200584D0011C415 /* logpoints_default.h */,
+				042213FC1200584D0011C415 /* logpoints_private.h */,
+				042213FD1200584D0011C415 /* logpoints_types.h */,
+				042213FE1200584D0011C415 /* logpoints.c */,
+				042213FF1200584D0011C415 /* logpoints.h */,
+				042214001200584D0011C415 /* logpoints.m */,
+				042214011200584D0011C415 /* tracer.c */,
+				042214021200584D0011C415 /* tracer.h */,
+				042214031200584D0011C415 /* tracer.m */,
+			);
+			name = "Sources-Common";
+			path = ../EngineRoom;
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
+				D2F7E79907B2D74100F64583 /* CoreData.framework */,
+				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				042213E71200581A0011C415 /* ConsoleWindowController.h in Headers */,
+				042213EB1200581A0011C415 /* LogPointArrayController.h in Headers */,
+				042213ED1200581A0011C415 /* LogPointsWindowController.h in Headers */,
+				042214041200584D0011C415 /* CrossPlatform.h in Headers */,
+				042214071200584D0011C415 /* EngineRoom.h in Headers */,
+				042214091200584D0011C415 /* er_compat.h in Headers */,
+				0422140B1200584D0011C415 /* er_util.h in Headers */,
+				0422140C1200584D0011C415 /* LogPoint.h in Headers */,
+				0422140E1200584D0011C415 /* logpoints_api.h in Headers */,
+				0422140F1200584D0011C415 /* logpoints_bk.h in Headers */,
+				042214101200584D0011C415 /* logpoints_default.h in Headers */,
+				042214111200584D0011C415 /* logpoints_private.h in Headers */,
+				042214121200584D0011C415 /* logpoints_types.h in Headers */,
+				042214141200584D0011C415 /* logpoints.h in Headers */,
+				042214171200584D0011C415 /* tracer.h in Headers */,
+				0422157B120073E60011C415 /* EngineRoomController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8DC2EF4F0486A6940098B216 /* EngineRoom-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "EngineRoom-OSX" */;
+			buildPhases = (
+				8DC2EF500486A6940098B216 /* Headers */,
+				8DC2EF520486A6940098B216 /* Resources */,
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EngineRoom-OSX";
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = "EngineRoom-OSX";
+			productReference = 8DC2EF5B0486A6940098B216 /* EngineRoom.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "EngineRoom-OSX" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* EngineRoom-OSX */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* EngineRoom-OSX */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */,
+				042213AA11FF62E20011C415 /* LogPointsWindow.xib in Resources */,
+				042213AD11FF631D0011C415 /* EngineRoom.xib in Resources */,
+				042213B011FF63440011C415 /* ConsoleWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				042213E81200581A0011C415 /* ConsoleWindowController.m in Sources */,
+				042213EC1200581A0011C415 /* LogPointArrayController.m in Sources */,
+				042213EE1200581A0011C415 /* LogPointsWindowController.m in Sources */,
+				042214051200584D0011C415 /* CrossPlatform.m in Sources */,
+				042214081200584D0011C415 /* EngineRoom.m in Sources */,
+				0422140A1200584D0011C415 /* er_util.c in Sources */,
+				0422140D1200584D0011C415 /* LogPoint.m in Sources */,
+				042214151200584D0011C415 /* logpoints.m in Sources */,
+				042214181200584D0011C415 /* tracer.m in Sources */,
+				0422157C120073E60011C415 /* EngineRoomController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		042213A811FF62E20011C415 /* LogPointsWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				042213A911FF62E20011C415 /* English */,
+			);
+			name = LogPointsWindow.xib;
+			sourceTree = "<group>";
+		};
+		042213AB11FF631D0011C415 /* EngineRoom.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				042213AC11FF631D0011C415 /* English */,
+			);
+			name = EngineRoom.xib;
+			sourceTree = "<group>";
+		};
+		042213AE11FF63440011C415 /* ConsoleWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				042213AF11FF63440011C415 /* English */,
+			);
+			name = ConsoleWindow.xib;
+			sourceTree = "<group>";
+		};
+		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1667FE841158C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91AE08733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = EngineRoom;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		1DEB91AF08733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = EngineRoom;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		1DEB91B208733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
+				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = macosx10.6;
+				WARNING_CFLAGS = "";
+			};
+			name = Debug;
+		};
+		1DEB91B308733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
+				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = macosx10.6;
+				WARNING_CFLAGS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "EngineRoom-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91AE08733DA50010E9CD /* Debug */,
+				1DEB91AF08733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "EngineRoom-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91B208733DA50010E9CD /* Debug */,
+				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
