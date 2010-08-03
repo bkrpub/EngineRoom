@@ -2,8 +2,8 @@
  *  $Id: er_util.h 768 2009-02-23 15:39:35Z bkr $
  */
 
-#ifndef __UTIL_H__
-#define __UTIL__H
+#ifndef __ER_UTIL_H__
+#define __ER_UTIL_H__
 
 #include <string.h>
 #include <stdio.h>
@@ -137,4 +137,4 @@ int util_log_asprintf(char **ret, const char *fmt, ...);
 int util_log_vasprintf(char **ret, const char *fmt, va_list ap);
 
 #endif
-/* __UTIL_H__ */
+/* __ER_UTIL_H__ */

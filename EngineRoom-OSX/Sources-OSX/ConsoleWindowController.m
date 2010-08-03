@@ -23,6 +23,7 @@ LOGPOINT_EMITTER_DECLARATION(logPointConsoleWindowEmitter)
   va_list args;
   va_start(args, fmt);
 
+#warning BK: no NSString support here
   CFStringRef cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);  
   CFStringRef cfMsg = CFStringCreateWithFormatAndArguments(kCFAllocatorDefault, NULL, cfFmt, args);
 

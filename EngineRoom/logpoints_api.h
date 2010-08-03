@@ -124,8 +124,8 @@ LOGPOINT_COMPOSER logPointGetComposer(void);
 LOGPOINT_COMPOSER logPointSetComposer(LOGPOINT_COMPOSER newComposer);
 
 /*
- * message is the complete formatted output, including decorations like location in source etc.
- * if the ObjC version (logpoints.m) is used, message is a CFStringRef, otherwise a const char *
+ * the composer will call the emitter with a format string and arguments decorating
+ * the message produced by the invoker with metadata like location in source etc.
  */
 typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...);
 
@@ -153,5 +153,5 @@ id logPointFormatObjCType(const char *type, void *data, const char *label);
 #endif
 
 #endif 
-/* __LOGPOINTS_INTERNALS_H__ */
+/* __LOGPOINTS_API_H__ */
 

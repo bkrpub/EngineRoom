@@ -6,6 +6,7 @@
 
 #import "CrossPlatform.h"
 
+#warning BK: missing feature: recursive formatting
 id logPointFormatObjCType(const char *type, void *data, const char *label) 
 {
 	if( NULL == type ) 
@@ -13,7 +14,7 @@ id logPointFormatObjCType(const char *type, void *data, const char *label)
 
 	id ret = nil;
 
-	if('r' == *type) {
+	if('r' == *type) { // const
 		++type;
 	}
 
