@@ -1,0 +1,25 @@
+
+Integration Guide
+
+I recommend putting the EngineRoom folder in the parent directory
+beneath your project folder.
+
+Now open your project, select the project and choose
+Add -> Existing files.
+
+OSX:
+Navigate to EngineRoom/EngineRoom-OSX and choose EngineRoom-OSX.xcodeproj
+
+On opening the new entry it should reveal EngineRoom.framework.
+
+Open the inspector for your target, add EngineRoom-OSX as a dependency.
+Drag the framework from the EngineRoom project to 'Link Binary with Libraries'
+for your target.
+
+Create a new Copy Files Build Phase with target "Frameworks" and drag the
+framework to it (from the EngineRoom project as before).
+
+Optional:
+Open your MainMenu NIB and add an NSObject, set its class to EngineRoom,
+this will provide you with a LogPoint menu.
+
