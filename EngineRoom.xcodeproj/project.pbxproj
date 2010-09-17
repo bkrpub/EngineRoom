@@ -25,14 +25,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 048B07361200DC27004E1344 /* EngineRoom-iOS.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libEngineRoom.a */;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = "EngineRoom-iOS";
 		};
 		048B07441200DC43004E1344 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 048B07401200DC43004E1344 /* EngineRoom-OSX.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* EngineRoom.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = "EngineRoom-OSX";
 		};
 /* End PBXContainerItemProxy section */

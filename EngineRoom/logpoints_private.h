@@ -115,10 +115,9 @@
 #endif
 
 #if __clang__
-//#warning Disabling LOGPOINT_USE_LOCAL_LABEL because (as of 20090210, checker-0.153) it is not supported by the clang static analyzer
-//seems to be fixed with Xcode 3.2.3
+//#warning Disabling LOGPOINT_USE_LOCAL_LABEL because (as of 20100809, Apple clang version 2.0 [108.3]) it is not supported by clang, see http://llvm.org/bugs/show_bug.cgi?id=3429
 #undef LOGPOINT_USE_LOCAL_LABEL
-#define LOGPOINT_USE_LOCAL_LABEL 1
+#define LOGPOINT_USE_LOCAL_LABEL 0
 #endif
 
 #ifndef LOGPOINT_USE_LOCAL_LABEL

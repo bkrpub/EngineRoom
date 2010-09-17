@@ -8,7 +8,8 @@
 
 #import "logpoints_bk.h"
 
-NSString *kLogPointUserDefaultsKey = @"logPointFilter";
+NSString *kLogPointFilterUserDefaultsKey = @"logPointFilter";
+NSString *kLogPointDumpUserDefaultsKey = @"logPointDump";
 
 #if 1
 #undef lpwarning
@@ -59,8 +60,13 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 
     id defaults = [NSUserDefaults standardUserDefaults];
         
-    NSString *filter = [defaults valueForKey: kLogPointUserDefaultsKey];
-        
+    NSString *filter = [defaults valueForKey: kLogPointFilterUserDefaultsKey];
+    BOOL dump = [defaults boolForKey: kLogPointDumpUserDefaultsKey];
+
+	if( YES == dump ) {
+		logPointDumpAll();
+	}
+
 	if( filter ) {	
 		NSLog(@"LogPoint filter: %@", filter);
 		
@@ -70,8 +76,6 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 			ret = NO;		
 		}
 	}
-
-	// logPointDumpAll();
 
 	[pool release];
 

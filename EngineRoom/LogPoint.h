@@ -8,7 +8,8 @@
 
 #import "logpoints.h"
 
-extern NSString *kLogPointUserDefaultsKey;
+extern NSString *kLogPointFilterUserDefaultsKey;
+extern NSString *kLogPointDumpUserDefaultsKey;
 
 @interface LogPoint : NSObject
 {

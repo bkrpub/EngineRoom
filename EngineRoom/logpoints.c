@@ -336,10 +336,10 @@ lp_return_t logPointActionDump(LOGPOINT *lpp, void *actionInfo UTIL_UNUSED)
 	    formatInfoLen -= 2;
 	}
 
-	fprintf(stderr, "LOGPOINT: %s %s%s%s%s %s:%llu %s %s %.*s\n", 
+	fprintf(stderr, "LOGPOINT: %s %s%s%s%s %s:%llu %s %p %s %.*s\n", 
 		LOGPOINT_IS_ACTIVE(*lpp) ? "ON " : "OFF", 
 		lpp->kind, *keys ? " [" : "", keys, *keys ? "]" : "", 
-		file, (unsigned long long)lpp->line, lpp->function, 
+		file, (unsigned long long)lpp->line, lpp->function, lpp->address, 
 		lpp->label ? lpp->label : "-", formatInfoLen, lpp->formatInfo ? lpp->formatInfo : "-");
 
 	return LOGPOINT_RETURN_OK;

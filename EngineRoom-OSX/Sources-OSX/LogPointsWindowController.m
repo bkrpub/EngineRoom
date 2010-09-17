@@ -29,7 +29,7 @@
 
 - (void) updateDefaultField
 {
-	NSString *filter = [[NSUserDefaults standardUserDefaults] valueForKey: kLogPointUserDefaultsKey];
+	NSString *filter = [[NSUserDefaults standardUserDefaults] valueForKey: kLogPointFilterUserDefaultsKey];
 	[defaultField setStringValue: filter ? filter : @""];
 }
 
@@ -91,7 +91,7 @@
 	if( 0 > [LogPoint enableOnlyLogPointsMatchingFilterString: filter error: &error] ) {
 		[self presentModalError: error];		
 	} else {
-		[[NSUserDefaults standardUserDefaults] setValue: filter forKey: kLogPointUserDefaultsKey];
+		[[NSUserDefaults standardUserDefaults] setValue: filter forKey: kLogPointFilterUserDefaultsKey];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 }

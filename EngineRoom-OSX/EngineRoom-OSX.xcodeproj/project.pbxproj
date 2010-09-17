@@ -34,7 +34,7 @@
 		042214151200584D0011C415 /* logpoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 042214001200584D0011C415 /* logpoints.m */; };
 		042214171200584D0011C415 /* tracer.h in Headers */ = {isa = PBXBuildFile; fileRef = 042214021200584D0011C415 /* tracer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		042214181200584D0011C415 /* tracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 042214031200584D0011C415 /* tracer.m */; };
-		0422157B120073E60011C415 /* EngineRoomController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04221579120073E60011C415 /* EngineRoomController.h */; };
+		0422157B120073E60011C415 /* EngineRoomController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04221579120073E60011C415 /* EngineRoomController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0422157C120073E60011C415 /* EngineRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422157A120073E60011C415 /* EngineRoomController.m */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
@@ -381,7 +381,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -424,7 +424,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;

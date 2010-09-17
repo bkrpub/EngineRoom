@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04C08DB70D8B3C7200B39463 /* EngineRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C08D9F0D8B3A3400B39463 /* EngineRoom.framework */; };
-		04C08DBF0D8B3D4400B39463 /* EngineRoom.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 04C08D9F0D8B3A3400B39463 /* EngineRoom.framework */; };
+		04771A7D12103310004A4FB0 /* EngineRoom.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 04771A7A121032F1004A4FB0 /* EngineRoom.framework */; };
+		04771A87121033A0004A4FB0 /* EngineRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04771A7A121032F1004A4FB0 /* EngineRoom.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */; };
@@ -19,33 +19,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		04C08CC30D8B17BE00B39463 /* PBXContainerItemProxy */ = {
+		04771A79121032F1004A4FB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 04C248250D82B6A0006B8590 /* EngineRoom.xcodeproj */;
+			containerPortal = 04771A75121032F1004A4FB0 /* EngineRoom-OSX.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 04C08CC00D8B179F00B39463;
-			remoteInfo = EngineRoom64;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* EngineRoom.framework */;
+			remoteInfo = "EngineRoom-OSX";
 		};
-		04C08D9E0D8B3A3400B39463 /* PBXContainerItemProxy */ = {
+		04771A851210337E004A4FB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 04C248250D82B6A0006B8590 /* EngineRoom.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 04C08D980D8B3A3300B39463;
-			remoteInfo = EngineRoom;
-		};
-		04C08DB30D8B3C5100B39463 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04C248250D82B6A0006B8590 /* EngineRoom.xcodeproj */;
+			containerPortal = 04771A75121032F1004A4FB0 /* EngineRoom-OSX.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 04C08D970D8B3A3300B39463;
-			remoteInfo = EngineRoom;
-		};
-		04C2482A0D82B6A0006B8590 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04C248250D82B6A0006B8590 /* EngineRoom.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = EngineRoom;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* EngineRoom-OSX */;
+			remoteInfo = "EngineRoom-OSX";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -56,7 +42,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				04C08DBF0D8B3D4400B39463 /* EngineRoom.framework in Copy Frameworks */,
+				04771A7D12103310004A4FB0 /* EngineRoom.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,10 +51,9 @@
 
 /* Begin PBXFileReference section */
 		044B386E0F370D44009B1B20 /* ClangTestCase.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ClangTestCase.c; sourceTree = "<group>"; };
-		04C248250D82B6A0006B8590 /* EngineRoom.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EngineRoom.xcodeproj; path = ../EngineRoom.xcodeproj; sourceTree = SOURCE_ROOT; };
+		04771A75121032F1004A4FB0 /* EngineRoom-OSX.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "EngineRoom-OSX.xcodeproj"; path = "../EngineRoom-OSX/EngineRoom-OSX.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
 		2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -87,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04C08DB70D8B3C7200B39463 /* EngineRoom.framework in Frameworks */,
+				04771A87121033A0004A4FB0 /* EngineRoom.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,12 +80,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		04C248260D82B6A0006B8590 /* Products */ = {
+		04771A76121032F1004A4FB0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				04C08D9F0D8B3A3400B39463 /* EngineRoom.framework */,
-				04C08CC40D8B17BE00B39463 /* EngineRoom.framework-tmp-64 */,
-				04C2482B0D82B6A0006B8590 /* EngineRoom.framework-tmp-32 */,
+				04771A7A121032F1004A4FB0 /* EngineRoom.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
-				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
@@ -134,7 +116,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* EngineRoomTest */ = {
 			isa = PBXGroup;
 			children = (
-				04C248250D82B6A0006B8590 /* EngineRoom.xcodeproj */,
+				04771A75121032F1004A4FB0 /* EngineRoom-OSX.xcodeproj */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
@@ -199,7 +181,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				04C08DB40D8B3C5100B39463 /* PBXTargetDependency */,
+				04771A861210337E004A4FB0 /* PBXTargetDependency */,
 			);
 			name = EngineRoomTest;
 			productInstallPath = "$(HOME)/Applications";
@@ -219,8 +201,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 04C248260D82B6A0006B8590 /* Products */;
-					ProjectRef = 04C248250D82B6A0006B8590 /* EngineRoom.xcodeproj */;
+					ProductGroup = 04771A76121032F1004A4FB0 /* Products */;
+					ProjectRef = 04771A75121032F1004A4FB0 /* EngineRoom-OSX.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -231,25 +213,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		04C08CC40D8B17BE00B39463 /* EngineRoom.framework-tmp-64 */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = "EngineRoom.framework-tmp-64";
-			remoteRef = 04C08CC30D8B17BE00B39463 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		04C08D9F0D8B3A3400B39463 /* EngineRoom.framework */ = {
+		04771A7A121032F1004A4FB0 /* EngineRoom.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = EngineRoom.framework;
-			remoteRef = 04C08D9E0D8B3A3400B39463 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		04C2482B0D82B6A0006B8590 /* EngineRoom.framework-tmp-32 */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = "EngineRoom.framework-tmp-32";
-			remoteRef = 04C2482A0D82B6A0006B8590 /* PBXContainerItemProxy */;
+			remoteRef = 04771A79121032F1004A4FB0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -281,10 +249,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		04C08DB40D8B3C5100B39463 /* PBXTargetDependency */ = {
+		04771A861210337E004A4FB0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = EngineRoom;
-			targetProxy = 04C08DB30D8B3C5100B39463 /* PBXContainerItemProxy */;
+			name = "EngineRoom-OSX";
+			targetProxy = 04771A851210337E004A4FB0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -340,7 +308,7 @@
 				GCC_PREFIX_HEADER = EngineRoomTest_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=ppc64]" = 10.5;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
@@ -363,7 +331,7 @@
 				GCC_PREFIX_HEADER = EngineRoomTest_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=ppc64]" = 10.5;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				PRODUCT_NAME = EngineRoomTest;
@@ -375,10 +343,11 @@
 		C05733CC08A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
 			name = Debug;
@@ -390,9 +359,11 @@
 					ppc,
 					i386,
 				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 			};
 			name = Release;
