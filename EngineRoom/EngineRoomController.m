@@ -51,7 +51,7 @@
 
 - (void) install
 {
-#if TARGET_OS_OS
+#if TARGET_OS_OSX
 	NSMenu *mainMenu = [NSApp mainMenu];
 
 	NSMenuItem *subMenuItem = [[[NSMenuItem alloc] initWithTitle: @"" action: NULL keyEquivalent: @""] autorelease];

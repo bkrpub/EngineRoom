@@ -6,10 +6,10 @@
 //  Copyright 2009 Bjoern Kriews. All rights reserved.
 //
 
-#import <EngineRoom/CrossPlatform.h>
+#import <TargetConditionals.h>
 
 @interface EngineRoomController : NSObject {
-#if TARGET_OS_OSX
+#if ! TARGET_OS_IPHONE
 	IBOutlet NSMenu *engineRoomMenu;
 #endif
 	NSArray *engineRoomTopLevelObjects;

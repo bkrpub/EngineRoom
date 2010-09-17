@@ -12,7 +12,7 @@ static id idNull = nil;
 
 void __attribute__((constructor)) construct(void) 
 {
-#ifdef TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 	NSLog(@"initializing CrossPlatform for iPhone OS");
 #else
 	NSLog(@"initializing CrossPlatform for Mac OS X");
