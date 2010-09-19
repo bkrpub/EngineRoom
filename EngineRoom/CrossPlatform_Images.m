@@ -1,11 +1,5 @@
-//
-//  CrossPlatform.m
-//
-//  Created by Bjoern Kriews on 08.10.08.
-//  Copyright 2008 Bjoern Kriews. All rights reserved.
-//
 
-#import "CrossPlatform.h"
+#import "CrossPlatform_Images.h"
 
 static NSMutableDictionary *CGImageCache = nil;
 static id idNull = nil;
@@ -13,9 +7,11 @@ static id idNull = nil;
 void __attribute__((constructor)) construct(void) 
 {
 #if TARGET_OS_IPHONE
-	NSLog(@"initializing CrossPlatform for iPhone OS");
+	NSLog(@"initializing CrossPlatform_Images for iPhone OS");
+#elif TARGET_OS_OSX
+	NSLog(@"initializing CrossPlatform_Images for Mac OS X");
 #else
-	NSLog(@"initializing CrossPlatform for Mac OS X");
+#error Unknown TARGET_OS
 #endif
 
 	if( nil == CGImageCache ) {
@@ -28,7 +24,7 @@ void __attribute__((constructor)) construct(void)
 }
 
 
-@implementation CrossPlatform
+@implementation CrossPlatform (Images)
 
 + (id) platformSpecificBitmapImageNamed: (NSString *) name
 {
@@ -88,19 +84,3 @@ void __attribute__((constructor)) construct(void)
 }
 
 @end
-
-
-@implementation NSValue ( CrossPlatformAdditions ) 
-
-#if TARGET_OS_OSX
-+ (NSValue *) valueWithCGPoint: (CGPoint) point { return [NSValue valueWithPoint: NSPointFromCGPoint(point)]; }
-+ (NSValue *) valueWithCGSize:  (CGSize)  size  { return [NSValue valueWithSize: NSSizeFromCGSize(size)]; }
-+ (NSValue *) valueWithCGRect:  (CGRect)  rect  { return [NSValue valueWithRect: NSRectFromCGRect(rect)]; }
-
-- (CGPoint) CGPointValue { return NSPointToCGPoint([self pointValue]); }
-- (CGSize) CGSizeValue   { return NSSizeToCGSize([self sizeValue]); }
-- (CGRect) CGRectValue   { return NSRectToCGRect([self rectValue]); }
-#endif
-
-@end
-
