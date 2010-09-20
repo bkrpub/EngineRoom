@@ -5,7 +5,7 @@ use warnings;
 
 my $licenseFile = shift @ARGV;
 
-my @license = qx{ sed '1,/^LICENSE TERMS/d' $licenseFile };
+my @license = map { s/\s*$//; $_ } qx{ sed '1,/^LICENSE TERMS/d' $licenseFile };
 
 my @files = @ARGV;
 
@@ -26,12 +26,12 @@ for my $file ( @files ) {
 
     if( $lines[0] =~ m!^\s*/\*! ) {
 	shift @lines while( $lines[0] !~ m!\*/! ); # skip /* ... */
-	shift @lines if $lines[0] =~ m!^\s\*/!;
+	shift @lines if $lines[0] =~ m!\*/\s*$!;
     }
 
     shift @lines while($lines[0] =~ /^\s*$/ ); # skip whitespace
 
-    unshift @lines, "/*\n", ( map { " " . $_ } @license ) , "*/\n", "\n"; # add license
+    unshift @lines, "/*\n", ( map { length($_) ? " " . "$_\n" : "$_\n" } @license ) , "*/\n", "\n"; # add license
 
     push @lines, "\n" unless $lines[-1] =~ /\n/; # end trailing newline
 
