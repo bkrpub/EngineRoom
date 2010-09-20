@@ -1,13 +1,18 @@
 #!/usr/bin/perl 
 
+# Usage: tools/patchLicense LICENSE.txt $( find . -name "*.[chm]" | grep -v filestoavoid )
+
 use strict;
 use warnings;
 
 my $licenseFile = shift @ARGV;
 
+my @files = @ARGV;
+
+die "Usage: $0 licensefile-containing-marker files...\n" unless $licenseFile and @files;
+
 my @license = map { s/\s*$//; $_ } qx{ sed '1,/^LICENSE TERMS/d' $licenseFile };
 
-my @files = @ARGV;
 
 for my $file ( @files ) {
     warn "# working on $file\n";
