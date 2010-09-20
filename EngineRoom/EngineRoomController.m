@@ -22,6 +22,50 @@
 }
 
 #if TARGET_OS_OSX
+- (void) traceResponderChain: (id) currentResponder position: (NSInteger *) position
+{
+	while( nil != currentResponder ) {
+
+		NSLog(@"Responder %2ld: %@", (long)*position, currentResponder);
+		++*position;
+		
+		if( NSApp == currentResponder || [currentResponder isKindOfClass: [NSWindow class]] ) {
+			id delegate = (NSApp == currentResponder) ? (id)[(NSApplication *)currentResponder delegate] : (id)[(NSWindow *)currentResponder delegate];
+			if( delegate ) {
+				NSLog(@"Responder %2ld: %@ (delegate of %@)", (long)*position, delegate, currentResponder);
+				++*position;
+			}
+		}
+
+		currentResponder = [currentResponder respondsToSelector: @selector(nextResponder)] ? [currentResponder nextResponder] : nil;
+	}
+}
+
+- (IBAction) logResponderChain: (id) sender
+{
+		NSInteger position = 1;
+		NSWindow *theKeyWindow = [NSApp keyWindow];
+		NSWindow *theMainWindow = [NSApp mainWindow];
+
+		NSLog(@"--- Responder Chain ---");
+
+		[self traceResponderChain: [theKeyWindow firstResponder] position: &position];
+		if( theKeyWindow != theMainWindow ) {
+			[self traceResponderChain: [theMainWindow firstResponder] position: &position];
+		}
+
+		[self traceResponderChain: NSApp position: &position];
+
+		if( [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleDocumentTypes"] ) {
+			[self traceResponderChain: [NSDocumentController sharedDocumentController] position: &position];
+		}
+
+		NSLog(@"--- End Responder Chain ---");
+} 
+#endif
+
+
+#if TARGET_OS_OSX
 - (BOOL) loadNib
 {
 	BOOL success = NO;
@@ -49,15 +93,32 @@
 }
 #endif
 
-- (void) install
+- (void) installInMenuItem: (NSMenuItem *) menuItem
 {
 #if TARGET_OS_OSX
-	NSMenu *mainMenu = [NSApp mainMenu];
+	NSString *menuIconPath = [[NSBundle bundleForClass: [self class]] pathForImageResource: @"MenuIcon.png"];
 
-	NSMenuItem *subMenuItem = [[[NSMenuItem alloc] initWithTitle: @"" action: NULL keyEquivalent: @""] autorelease];
-	[mainMenu addItem: subMenuItem];
+	if( nil == menuItem ) {
 
-	[mainMenu setSubmenu: engineRoomMenu forItem: subMenuItem];
+		menuItem = [[[NSMenuItem alloc] initWithTitle: @"" action: NULL keyEquivalent: @""] autorelease];
+
+		NSMenu *mainMenu = [NSApp mainMenu];
+
+		[mainMenu addItem: menuItem];
+		[mainMenu setSubmenu: engineRoomMenu forItem: menuItem];
+
+	} else {
+		NSMenuItem *firstEngineRoomMenuItem = [engineRoomMenu itemAtIndex: 0];
+		[menuItem setTarget: [firstEngineRoomMenuItem target]];
+		[menuItem setAction: [firstEngineRoomMenuItem action]];
+
+		[menuItem setSubmenu: engineRoomMenu];
+	}
+
+	if( nil != menuIconPath ) {
+		[menuItem setImage: [[[NSImage alloc] initWithContentsOfFile: menuIconPath] autorelease]];
+	}
+
 #endif
 
 #if TARGET_OS_IPHONE

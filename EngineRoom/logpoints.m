@@ -4,7 +4,7 @@
 
 #include "logpoints.c"
 
-#import "CrossPlatform_CGGeometry.h"
+#import "CrossPlatform_NSString_CGGeometry.h"
 
 #warning BK: missing feature: recursive formatting
 id logPointFormatObjCType(const char *type, void *data, const char *label) 

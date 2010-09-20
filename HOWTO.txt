@@ -21,5 +21,9 @@ framework to it (from the EngineRoom project as before).
 
 Optional:
 Open your MainMenu NIB and add an NSObject, set its class to EngineRoom,
-this will provide you with a LogPoint menu.
+this will provide you with a LogPoint Menu.
+If you prefer a MenuItem, add one and connect EngineRoom's engineRoomMenuItem outlet to it.
+And try clicking the item.
+
+
 

@@ -43,6 +43,11 @@
 		0473CEDE12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED712458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CEDF12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473CED812458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.m */; };
 		0473CEE112458BB4004FAD1E /* CrossPlatform_Target.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CEE012458BB4004FAD1E /* CrossPlatform_Target.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0473D1B51246B8B7004FAD1E /* MenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0473D1B41246B8B7004FAD1E /* MenuIcon.png */; };
+		0473D1EF1246BE2B004FAD1E /* ERAboutWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473D1ED1246BE2B004FAD1E /* ERAboutWindowController.h */; };
+		0473D1F01246BE2B004FAD1E /* ERAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473D1EE1246BE2B004FAD1E /* ERAboutWindowController.m */; };
+		0473D1F31246BEE2004FAD1E /* ERAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473D1F11246BEE2004FAD1E /* ERAboutWindow.xib */; };
+		0473D1F51246BF64004FAD1E /* AboutIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0473D1F41246BF64004FAD1E /* AboutIcon.png */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -87,6 +92,11 @@
 		0473CED712458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_NSValue_CGGeometry.h; sourceTree = "<group>"; };
 		0473CED812458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossPlatform_NSValue_CGGeometry.m; sourceTree = "<group>"; };
 		0473CEE012458BB4004FAD1E /* CrossPlatform_Target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Target.h; sourceTree = "<group>"; };
+		0473D1B41246B8B7004FAD1E /* MenuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MenuIcon.png; path = ../Resources/MenuIcon.png; sourceTree = SOURCE_ROOT; };
+		0473D1ED1246BE2B004FAD1E /* ERAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERAboutWindowController.h; sourceTree = "<group>"; };
+		0473D1EE1246BE2B004FAD1E /* ERAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERAboutWindowController.m; sourceTree = "<group>"; };
+		0473D1F21246BEE2004FAD1E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ERAboutWindow.xib; sourceTree = "<group>"; };
+		0473D1F41246BF64004FAD1E /* AboutIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AboutIcon.png; path = ../Resources/AboutIcon.png; sourceTree = SOURCE_ROOT; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -125,6 +135,8 @@
 				042213E41200581A0011C415 /* LogPointArrayController.m */,
 				042213E51200581A0011C415 /* LogPointsWindowController.h */,
 				042213E61200581A0011C415 /* LogPointsWindowController.m */,
+				0473D1ED1246BE2B004FAD1E /* ERAboutWindowController.h */,
+				0473D1EE1246BE2B004FAD1E /* ERAboutWindowController.m */,
 			);
 			path = "Sources-OSX";
 			sourceTree = "<group>";
@@ -169,6 +181,9 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0473D1F41246BF64004FAD1E /* AboutIcon.png */,
+				0473D1B41246B8B7004FAD1E /* MenuIcon.png */,
+				0473D1F11246BEE2004FAD1E /* ERAboutWindow.xib */,
 				042213A811FF62E20011C415 /* LogPointsWindow.xib */,
 				042213AB11FF631D0011C415 /* EngineRoom.xib */,
 				042213AE11FF63440011C415 /* ConsoleWindow.xib */,
@@ -254,6 +269,7 @@
 				0473CEDB12458509004FAD1E /* CrossPlatform_Images.h in Headers */,
 				0473CEDE12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.h in Headers */,
 				0473CEE112458BB4004FAD1E /* CrossPlatform_Target.h in Headers */,
+				0473D1EF1246BE2B004FAD1E /* ERAboutWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +322,9 @@
 				042213AA11FF62E20011C415 /* LogPointsWindow.xib in Resources */,
 				042213AD11FF631D0011C415 /* EngineRoom.xib in Resources */,
 				042213B011FF63440011C415 /* ConsoleWindow.xib in Resources */,
+				0473D1B51246B8B7004FAD1E /* MenuIcon.png in Resources */,
+				0473D1F31246BEE2004FAD1E /* ERAboutWindow.xib in Resources */,
+				0473D1F51246BF64004FAD1E /* AboutIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +347,7 @@
 				0422157C120073E60011C415 /* EngineRoomController.m in Sources */,
 				0473CEDC12458509004FAD1E /* CrossPlatform_Images.m in Sources */,
 				0473CEDF12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.m in Sources */,
+				0473D1F01246BE2B004FAD1E /* ERAboutWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +376,14 @@
 				042213AF11FF63440011C415 /* English */,
 			);
 			name = ConsoleWindow.xib;
+			sourceTree = "<group>";
+		};
+		0473D1F11246BEE2004FAD1E /* ERAboutWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0473D1F21246BEE2004FAD1E /* English */,
+			);
+			name = ERAboutWindow.xib;
 			sourceTree = "<group>";
 		};
 		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
