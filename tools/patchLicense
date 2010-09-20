@@ -1,0 +1,43 @@
+#!/usr/bin/perl 
+
+use strict;
+use warnings;
+
+my $licenseFile = shift @ARGV;
+
+my @license = qx{ sed '1,/^LICENSE TERMS/d' $licenseFile };
+
+my @files = @ARGV;
+
+for my $file ( @files ) {
+    warn "# working on $file\n";
+
+    open(FILE, "<", "$file") or die "$0: can't open '$file' for reading ($!)\n";
+    
+    my @lines = <FILE>;
+
+    close(FILE);
+
+    shift @lines while($lines[0] =~ /^\s*$/ ); # skip whitespace
+
+    shift @lines while $lines[0] =~ m!^\s*//!; # skip // lines
+	
+    shift @lines while($lines[0] =~ /^\s*$/ ); # skip whitespace
+
+    if( $lines[0] =~ m!^\s*/\*! ) {
+	shift @lines while( $lines[0] !~ m!\*/! ); # skip /* ... */
+	shift @lines if $lines[0] =~ m!^\s\*/!;
+    }
+
+    shift @lines while($lines[0] =~ /^\s*$/ ); # skip whitespace
+
+    unshift @lines, "/*\n", ( map { " " . $_ } @license ) , "*/\n", "\n"; # add license
+
+    push @lines, "\n" unless $lines[-1] =~ /\n/; # end trailing newline
+
+    open(FILE, ">", $file) or die "$0: can't open '$file' for writing ($!)\n";
+    print FILE @lines;
+    close(FILE);
+}
+
+exit 0;

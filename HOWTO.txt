@@ -10,14 +10,18 @@ Add -> Existing files.
 OSX:
 Navigate to EngineRoom/EngineRoom-OSX and choose EngineRoom-OSX.xcodeproj
 
+Do not tick "Copy".
+
 On opening the new entry it should reveal EngineRoom.framework.
 
-Open the inspector for your target, add EngineRoom-OSX as a dependency.
-Drag the framework from the EngineRoom project to 'Link Binary with Libraries'
-for your target.
-
 Create a new Copy Files Build Phase with target "Frameworks" and drag the
-framework to it (from the EngineRoom project as before).
+framework to it (from the EngineRoom project ).
+
+Option-Drag the framework from there to your targets 'Link Binary with Libraries'.
+
+Open the inspector for your target, Tab "General", 
+add EngineRoom-OSX as a dependency.
+
 
 Optional:
 Open your MainMenu NIB and add an NSObject, set its class to EngineRoom,
