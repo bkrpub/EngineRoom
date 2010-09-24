@@ -166,71 +166,95 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 	
 }
 
-+ (NSPredicate *) predicateFromTextualRepresentation: (NSString *) textual error: (NSError **) outError
++ (NSPredicate *) predicateFromTextualRepresentation: (NSString *) textualRep error: (NSError **) outError
 {
-    if( textual == nil ) {
+    if( textualRep == nil ) {
 		[self setErrorPtr: outError withCode: LOGPOINT_RETURN_BAD_FILTER userInfo: nil];
         return nil;
 	}
     
-    if( ! [textual respondsToSelector: @selector(length)] || ! [textual respondsToSelector: @selector(rangeOfString:)] ) {
-        lpwarning("filtering", "textual representation '%@' does not respond to length:, rangeOfString: - ignoring", textual);
+    if( ! [textualRep respondsToSelector: @selector(length)] || ! [textualRep respondsToSelector: @selector(rangeOfString:)] ) {
+        lpwarning("filtering", "textual representation '%@' does not respond to length:, rangeOfString: - ignoring", textualRep);
 		[self setErrorPtr: outError withCode: LOGPOINT_RETURN_BAD_FILTER userInfo: nil];
         return nil;
     }
  
-	textual = [textual stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	if( [textualRep rangeOfString: @"%"].location != NSNotFound ) {
+		lpwarning("filtering", "textual representation '%@' contains a %% character - not supported - ignoring", textual);
+		[self setErrorPtr: outError withCode: LOGPOINT_RETURN_BAD_FILTER userInfo: 
+		 [NSDictionary dictionaryWithObject: NSLocalizedString(@"% not supported in filter string - ignored", @"") forKey: NSLocalizedFailureReasonErrorKey]];
+		return nil;
+	} 
+ 
+ #if MAINTAINER_WARNINGS
+#warning BK: move this to arrays
+#endif	
+	NSMutableString *finalTextual = [NSMutableString string];
+
+	NSEnumerator *repEnum = [[textualRep componentsSeparatedByString: @";"] objectEnumerator];
 	
-	if( [textual length] > 1 ) {
-		if( [textual hasPrefix: @","] ) {
-			textual = [NSString stringWithFormat: @"keys CONTAINS '%@'", [textual substringFromIndex: 1]];
-		}
+	NSString *textual;
 	
-		if( [textual hasPrefix: @"="] ) {
-			textual = [NSString stringWithFormat: @"kind CONTAINS '%@'", [textual substringFromIndex: 1]];
+	while( nil != ( textual = [repEnum nextObject] ) ) {
+	
+		textual = [textual stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		
+		if( [textual length] > 1 ) {
+			unichar firstChar = [textual characterAtIndex: 0];
+			NSString *format = nil;
+		
+			switch( firstChar ) {
+				case '#':
+					format = @"keys CONTAINS '%@'";
+					break;
+				case '=':
+					format = @"kind CONTAINS '%@'";
+					break;
+				case ':':
+					format = @"selectorName BEGINSWITH '%@'";
+					break;
+				case '@':
+					format = @"className BEGINSWITH '%@'";
+					break;
+				case '?':
+					format = @"formatInfo CONTAINS '%@'";
+					break;
+				case '/':
+					format = @"description CONTAINS '%@'";
+					break;
+			}
+			
+			if( format ) {
+				textual = [NSString stringWithFormat: format, [textual substringFromIndex: 1]];
+			}
 		}
 		
-		if( [textual hasPrefix: @":"] ) {
-			textual = [NSString stringWithFormat: @"selectorName BEGINSWITH '%@'", [textual substringFromIndex: 1]];
-		}
-	
-		if( [textual hasPrefix: @"@"] ) {
-			textual = [NSString stringWithFormat: @"className BEGINSWITH '%@'", [textual substringFromIndex: 1]];
-		}
+		
+		if( 0 == [textual length] ) {
+			lpwarning("filtering", "interpreting empty string as false");
+			textual = @"FALSEPREDICATE";
+		}                    
+		
+		if( [textual isEqualToString: @"*"] ) {
+			lpwarning("filtering", "interpreting * string as true");
+			textual = @"TRUEPREDICATE";
+		}                    	 
+		
 
-		if( [textual hasPrefix: @"?"] ) {
-			textual = [NSString stringWithFormat: @"description CONTAINS '%@'", [textual substringFromIndex: 1]];
-		}		
+		[finalTextual appendFormat: @"%@ %@ )",
+			[finalTextual length] ? @" OR (" : @"(",
+			textual];
 	}
-
-
-    if( 0 == [textual length] ) {
-        lpwarning("filtering", "interpreting empty string as false");
-		textual = @"FALSEPREDICATE";
-    }                    
-
-    if( [textual isEqualToString: @"*"] ) {
-        lpwarning("filtering", "interpreting * string as true");
-		textual = @"TRUEPREDICATE";
-    }                    	 
-	
-	 
-    if( [textual rangeOfString: @"%"].location != NSNotFound ) {
-        lpwarning("filtering", "textual representation '%@' contains a %% character - not supported - ignoring", textual);
-		[self setErrorPtr: outError withCode: LOGPOINT_RETURN_BAD_FILTER userInfo: 
-			[NSDictionary dictionaryWithObject: NSLocalizedString(@"% not supported in filter string - ignored", @"") forKey: NSLocalizedFailureReasonErrorKey]];
-		return nil;
-    } 
-    
-	NSLog(@"TextualPredicate: %@", textual);
+		
+	NSLog(@"TextualPredicate: %@", finalTextual);
 	
 	NSPredicate *predicate = nil;
 	
 	@try {
-		predicate = [NSPredicate predicateWithFormat: textual];
+		predicate = [NSPredicate predicateWithFormat: finalTextual];
     } 
 	@catch( NSException *exception )  {
-        lpwarning("filtering", "could not parse lpPredicate '%@' (%@)", textual, exception);
+        lpwarning("filtering", "could not parse lpPredicate '%@' (%@)", finalTextual, exception);
 
 		NSLog(@"exc: n: %@ r: %@ u: %@", [exception name], [exception reason], [exception userInfo]);
 

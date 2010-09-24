@@ -1,5 +1,8 @@
 
-Integration Guide
+** this documentation does not yet exist ** work in progress **
+
+Using EngineRoom in your Application
+------------------------------------
 
 I recommend putting the EngineRoom folder in the parent directory
 beneath your project folder.
@@ -23,11 +26,50 @@ Open the inspector for your target, Tab "General",
 add EngineRoom-OSX as a dependency.
 
 
-Optional:
 Open your MainMenu NIB and add an NSObject, set its class to EngineRoom,
 this will provide you with a LogPoint Menu.
 If you prefer a MenuItem, add one and connect EngineRoom's engineRoomMenuItem outlet to it.
 And try clicking the item.
 
+
+I recommend 
+
+#import <EngineRoom/EngineRoom.h> 
+#import <EngineRoom/logpoints_bk.h>      (until I replace it, sorry, missing part)
+#define NSLog LPLog
+
+in your prefix header.
+
+Now recompile, run and hit Option-Command-. 
+
+You can enter predicates in the textfields to activate LogPoints.
+
+There is shorthand available - still a moving target - therefore undocumented:
+
+but here is an example:
+
+if you enter:
+
+:selectorPrefix ; @ClassPrefix ; #keyword ; ?drag
+
+EngeinRoom will activate LogPoints matching the following predicate:
+
+( selectorName BEGINSWITH 'selectorPrefix' ) OR 
+( className BEGINSWITH 'ClassPrefix' ) OR 
+( keys CONTAINS 'keyword' ) OR 
+( formatInfo CONTAINS 'drag' )
+
+formatInfo is (more or less) the format string you gave to your log message.
+
+
+The startup filter is written to your apps user defaults and can be modified like this:
+
+$ defaults write your.app.identifier logPointFilter '...'
+
+
+
+$ defaults write your.app.identifier logPointDump -bool YES
+
+will produce a dump of all logpoints for testing purposes
 
 
