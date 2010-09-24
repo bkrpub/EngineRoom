@@ -1,4 +1,8 @@
 /*
+ * please ignore this file - it is here because it is used by some prior code 
+ */
+
+/*
  This file is part of EngineRoom, Copyright (c) 2007-2010 Bjoern Kriews, Hamburg - All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification,
@@ -24,7 +28,7 @@
 #define __LOGPOINTS_BK_H__ 1
 
 #include "logpoints.h"
-#include "logpoints_default.h"
+#include "logpoints_default_policy.h"
 
 #ifdef __OBJC__
 #define LPLog(fmt, ...) LOGPOINT_FUNCTION_C_NS( LOGPOINT_NOFLAGS, "NSLog", NULL, NULL, fmt, ## __VA_ARGS__ ) 
@@ -210,4 +214,4 @@
 
 
 #endif
-/* __ER_CONFIG_BK_H__ */
+/* __LOGPOINTS_BK_H__ */
