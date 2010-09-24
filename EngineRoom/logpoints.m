@@ -24,7 +24,9 @@
 
 #import "CrossPlatform_NSString_CGGeometry.h"
 
+#if MAINTAINER_WARNINGS
 #warning BK: missing feature: recursive formatting
+#endif
 id logPointFormatObjCType(const char *type, void *data, const char *label) 
 {
 	if( NULL == type ) 

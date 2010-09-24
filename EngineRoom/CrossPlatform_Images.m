@@ -28,9 +28,7 @@ static id idNull = nil;
 void __attribute__((constructor)) construct(void) 
 {
 #if TARGET_OS_IPHONE
-	NSLog(@"initializing CrossPlatform_Images for iPhone OS");
 #elif TARGET_OS_OSX
-	NSLog(@"initializing CrossPlatform_Images for Mac OS X");
 #else
 #error Unknown TARGET_OS
 #endif

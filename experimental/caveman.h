@@ -218,7 +218,7 @@
 #define cavearray(v) do { void *__tmp = (void*) (v); NSString *__msg = cavemanFormatValue( ( __typeof__ (*v) *) __tmp, #v); \
         NSLog(@"%s:%d: %@", __PRETTY_FUNCTION__, __LINE__, __msg); [__msg release]; }while(0)
 
-#if INTERNAL_WARNINGS
+#if MAINTAINER_WARNINGS
 #warning cavestr is c-string only
 #endif
 #define cavestr(v) do { char *__msg = (v) ? cavemanFormat("cstring: %s = %p (%lu:\"%s\")", #v, (v), strlen(v), (v)) : \
