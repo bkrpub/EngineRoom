@@ -27,7 +27,7 @@
 NSString *kLogPointFilterUserDefaultsKey = @"logPointFilter";
 NSString *kLogPointDumpUserDefaultsKey = @"logPointDump";
 
-#if 1
+#if ! MAINTAINER_WARNINGS
 #undef lpwarning
 #define lpwarning(keys, fmt, ...) /**/
 #endif

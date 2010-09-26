@@ -1,4 +1,16 @@
 
+detec and auto-enable new ones?
+
+lpFilterSimple / auto setup from ENV
+
+UTIL64 sizeof(long)?
+
+utilDebug? enable?
+
+ret check in vasprintf
+
+git/svn detect  - too far?
+
 __attribute__((overloadable)) with clang for formatting 
 
 check tracerDump output versus tracerBacktraceAsString
