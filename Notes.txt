@@ -1,4 +1,6 @@
 
+cffmt release ns bug
+
 detec and auto-enable new ones?
 
 lpFilterSimple / auto setup from ENV
@@ -12,6 +14,7 @@ ret check in vasprintf
 git/svn detect  - too far?
 
 __attribute__((overloadable)) with clang for formatting 
+hack clang
 
 check tracerDump output versus tracerBacktraceAsString
 
@@ -20,3 +23,24 @@ check scanClassList on 10.4
 __msg in Macros (extra parameter for LOGPOINT_CREATE needed)
 
 versioning
+
+
+#import <mach/mach_time.h>
+
+uint64_t start = mach_absolute_time();
+
+// do stuff to be timed
+
+uint64_t end = mach_absolute_time();
+uint64_t elapsed = end - start;
+
+mach_timebase_info_data_t info;
+if (mach_timebase_info (&info) != KERN_SUCCESS) {
+    printf ("mach_timebase_info failed\n");
+}
+
+uint64_t nanosecs = elapsed * info.numer / info.denom;
+uint64_t millisecs = nanosecs / 1000000;
+
+
+ibtool --connections DimensionsPanel.xib
