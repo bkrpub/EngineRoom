@@ -92,6 +92,8 @@ extern NSString *kLogPointDumpUserDefaultsKey;
 - (NSString *) className;
 - (NSString *) selectorName;
 - (NSString *) selectorNameWithTypePrefix;
+- (NSString *) functionOrSelectorName;
+- (NSString *) functionOrSelectorNameWithTypePrefix;
 
 - (NSString *) sourcePath;
 - (NSString *) sourceFileName;

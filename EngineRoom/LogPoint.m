@@ -211,7 +211,7 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 					format = @"kind CONTAINS '%@'";
 					break;
 				case ':':
-					format = @"selectorName BEGINSWITH '%@'";
+					format = @"functionOrSelectorName BEGINSWITH '%@'";
 					break;
 				case '@':
 					format = @"className BEGINSWITH '%@'";
@@ -222,6 +222,10 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 				case '/':
 					format = @"description CONTAINS '%@'";
 					break;
+				case '*':
+					format = @"binaryFileName BEGINSWITH '%@'";
+					break;
+
 			}
 			
 			if( format ) {
@@ -412,6 +416,15 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 		stringByAppendingString: NSSTRINGWRAPPER(selectorName, selectorNameLength)];
 }
 
+- (NSString *) functionOrSelectorName
+{
+    return methodType == 0 ? [self function] : [self selectorName];
+}
+
+- (NSString *) functionOrSelectorNameWithTypePrefix
+{
+    return methodType == 0 ? [self function] : [self selectorNameWithTypePrefix];
+}
 
 - (NSString *) sourcePath
 {

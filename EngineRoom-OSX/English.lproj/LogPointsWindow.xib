@@ -11,7 +11,7 @@
 			<string key="NS.object.0">788</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="345"/>
+			<integer value="347"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -229,7 +229,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Selector</string>
+														<string key="NSContents">Selector / Function</string>
 														<reference key="NSSupport" ref="26"/>
 														<object class="NSColor" key="NSBackgroundColor">
 															<int key="NSColorSpace">3</int>
@@ -422,7 +422,7 @@
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="42427197"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSPercent">0.9360465407371521</double>
+									<double key="NSPercent">0.93604651162790697</double>
 								</object>
 								<object class="NSClipView" id="132713946">
 									<reference key="NSNextResponder" ref="42427197"/>
@@ -665,6 +665,7 @@
 					<string>formatInfo</string>
 					<string>label</string>
 					<string>selectorNameWithTypePrefix</string>
+					<string>functionOrSelectorNameWithTypePrefix</string>
 				</array>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -1052,15 +1053,15 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: arrangedObjects.selectorNameWithTypePrefix</string>
+						<string key="label">value: arrangedObjects.functionOrSelectorNameWithTypePrefix</string>
 						<reference key="source" ref="803062204"/>
 						<reference key="destination" ref="30129252"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="803062204"/>
 							<reference key="NSDestination" ref="30129252"/>
-							<string key="NSLabel">value: arrangedObjects.selectorNameWithTypePrefix</string>
+							<string key="NSLabel">value: arrangedObjects.functionOrSelectorNameWithTypePrefix</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">arrangedObjects.selectorNameWithTypePrefix</string>
+							<string key="NSKeyPath">arrangedObjects.functionOrSelectorNameWithTypePrefix</string>
 							<object class="NSDictionary" key="NSOptions">
 								<string key="NS.key.0">NSConditionallySetsEditable</string>
 								<boolean value="YES" key="NS.object.0"/>
@@ -1068,7 +1069,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">592</int>
+					<int key="connectionID">612</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1534,20 +1535,33 @@
 				</object>
 				<string key="558.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="558.ImportedFromIB2"/>
+				<string key="600.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="601.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="602.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="603.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="604.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="605.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="606.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="607.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="608.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="609.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="609.IBShouldRemoveOnLegacySave"/>
+				<string key="610.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="610.IBShouldRemoveOnLegacySave"/>
+				<string key="611.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="611.IBShouldRemoveOnLegacySave"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">611</int>
+			<int key="maxID">612</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
+					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">increaseBackgroundAlpha:</string>
 						<string key="NS.object.0">id</string>
@@ -1569,7 +1583,7 @@
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">EngineRoom/LogPoint.h</string>
+						<string key="minorKey">../EngineRoom/LogPoint.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1585,7 +1599,7 @@
 					<string key="superclassName">NSArrayController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">EngineRoom/LogPointArrayController.h</string>
+						<string key="minorKey">Sources-OSX/LogPointArrayController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1654,7 +1668,7 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">EngineRoom/LogPointsWindowController.h</string>
+						<string key="minorKey">Sources-OSX/LogPointsWindowController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1772,6 +1786,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSFormatter.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSManagedObjectContext</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">CoreData.framework/Headers/NSManagedObjectContext.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
