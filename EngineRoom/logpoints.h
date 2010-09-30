@@ -100,7 +100,10 @@ LOGPOINT_EXTERN_C(kLogPointKindSwitch[],    const char, "SWITCH");
 LOGPOINT_EXTERN_C(kLogPointKindAssert[],    const char, "ASSERT");
 
 
-LOGPOINT_EXTERN_C(kLogPointNoFormat,    const char* const, NULL);
+#define kLogPointKindNone		NULL
+#define kLogPointKeysNone		NULL
+#define kLogPointLabelNone		NULL
+#define kLogPointFormatNone		NULL
 
 #endif 
 /* __LOGPOINTS_H__ */

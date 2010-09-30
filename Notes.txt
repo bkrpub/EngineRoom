@@ -1,5 +1,12 @@
 
+
+
 cffmt release ns bug
+
+embed without linkage (i.e. AFCache)
+Weak Linkage? @loader_path... @executable_path...
+Macro fuer function-names mit local prefix
+weak functions (test for null before call)
 
 detec and auto-enable new ones?
 
