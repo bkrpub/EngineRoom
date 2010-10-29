@@ -152,11 +152,20 @@
 #define LOGPOINT_LOCAL_LABEL_ADDRESS     NULL
 #endif
 
-#define LOGPOINT_CREATE(theFlags, kind, keys, label, langspec1, langspec2, fmt, ...) ({ \
+/*! 
+	@function LOGPOINT_CREATE
+	@abstract Lowest-level logpoint creation macro
+	@discussion Creates a static struct LOGPOINT mapped into a special linker segment
+	@param flags bitwise-or of logpoint flags
+	@param kind  compile-time constant char pointer, describing the kind of logpoint or kLogPointKindNone
+	@param keys  compile-time constant char pointer, points to comma separated keywords (spaces optional) associated with the logpoint or kLogPointKeysNone
+	@param label compile-time constant char pointer, extra label to decorate the message with
+*/	
+#define LOGPOINT_CREATE(flags, kind, keys, label, langspec1, langspec2, fmt, ...) ({ \
         LOGPOINT_LOCAL_LABEL_DECLARATION /* must come first - see gcc docs */ \
         static LOGPOINT lplogpoint LOGPOINT_SECTION_ATTRIBUTE = \
 	  { LOGPOINT_MAGIC, sizeof(LOGPOINT), (kind), (keys), __UTIL_PRETTY_FUNCTION__, __FILE__, __LINE__, \
-	    (theFlags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, label, #fmt ", " #__VA_ARGS__, NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
+	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, label, #fmt ", " #__VA_ARGS__, NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
         LOGPOINT_LOCAL_LABEL_CREATE /* after the static - or gcc 4.0.1 will crash */ \
         LOGPOINT_INCREMENT_COUNTER; \
         if( LOGPOINT_IS_ACTIVE(lplogpoint) ) { \

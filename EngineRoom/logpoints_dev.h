@@ -50,25 +50,40 @@ LPKLog? Enabled?
 
 
 #ifdef __OBJC__
-#define LPLog(fmt, ...) LOGPOINT_FUNCTION_C_NS( LOGPOINT_NOFLAGS, "NSLog", NULL, NULL, fmt, ## __VA_ARGS__ ) 
+#define LPLog(fmt, ...) LOGPOINT_FUNCTION_C_NS( LOGPOINT_NOFLAGS, "LPLog", kLogPointKeysNone, kLogPointLabelNone, fmt, ## __VA_ARGS__ ) 
 
-#define lp(fmt, ...)    LOGPOINT_FUNCTION_C( LOGPOINT_NOFLAGS, "lp", NULL, NULL, fmt, ## __VA_ARGS__ ) 
+#define lplog(fmt, ...)    LOGPOINT_FUNCTION_C( LOGPOINT_NOFLAGS, "lplog", kLogPointKeysNone, kLogPointLabelNone, fmt, ## __VA_ARGS__ ) 
 
-#define dbug(v)   ({ id __msg = LOGPOINT_FORMAT_VALUE(v, #v); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@", __msg ); __ret; }) 
-#define dbug2(v1,v2)   ({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "[%@] [%@]", __msg1, __msg2 ); __ret; }) 
 
-#define dbugC(v)   ({ id __msg = LOGPOINT_FORMAT_VALUE(v, #v); int __ret = LOGPOINT_FUNCTION_C( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@", __msg ); __ret; }) 
+
+
+#define LOGPOINT_METHOD_OBJC_AUTO_VALUE1(flags, kind, keys, label, v1) \
+	({ id __msg = LOGPOINT_FORMAT_VALUE(v1, #v1); int __ret = LOGPOINT_METHOD_OBJC( (flags), kind, keys, label, "%@", __msg ); __ret; }) 
+#define LOGPOINT_METHOD_OBJC_AUTO_VALUE2(flags, kind, keys, label, v1, v2) \
+	({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); int __ret = LOGPOINT_METHOD_OBJC( (flags), kind, keys, label, "[%@] [%@]", __msg1, __msg2 ); __ret; }) 
+
+#define lpdebug1(v1)	LOGPOINT_AUTO_VALUE1(LOGPOINT_METHOD_OBJC | LOGPOINT_FLAGS_DEBUG, kLogPointKeysNone, #v1, v1 ))
+#define lpdebug2(v1,v2)	LOGPOINT_AUTO_VALUE2(LOGPOINT_METHOD_OBJC | LOGPOINT_FLAGS_DEBUG, kLogPointKeysNone, #v1 ", " #v2, v1, v2))
+
+#define lpreturn()
+#define lpreturnC()
+
+*/ 
+#define dbug(v)   ({ id __msg = LOGPOINT_FORMAT_VALUE(v, #v); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, "%@", __msg ); __ret; }) 
+#define dbug2(v1,v2)   ({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, "[%@] [%@]", __msg1, __msg2 ); __ret; }) 
+
+#define dbugC(v)   ({ id __msg = LOGPOINT_FORMAT_VALUE(v, #v); int __ret = LOGPOINT_FUNCTION_C( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, "%@", __msg ); __ret; }) 
 
 #define dbug_return(v) return ({ \
 	__typeof__(v) __returnTmp = (v); \
 	id __msg = LOGPOINT_FORMAT_VALUE(v, #v); \
-	LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "return: %@", __msg ); \
+	LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, "return: %@", __msg ); \
 	__returnTmp; })
 
 #define dbug_returnC(v) return ({ \
 	__typeof__(v) __returnTmp = (v); \
 	id __msg = LOGPOINT_FORMAT_VALUE(v, #v); \
-	LOGPOINT_FUNCTION_C( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "return: %@", __msg ); \
+	LOGPOINT_FUNCTION_C( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, "return: %@", __msg ); \
 	__returnTmp; })
 
 #else
@@ -147,25 +162,6 @@ LPKLog? Enabled?
 //#define lpdebug1(keys, value)       LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, NULL, "%s = %@", #value, value)
 //#define lpcdebug1(keys, value)       LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, NULL, "%s = %@", #value, value)
 
-#define lpInt(keys, value)          lpsingle(keys, #value, "%d", (int) value)
-#define lpcInt(keys, value)         lpcsingle(keys, #value, "%d", (int) value)
-//#define lpInt(keys, value)          _lpSoftLogMessage(#value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %d", #value, value)
-//#define lpcInt(keys, value)          _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %d", #value, value)
-
-#define lpDouble(keys, value)       _lpSoftLogMessage(#value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %f", #value, value)
-#define lpcDouble(keys, value)       _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %f", #value, value)
-
-#define lpRect(keys, value)         _lpSoftLogMessage("NSRect: " #value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %@", #value, NSStringFromRect(value))
-#define lpcRect(keys, value)         _lpSoftLogMessage("NSRect: " #value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %@", #value, NSStringFromRect(value))
-
-#define lpPoint(keys, value)        _lpSoftLogMessage("NSPoint: " #value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %@", #value, NSStringFromPoint(value))
-#define lpcPoint(keys, value)        _lpSoftLogMessage("NSPoint: " #value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %@", #value, NSStringFromPoint(value))
-
-#define lpSize(keys, value)         _lpSoftLogMessage("NSSize: " #value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %@", #value, NSStringFromSize(value))
-#define lpcSize(keys, value)         _lpSoftLogMessage("NSSize: " #value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %@", #value, NSStringFromSize(value))
-
-#define lpRange(keys, value)        _lpSoftLogMessage("NSRange: " #value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %@", #value, NSStringFromRange(value))
-#define lpcRange(keys, value)        _lpSoftLogMessage("NSRange: " #value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %@", #value, NSStringFromRange(value))
 
 #define lpshow(value)               _lpSoftLogMessage(#value, LOGPOINT_OBJC, "DEBUG", #value, self, _cmd, "%@", value)
 #define lpcshow(value)               _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", #value, NULL, NULL, "%@", value)

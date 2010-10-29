@@ -34,6 +34,12 @@
 #define dbug(v)   ({ id __msg = LOGPOINT_FORMAT_VALUE(v, #v); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@", __msg ); __ret; }) 
 #define dbug2(v1,v2)   ({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "[%@] [%@]", __msg1, __msg2 ); __ret; }) 
 
+#define lpdebug1(v1)				({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@", __msg1 ); __ret; }) 
+#define lpdebug2(v1,v2)				({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@ ; %@", __msg1, __msg2 ); __ret; }) 
+#define lpdebug3(v1,v2,v3)			({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); id __msg3 = LOGPOINT_FORMAT_VALUE(v3, #v3); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@ ; %@ ; %@", __msg1, __msg2, __msg3 ); __ret; }) 
+#define lpdebug4(v1,v2,v3,v4)		({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); id __msg3 = LOGPOINT_FORMAT_VALUE(v3, #v3); id __msg4 = LOGPOINT_FORMAT_VALUE(v4, #v4); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@ ; %@ ; %@ ; %@", __msg1, __msg2, __msg3, __msg4 ); __ret; }) 
+#define lpdebug5(v1,v2,v3,v4,v5)	({ id __msg1 = LOGPOINT_FORMAT_VALUE(v1, #v1); id __msg2 = LOGPOINT_FORMAT_VALUE(v2, #v2); id __msg3 = LOGPOINT_FORMAT_VALUE(v3, #v3); id __msg4 = LOGPOINT_FORMAT_VALUE(v4, #v4); id __msg5 = LOGPOINT_FORMAT_VALUE(v5, #v5); int __ret = LOGPOINT_METHOD_OBJC( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@ ; %@ ; %@ ; %@ ; %@", __msg1, __msg2, __msg3, __msg4, __msg5 ); __ret; }) 
+
 #define dbugC(v)   ({ id __msg = LOGPOINT_FORMAT_VALUE(v, #v); int __ret = LOGPOINT_FUNCTION_C( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, NULL, "", "%@", __msg ); __ret; }) 
 
 #define dbug_return(v) return ({ \
@@ -72,11 +78,14 @@
 
 
 #if LOGPOINT_ENABLE_ASSERT
-#define LPAssert(cond, desc)  ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
-#define LPCAssert(cond, desc) ({ (cond) ? LOGPOINT_EMPTY :  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
+#define lpassert(cond, desc)  ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
+#define lpcassert(cond, desc)  ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
+
+#define LPAssert(cond, desc)  ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
+#define LPCAssert(cond, desc) ({ (cond) ? LOGPOINT_EMPTY :  LOGPOINT_FUNCTION_C_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
 #define LPAssertF(cond, fmt, ...)  ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, fmt, ## __VA_ARGS__); })
 #define LPCAssertF(cond, fmt, ...) ({ (cond) ? LOGPOINT_EMPTY :  LOGPOINT_FUNCTION_C_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, fmt, ## __VA_ARGS__); })
-#define LPParameterAssert(cond)   ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, kLogPointFormatNone); })
+#define LPParameterAssert(cond)   ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, kLogPointFormatNone); })
 #define LPCParameterAssert(cond)  ({ (cond) ? LOGPOINT_EMPTY :  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, kLogPointFormatNone); })
 #else
 #define LPAssert(cond, desc)               LOGPOINT_EMPTY
@@ -119,10 +128,12 @@
 #define lpsingle(keys, label, fmt, value)  LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, label " =", fmt, value)
 #define lpcsingle(keys, label, fmt, value)  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, label " =", fmt, value)
 
+#if 0
 #define lpdebug1(keys, value)       lpsingle(keys, #value, "%@", value)
 #define lpcdebug1(keys, value)      lpcsingle(keys, #value, "%@", value)
 //#define lpdebug1(keys, value)       LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, NULL, "%s = %@", #value, value)
 //#define lpcdebug1(keys, value)       LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, NULL, "%s = %@", #value, value)
+#endif
 
 #define lpInt(keys, value)          lpsingle(keys, #value, "%d", (int) value)
 #define lpcInt(keys, value)         lpcsingle(keys, #value, "%d", (int) value)
@@ -206,7 +217,7 @@
 #endif
 
 
-#define LPABSTRACT                  LPASSERT(NULL, @"needs implementation in subclass")
+#define LPABSTRACT                  lpassert(NULL, @"needs implementation in subclass")
 
 
 #endif

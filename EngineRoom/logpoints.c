@@ -133,7 +133,7 @@ SELF_TRACE("invoker8");
 #endif
   }
 SELF_TRACE("invoker9");      
-#ifdef INTERNAL_WARNINGS
+#if MAINTAINER_WARNINGS
 #warning this will leak for assertion exceptions which are catched
 #endif
 #ifdef __OBJC__
@@ -151,11 +151,12 @@ SELF_TRACE("invoker10");
 static int logPointShowInstanceInfo UTIL_UNUSED = 1;
 LOGPOINT_COMPOSER_DECLARATION(logPointComposerDefault)
 {
-#ifdef INTERNAL_WARNINGS
-#warning no nssstringmode for keys yet
+#if MAINTAINER_WARNINGS
+#warning no nssstringmode for keys and label yet
 #endif
-  const char *keys = lpp->keys ? lpp->keys : "";
-  const char *label = lpp->label ? lpp->label : "";
+  const char *kind = (kLogPointKindNone == lpp->kind) ? "" : lpp->kind;
+  const char *keys = (kLogPointKeysNone == lpp->keys) ? "" : lpp->keys;
+  const char *label = (kLogPointLabelNone == lpp->label) ? "" : lpp->label;
 #ifdef __OBJC__
   const char *methodName = NULL;
   const char *className = NULL;
@@ -163,7 +164,7 @@ LOGPOINT_COMPOSER_DECLARATION(logPointComposerDefault)
   BOOL isClassMethod = NO;
 SELF_TRACE("composer1");      
   if( LOGPOINT_IS_OBJC(*lpp) ) {
-    id objcSelf = (id) langspec1;
+    id objcSelf = (id) langspec1;	
     SEL objcCmd = (SEL) langspec2; 
 SELF_TRACE("composer2 = %p\n", object_getClass);      		
 	// using weak symbols
@@ -189,8 +190,8 @@ SELF_TRACE("composer5");
 #endif
 SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());      		  
   lp_return_t ret = (*logPointGetEmitter())(lpp, langspec1, langspec2, "%s %s%s%s%s:%llu %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
-				    lpp->kind, 
-				    *keys ? "[" : "", keys ? keys : "", *keys ? "] " : "", 
+				    kind, 
+				    *keys ? "[" : "", keys, *keys ? "] " : "", 
 				    logPointFileNameOnly(lpp), (unsigned long long)lpp->line, 
 #ifdef __OBJC__
 				    className ? (isClassMethod ? "+[" : "-[") : "", 
@@ -209,7 +210,7 @@ SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());
 				    "",
 				    "",
 #endif
-				    label, *label ? " " : "", payload);
+				    label, *label && payload ? " " : "", payload ? payload : LOGPOINT_MESSAGE_EMPTY);
 
 SELF_TRACE("composer7");      		  
   return ret;
@@ -533,7 +534,7 @@ lp_return_t logPointPlatformApply( LOGPOINT_FILTER filter, void *filterInfo, LOG
         intptr_t slide = _dyld_get_image_vmaddr_slide( i );
 
         /* this is the recommended method but it does not work from a framework */
-	/* int walkingDynamic = ( mhp == &_mh_execute_header ) ? 0 : LOGPOINT_OPTION_WALKING_DYNAMIC; */
+	/* int walkingDynamic = ( mhp == &_mh_execute_header ) ? 0 : 1; */
 
 	int walkingDynamic = ( slide == 0 ) ? 0 : 1;
 

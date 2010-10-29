@@ -109,9 +109,11 @@ int logPointPriorityNumberFromName(const char *name);
 #ifdef __OBJC__
 typedef CFStringRef LOGPOINT_MESSAGE_TYPE;
 #define LOGPOINT_MESSAGE_FORMAT "%@"
+#define LOGPOINT_MESSAGE_EMPTY  CFSTR("")
 #else
 typedef char *LOGPOINT_MESSAGE_TYPE;
 #define LOGPOINT_MESSAGE_FORMAT "%s"
+#define LOGPOINT_MESSAGE_EMPTY  ""
 #endif
 
 /*

@@ -43,8 +43,10 @@ id logPointFormatObjCType(const char *type, void *data, const char *label)
 	
 	switch( *type ) {
 		case '@':
+			ret = ptr ? [(id) ptr description] : @"nil"; break;
+					
 		case '#':
-			ret = [(id) ptr description]; break;
+			ret = ptr ? [(id) ptr description] : @"Nil"; break;
 
 		case '*': ret = [NSString stringWithFormat: @"char*: '%s'", *(char **)data]; break;
 
@@ -144,9 +146,9 @@ id logPointFormatObjCType(const char *type, void *data, const char *label)
 			break;
 	}
 		
-	return ret ? [NSString stringWithFormat: @"%s%s%@", 
+	return [NSString stringWithFormat: @"%s%s%@", 
 		label && *label ? label : "",
 		label && *label ? ": " : "",
-		ret] : [NSString stringWithFormat: @"type not decoded (%s)", type];
+		ret ? ret : [NSString stringWithFormat: @"type not decoded (%s)", type]];
 
 }

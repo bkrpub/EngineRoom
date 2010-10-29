@@ -1,14 +1,37 @@
 
+..NSWarn()
+..NSErr()
+
+google-toolbox-for-mac
+
+Thread-safe emit?
 
 
 cffmt release ns bug
+
+format string for composer 
+"%{%Y%m%d} %k %l %f %% %m
+%k kind
+%w keys 
+%c class
+%o pointer
+%a address
+%f function
+%F file
+%l line
+
+how to handle assertions?
+log first? then assertion handler?
 
 embed without linkage (i.e. AFCache)
 Weak Linkage? @loader_path... @executable_path...
 Macro fuer function-names mit local prefix
 weak functions (test for null before call)
 
-detec and auto-enable new ones?
+visualization of logging density
+
+detect and auto-enable new ones?
+format lines and diff?
 
 lpFilterSimple / auto setup from ENV
 
