@@ -169,7 +169,7 @@ SELF_TRACE("composer1");
 SELF_TRACE("composer2 = %p\n", object_getClass);      		
 	// using weak symbols
 	Class objcClass = COMPAT_OBJECT_GETCLASS(objcSelf);
-    isClassMethod = ( objcSelf == objcClass );
+    isClassMethod = COMPAT_CLASS_ISMETACLASS( objcClass );
 
 SELF_TRACE("composer3 = %p\n", object_getClassName);      		
 
