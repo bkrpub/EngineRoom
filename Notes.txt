@@ -1,3 +1,15 @@
+typeof(&((a)[0])) __x 
+
+https://gnunet.org/coverage/usr/include/curl/typecheck-gcc.h.gcov.html
+
+http://locklessinc.com/articles/overloading/
+
+http://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html
+
+
+lpdebugv(fmt, va_args)
+
+NS_FORMAT_FUNCTION(1,2)
 
 ..NSWarn()
 ..NSErr()
