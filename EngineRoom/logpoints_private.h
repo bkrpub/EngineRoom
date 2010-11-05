@@ -125,10 +125,12 @@
 #define LOGPOINT_INCREMENT_COUNTER  LOGPOINT_EMPTY
 #endif
 
-/* override this with your own -D if you need to */
+/* override this with your own -D if you need to (?) */
 #ifndef LOGPOINT_INVOKE
-#define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) (*logPointGetInvoker())((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ )
+#define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( logPointGetInvoker ? logPointGetInvoker() : local_logPointInvokerDefault)((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ )
 #endif
+
+
 
 #if __clang__
 #if MAINTAINER_WARNINGS
