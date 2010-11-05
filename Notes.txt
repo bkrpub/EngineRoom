@@ -1,3 +1,5 @@
+usage in blocks (PRETTY_FUNCTION)
+
 typeof(&((a)[0])) __x 
 
 https://gnunet.org/coverage/usr/include/curl/typecheck-gcc.h.gcov.html

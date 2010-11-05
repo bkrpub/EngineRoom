@@ -62,10 +62,10 @@
 
 /* argument counting technique found in a great article by Steven Fuerst - http://locklessinc.com/articles/overloading/ */
 
-#define LOGPOINT_COUNT_ARGS2(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _, ...) _
-#define LOGPOINT_COUNT_ARGS(...) LOGPOINT_COUNT_ARGS2(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+#define _LOGPOINT_COUNT_ARGS_HELPER(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _, ...) _
+#define LOGPOINT_COUNT_ARGS(...) _LOGPOINT_COUNT_ARGS_HELPER(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 
-#define LOGPOINT_COUNT_ARGS0(...) LOGPOINT_COUNT_ARGS(dummy, ## __VA_ARGS__)
+#define LOGPOINT_COUNT_OPTIONAL_ARGS_PLUS1(...) LOGPOINT_COUNT_ARGS(dummy, ## __VA_ARGS__)
 
 #define LOGPOINT_CAT(A, B) LOGPOINT_CAT2(A, B)
 #define LOGPOINT_CAT2(A, B) A ## B
@@ -73,21 +73,21 @@
 /* end move into logpoints.h */
 
 
+#define lpdebug0()					                LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, kLogPointFormatNone)
 #define lpdebug1(v1)					LOGPOINT_METHOD_OBJC_AUTO_VALUE1(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1))
 #define lpdebug2(v1, v2)				LOGPOINT_METHOD_OBJC_AUTO_VALUE2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2))
 #define lpdebug3(v1, v2, v3)			LOGPOINT_METHOD_OBJC_AUTO_VALUE3(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3))
 #define lpdebug4(v1, v2, v3, v4)		LOGPOINT_METHOD_OBJC_AUTO_VALUE4(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4))
 #define lpdebug5(v1, v2, v3, v4, v5)	LOGPOINT_METHOD_OBJC_AUTO_VALUE5(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4), #v5, (v5))
 
-#define lpdebugMinus1Plus1()	      				        LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, kLogPointFormatNone)
-#define lpdebugMinus1Plus2(v1)					LOGPOINT_METHOD_OBJC_AUTO_VALUE1(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1))
-#define lpdebugMinus1Plus3(v1, v2)				LOGPOINT_METHOD_OBJC_AUTO_VALUE2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2))
-#define lpdebugMinus1Plus4(v1, v2, v3)			LOGPOINT_METHOD_OBJC_AUTO_VALUE3(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3))
-#define lpdebugMinus1Plus5(v1, v2, v3, v4)		LOGPOINT_METHOD_OBJC_AUTO_VALUE4(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4))
-#define lpdebugMinus1Plus6(v1, v2, v3, v4, v5)	LOGPOINT_METHOD_OBJC_AUTO_VALUE5(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4), #v5, (v5))
+#define lpdebug1LessThan1 lpdebug0
+#define lpdebug1LessThan2 lpdebug1
+#define lpdebug1LessThan3 lpdebug2
+#define lpdebug1LessThan4 lpdebug3
+#define lpdebug1LessThan5 lpdebug4
+#define lpdebug1LessThan6 lpdebug5
 
-
-#define lpdebugn(...) LOGPOINT_CAT(lpdebugMinus1Plus, LOGPOINT_COUNT_ARGS0(__VA_ARGS__))(__VA_ARGS__)
+#define lpdebugn(...) LOGPOINT_CAT(lpdebug1LessThan, LOGPOINT_COUNT_OPTIONAL_ARGS_PLUS1(__VA_ARGS__))(__VA_ARGS__)
 
 
 #define lpdebug_expr(value)  LOGPOINT_METHOD_OBJC_AUTO_EXPR( LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, kLogPointKeysNone, kLogPointLabelNone, #value, (value))

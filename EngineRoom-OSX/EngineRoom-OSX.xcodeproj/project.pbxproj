@@ -36,7 +36,8 @@
 		042214181200584D0011C415 /* tracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 042214031200584D0011C415 /* tracer.m */; };
 		0422157B120073E60011C415 /* EngineRoomController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04221579120073E60011C415 /* EngineRoomController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0422157C120073E60011C415 /* EngineRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422157A120073E60011C415 /* EngineRoomController.m */; };
-		0454D481125375B900CF8905 /* logpoints_dev.h in Headers */ = {isa = PBXBuildFile; fileRef = 0454D480125375B900CF8905 /* logpoints_dev.h */; };
+		0445B9E312833F3E00CE2063 /* logpoints_nslog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0445B9E212833F3E00CE2063 /* logpoints_nslog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0454D481125375B900CF8905 /* logpoints_dev.h in Headers */ = {isa = PBXBuildFile; fileRef = 0454D480125375B900CF8905 /* logpoints_dev.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CED912458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED212458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CEDA12458509004FAD1E /* CrossPlatform_Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED312458509004FAD1E /* CrossPlatform_Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CEDB12458509004FAD1E /* CrossPlatform_Images.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED412458509004FAD1E /* CrossPlatform_Images.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -87,6 +88,7 @@
 		042214031200584D0011C415 /* tracer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tracer.m; sourceTree = "<group>"; };
 		04221579120073E60011C415 /* EngineRoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoomController.h; sourceTree = "<group>"; };
 		0422157A120073E60011C415 /* EngineRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoomController.m; sourceTree = "<group>"; };
+		0445B9E212833F3E00CE2063 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
 		0454D480125375B900CF8905 /* logpoints_dev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_dev.h; sourceTree = "<group>"; };
 		0473CED212458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_NSString_CGGeometry.h; sourceTree = "<group>"; };
 		0473CED312458509004FAD1E /* CrossPlatform_Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Utilities.h; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				0454D480125375B900CF8905 /* logpoints_dev.h */,
 				0490DD7F124D576B0057D874 /* logpoints_default_policy.h */,
 				042213FB1200584D0011C415 /* logpoints_default.h */,
+				0445B9E212833F3E00CE2063 /* logpoints_nslog.h */,
 				042213FC1200584D0011C415 /* logpoints_private.h */,
 				042213FD1200584D0011C415 /* logpoints_types.h */,
 				042213FE1200584D0011C415 /* logpoints.c */,
@@ -265,6 +268,8 @@
 				0422140E1200584D0011C415 /* logpoints_api.h in Headers */,
 				0422140F1200584D0011C415 /* logpoints_bk.h in Headers */,
 				042214101200584D0011C415 /* logpoints_default.h in Headers */,
+				0490DD80124D576B0057D874 /* logpoints_default_policy.h in Headers */,
+				0445B9E312833F3E00CE2063 /* logpoints_nslog.h in Headers */,
 				042214111200584D0011C415 /* logpoints_private.h in Headers */,
 				042214121200584D0011C415 /* logpoints_types.h in Headers */,
 				042214141200584D0011C415 /* logpoints.h in Headers */,
@@ -276,7 +281,6 @@
 				0473CEDE12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.h in Headers */,
 				0473CEE112458BB4004FAD1E /* CrossPlatform_Target.h in Headers */,
 				0473D1EF1246BE2B004FAD1E /* ERAboutWindowController.h in Headers */,
-				0490DD80124D576B0057D874 /* logpoints_default_policy.h in Headers */,
 				0454D481125375B900CF8905 /* logpoints_dev.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
