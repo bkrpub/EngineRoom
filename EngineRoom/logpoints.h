@@ -77,6 +77,28 @@
 #endif 
 /* __OBJC__ */
 
+
+/* auto-value support (type introspection) is publicly available only for ObjC (see experimental for other gruesome stuff) */
+#ifdef __OBJC__
+
+#include "logpoints_auto_value.h"
+
+#define LOGPOINT_METHOD_OBJC_AUTO_EXPR(flags, kind, keys, label, valueLabel, value) ({ \
+	__typeof__(value) __valueTmp = (value); \
+	id __msg = LOGPOINT_FORMAT_VALUE(__valueTmp, (valueLabel)); \
+	LOGPOINT_METHOD_OBJC( (flags), (kind), (keys), (label), "%@", __msg ); \
+	__valueTmp; })
+
+#define LOGPOINT_FUNCTION_C_AUTO_EXPR(flags, kind, keys, label, valueLabel, value) ({ \
+	__typeof__(value) __valueTmp = (value); \
+	id __msg = LOGPOINT_FORMAT_VALUE(__valueTmp, (valueLabel)); \
+	LOGPOINT_FUNCTION_C( (flags), (kind), (keys), (label), "%@", __msg ); \
+	__valueTmp; })
+
+#endif 
+/* __OBJC__ */
+
+
 /* the following constants must be declared as char[] to be used in static initializers */
 
 /* syslog equivalents */

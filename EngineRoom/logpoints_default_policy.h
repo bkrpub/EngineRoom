@@ -23,25 +23,45 @@
 #ifndef __LOGPOINTS_DEFAULT_POLICY_H__
 #define __LOGPOINTS_DEFAULT_POLICY_H__
 
-#include "logpoints.h"
+/* compile time feature enable defaults - make sure that these are always included before logpoints.h */
 
+#ifndef LOGPOINT_COUNT
 #ifdef LOGPOINT_RELEASE_BUILD
 #define LOGPOINT_COUNT 0
-#define LOGPOINT_ENABLE_DEBUG 1
-#define LOGPOINT_ENABLE_TRACE 1
-#define LOGPOINT_ENABLE_WARNING 1
-#define LOGPOINT_ENABLE_ASSERT 1
-#define LOGPOINT_ENABLE_NOTES 0
-#define LOGPOINT_ENABLE_SWITCH 1
 #else
 #define LOGPOINT_COUNT 1
+#endif
+#endif
+
+#ifndef LOGPOINT_ENABLE_DEBUG
 #define LOGPOINT_ENABLE_DEBUG 1
+#endif
+
+#ifndef LOGPOINT_ENABLE_TRACE
 #define LOGPOINT_ENABLE_TRACE 1
+#endif
+
+#ifndef LOGPOINT_ENABLE_WARNING
 #define LOGPOINT_ENABLE_WARNING 1
+#endif
+
+#ifndef LOGPOINT_ENABLE_ASSERT
 #define LOGPOINT_ENABLE_ASSERT 1
+#endif
+
+#ifndef LOGPOINT_ENABLE_NOTES
+#ifdef LOGPOINT_RELEASE_BUILD
+#define LOGPOINT_ENABLE_NOTES 0
+#else
 #define LOGPOINT_ENABLE_NOTES 1
+#endif
+#endif
+
+#ifndef LOGPOINT_ENABLE_SWITCH
 #define LOGPOINT_ENABLE_SWITCH 1
 #endif
+
+/* default flag sets */
 
 #define LOGPOINT_FLAGS_DEBUG        ( LOGPOINT_PRIORITIZED | LOGPOINT_DEBUG )
 #define LOGPOINT_FLAGS_INFO         ( LOGPOINT_PRIORITIZED | LOGPOINT_INFO )

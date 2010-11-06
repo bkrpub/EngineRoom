@@ -24,6 +24,7 @@
 #define __LOGPOINTS_PRIVATE_H__ 1
 
 #include "er_util.h"
+#include "er_macros.h"
 #include "logpoints_types.h"
 
 #import <stdlib.h>
@@ -35,57 +36,8 @@
 #import <Foundation/Foundation.h>
 #endif
 
-#ifdef NO_LACK_OF_CONCEPT
-
-#ifndef LOGPOINT_COUNT
-#ifdef LOGPOINT_RELEASE_BUILD
-#define LOGPOINT_COUNT 0
-#else
-#define LOGPOINT_COUNT 1
-#endif
-#endif
-
-#ifndef LOGPOINT_ENABLE_DEBUG
-#ifdef LOGPOINT_RELEASE_BUILD
-#define LOGPOINT_ENABLE_DEBUG 0
-#else
-#define LOGPOINT_ENABLE_DEBUG 1
-#endif
-#endif
-
-#ifndef LOGPOINT_ENABLE_TRACE
-#ifdef LOGPOINT_RELEASE_BUILD
-#define LOGPOINT_ENABLE_TRACE 0
-#else
-#define LOGPOINT_ENABLE_TRACE 1
-#endif
-#endif
-
-#ifndef LOGPOINT_ENABLE_WARNING
-#define LOGPOINT_ENABLE_WARNING 1
-#endif
-
-#ifndef LOGPOINT_ENABLE_ASSERT
-#define LOGPOINT_ENABLE_ASSERT 1
-#endif
-
-#ifndef LOGPOINT_ENABLE_NOTES
-#ifdef LOGPOINT_RELEASE_BUILD
-#define LOGPOINT_ENABLE_NOTES 0
-#else
-#define LOGPOINT_ENABLE_NOTES 1
-#endif
-#endif
-
-#ifndef LOGPOINT_ENABLE_SWITCH
-#define LOGPOINT_ENABLE_SWITCH 1
-#endif
-
-#endif
-/* NO_LACK_OF_CONCEPT */
-
 #ifndef LOGPOINT_EMPTY
-#define LOGPOINT_EMPTY ({ })
+#define LOGPOINT_EMPTY ({ 0; }) /* logpoints return whether they were triggered */
 #endif
 
 #ifdef __linux__
