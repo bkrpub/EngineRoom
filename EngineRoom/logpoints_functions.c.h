@@ -20,38 +20,9 @@
  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import <EngineRoom/CrossPlatform.h>
+#ifndef __LOGPOINTS_FUNCTIONS_C_H__
+#define __LOGPOINTS_FUNCTIONS_C_H__
 
-#ifdef __ENGINE_ROOM_M__
-#define ENGINE_ROOM_GLOBAL(var, value) var = (value)
-#else
-#define ENGINE_ROOM_GLOBAL(var, value) extern var
 #endif
+/* __LOGPOINTS_FUNCTIONS_C_H__ */
 
-ENGINE_ROOM_GLOBAL(NSString *kEngineRoomInstallMenuUserDefaultsKey, @"engineRoomInstallMenu");
-
-#import <EngineRoom/EngineRoomController.h>
-
-#if TARGET_OS_OSX
-#import <EngineRoom/LogPointsWindowController.h>
-#import <EngineRoom/ConsoleWindowController.h>
-#endif
-
-@interface EngineRoom : NSObject {
-	IBOutlet NSMenuItem *engineRoomMenuItem;
-
-	EngineRoomController *m_engineRoomController;
-
-	NSUserDefaults *m_standardUserDefaults;
-	NSUserDefaults *m_engineRoomUserDefaults;
-}
-
-+ (id) sharedEngineRoom;
-
-- (id) configurationValueForKey: (NSString *) key;
-
-- (NSBundle *) bundle;
-
-- (NSDictionary *) infoDictionary;
-
-@end

@@ -76,19 +76,19 @@
 
 
 #if LOGPOINT_ENABLE_ASSERT
-#define LPAssert(cond, desc)  ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
-#define LPCAssert(cond, desc) ({ (cond) ? LOGPOINT_EMPTY :  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
-#define LPAssertF(cond, fmt, ...)  ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, fmt, ## __VA_ARGS__); })
-#define LPCAssertF(cond, fmt, ...) ({ (cond) ? LOGPOINT_EMPTY :  LOGPOINT_FUNCTION_C_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, fmt, ## __VA_ARGS__); })
-#define LPParameterAssert(cond)   ({ (cond) ? LOGPOINT_EMPTY : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, kLogPointNoFormat); })
-#define LPCParameterAssert(cond)  ({ (cond) ? LOGPOINT_EMPTY :  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, kLogPointNoFormat); })
+#define LPAssert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
+#define LPCAssert(cond, desc) ({ (cond) ? LOGPOINT_ZERO :  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, "%@", desc); })
+#define LPAssertF(cond, fmt, ...)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, fmt, ## __VA_ARGS__); })
+#define LPCAssertF(cond, fmt, ...) ({ (cond) ? LOGPOINT_ZERO :  LOGPOINT_FUNCTION_C_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, fmt, ## __VA_ARGS__); })
+#define LPParameterAssert(cond)   ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, kLogPointNoFormat); })
+#define LPCParameterAssert(cond)  ({ (cond) ? LOGPOINT_ZERO :  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, NULL, #cond, kLogPointNoFormat); })
 #else
-#define LPAssert(cond, desc)               LOGPOINT_EMPTY
-#define LPCAssert(cond, desc)              LOGPOINT_EMPTY
-#define LPAssertF(cond, fmt, ...)          LOGPOINT_EMPTY
-#define LPCAssertF(cond, fmt, ...)         LOGPOINT_EMPTY
-#define LPParameterAssert(cond, fmt, ...)  LOGPOINT_EMPTY
-#define LPParameterCAssert(cond, fmt, ...) LOGPOINT_EMPTY
+#define LPAssert(cond, desc)               LOGPOINT_ZERO
+#define LPCAssert(cond, desc)              LOGPOINT_ZERO
+#define LPAssertF(cond, fmt, ...)          LOGPOINT_ZERO
+#define LPCAssertF(cond, fmt, ...)         LOGPOINT_ZERO
+#define LPParameterAssert(cond, fmt, ...)  LOGPOINT_ZERO
+#define LPParameterCAssert(cond, fmt, ...) LOGPOINT_ZERO
 #endif
 
 #define lperror(keys, fmt, ...)   LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ERROR, kLogPointKindError, keys, NULL, fmt, ## __VA_ARGS__)
@@ -98,8 +98,8 @@
 #define lpwarning(keys, fmt, ...)   LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_WARNING, kLogPointKindWarning, keys, NULL, fmt, ## __VA_ARGS__)
 #define lpcwarning(keys, fmt, ...)  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_WARNING, kLogPointKindWarning, keys, NULL, fmt, ## __VA_ARGS__)
 #else
-#define lpwarning(keys, fmt, ...)   LOGPOINT_EMPTY
-#define lpcwarning(keys, fmt, ...)  LOGPOINT_EMPTY
+#define lpwarning(keys, fmt, ...)   LOGPOINT_ZERO
+#define lpcwarning(keys, fmt, ...)  LOGPOINT_ZERO
 #endif
       
 
@@ -110,10 +110,10 @@
 #define lptrace(keys)               _lpSoftLogMessage("", 0, "TRACE", keys, self, _cmd, "")
 #define lpctrace(keys)              _lpSoftLogMessage("", 0, "TRACE", keys, NULL, NULL, "")
 #else
-#define LPTRACE                     LOGPOINT_EMPTY
-#define LPMEMTRACE                  LOGPOINT_EMPTY
-#define lptrace(keys, ...)          LOGPOINT_EMPTY
-#define lpctrace(keys, ...)         LOGPOINT_EMPTY
+#define LPTRACE                     LOGPOINT_ZERO
+#define LPMEMTRACE                  LOGPOINT_ZERO
+#define lptrace(keys, ...)          LOGPOINT_ZERO
+#define lpctrace(keys, ...)         LOGPOINT_ZERO
 #endif
 
 #if LOGPOINT_ENABLE_DEBUG
@@ -153,32 +153,32 @@
 
 #else
 
-#define lpdebug(keys, ...)          LOGPOINT_EMPTY
-#define lpcdebug(keys, ...)         LOGPOINT_EMPTY
+#define lpdebug(keys, ...)          LOGPOINT_ZERO
+#define lpcdebug(keys, ...)         LOGPOINT_ZERO
 
-#define lpdebug1(keys, ...)         LOGPOINT_EMPTY
-#define lpcdebug1(keys, ...)        LOGPOINT_EMPTY
+#define lpdebug1(keys, ...)         LOGPOINT_ZERO
+#define lpcdebug1(keys, ...)        LOGPOINT_ZERO
 
-#define lpInt(keys, ...)            LOGPOINT_EMPTY
-#define lpcInt(keys, ...)           LOGPOINT_EMPTY
+#define lpInt(keys, ...)            LOGPOINT_ZERO
+#define lpcInt(keys, ...)           LOGPOINT_ZERO
 
-#define lpDouble(keys, ...)         LOGPOINT_EMPTY
-#define lpcDouble(keys, ...)        LOGPOINT_EMPTY
+#define lpDouble(keys, ...)         LOGPOINT_ZERO
+#define lpcDouble(keys, ...)        LOGPOINT_ZERO
 
-#define lpRect(keys, v)             LOGPOINT_EMPTY
-#define lpcRect(keys, v)            LOGPOINT_EMPTY
+#define lpRect(keys, v)             LOGPOINT_ZERO
+#define lpcRect(keys, v)            LOGPOINT_ZERO
 
-#define lpPoint(keys, v)            LOGPOINT_EMPTY
-#define lpcPoint(keys, v)           LOGPOINT_EMPTY
+#define lpPoint(keys, v)            LOGPOINT_ZERO
+#define lpcPoint(keys, v)           LOGPOINT_ZERO
 
-#define lpSize(keys, v)             LOGPOINT_EMPTY
-#define lpcSize(keys, v)            LOGPOINT_EMPTY
+#define lpSize(keys, v)             LOGPOINT_ZERO
+#define lpcSize(keys, v)            LOGPOINT_ZERO
 
-#define lpRange(keys, v)            LOGPOINT_EMPTY
-#define lpcRange(keys, v)           LOGPOINT_EMPTY
+#define lpRange(keys, v)            LOGPOINT_ZERO
+#define lpcRange(keys, v)           LOGPOINT_ZERO
 
-#define lpshow(v)		    LOGPOINT_EMPTY
-#define lpcshow(v)		    LOGPOINT_EMPTY
+#define lpshow(v)		    LOGPOINT_ZERO
+#define lpcshow(v)		    LOGPOINT_ZERO
 
 #endif
 
@@ -188,10 +188,10 @@
 #define lpTODO(fmt, ...)            lpHardLogMessage(LOGPOINT_OBJC, "TODO", NULL, self, _cmd, fmt, ## __VA_ARGS__)
 #define lpcTODO(fmt, ...)            lpHardLogMessage(LOGPOINT_C, "TODO", NULL, NULL, NULL, fmt, ## __VA_ARGS__)
 #else
-#define lpFIXME(fmt, ...)           LOGPOINT_EMPTY
-#define lpcFIXME(fmt, ...)          LOGPOINT_EMPTY
-#define lpTODO(fmt, ...)            LOGPOINT_EMPTY
-#define lpcTODO(fmt, ...)           LOGPOINT_EMPTY
+#define lpFIXME(fmt, ...)           LOGPOINT_ZERO
+#define lpcFIXME(fmt, ...)          LOGPOINT_ZERO
+#define lpTODO(fmt, ...)            LOGPOINT_ZERO
+#define lpcTODO(fmt, ...)           LOGPOINT_ZERO
 #endif
 
 #if LOGPOINT_ENABLE_SWITCH

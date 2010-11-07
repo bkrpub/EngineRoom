@@ -300,10 +300,10 @@ LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER newEmitter);
 #if __OBJC__
 
 #define LOGPOINT_FORMAT_VALUE(v, label) ({ \
-	__typeof__ (v) __cmv = (v) ; \
-	char *type = __builtin_types_compatible_p( __typeof__(__cmv), long double) ? "D" : @encode( __typeof__ (__cmv) ); \
+	__typeof__ (v) __valueToFormat = (v) ; \
+	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
 	/* TESTING NSValue *__cmnsv = [[NSValue alloc] initWithBytes: &__cmv objCType: type]; */ /* NSValue secretly supports 'D'... */ \
-	(logPointFormatObjCType ? logPointFormatObjCType : local_logPointFormatObjCType)(type, (void*)&__cmv, (label)); /* returns autoreleased string */ \
+	(logPointFormatObjCType ? logPointFormatObjCType : local_logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
 }) 
 
 /* 

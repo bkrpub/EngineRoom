@@ -36,8 +36,12 @@
 #import <Foundation/Foundation.h>
 #endif
 
-#ifndef LOGPOINT_EMPTY
-#define LOGPOINT_EMPTY ({ 0; }) /* logpoints return whether they were triggered */
+#ifndef LOGPOINT_NOP
+#define LOGPOINT_NOP ({ }) 
+#endif
+
+#ifndef LOGPOINT_ZERO
+#define LOGPOINT_ZERO ({ 0; }) /* logpoints return whether they were triggered */
 #endif
 
 #ifdef __linux__
@@ -74,14 +78,12 @@
 #if LOGPOINT_COUNT
 #define LOGPOINT_INCREMENT_COUNTER  ++lplogpoint.count
 #else
-#define LOGPOINT_INCREMENT_COUNTER  LOGPOINT_EMPTY
+#define LOGPOINT_INCREMENT_COUNTER  LOGPOINT_NOP
 #endif
 
-/* override this with your own -D if you need to (?) */
 #ifndef LOGPOINT_INVOKE
 #define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( logPointGetInvoker ? logPointGetInvoker() : local_logPointInvokerDefault)((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ )
 #endif
-
 
 
 #if __clang__

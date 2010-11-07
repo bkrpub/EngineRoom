@@ -49,6 +49,7 @@
  *
  * which is useful if you need to inspect or stringify arguments
  */
+#define ER_VARARGS_TO_NONZERO_ARGS(prefix, ...) ER_CAT( prefix, ER_COUNT_NONZERO_ARGS(__VA_ARGS__))(__VA_ARGS__)
 #define ER_VARARGS_TO_ONELESSTHAN(prefix, ...) ER_CAT( ER_CAT(prefix, OneLessThan), ER_COUNT_ARGS_PLUS1(__VA_ARGS__))(__VA_ARGS__)
 
 #endif

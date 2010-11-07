@@ -70,7 +70,9 @@ typedef struct logpoint {
     /* 14 * 4 = 40 bytes on 32bit, padded to 64 because this happens on i386 anyway, 128 on 64bit */
 } LOGPOINT;
 
-#define LOGPOINT_MAGIC 0x40343240
+#define LOGPOINT_VERSION 1
+
+#define LOGPOINT_MAGIC ( 0x40343200 + '@' + LOGPOINT_VERSION ) 
 #define LOGPOINT_MAGIC2(line) ( LOGPOINT_MAGIC - (line) - 63490 * sizeof(LOGPOINT))
 
 #define LOGPOINT_MAGIC_TEST(lp) (LOGPOINT_MAGIC == (lp).magic && LOGPOINT_EXPECTED_SIZE == (lp).size && LOGPOINT_MAGIC2((lp).line) == (lp).magic2 )
