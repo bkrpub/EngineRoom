@@ -42,8 +42,8 @@
 
 
 #if LOGPOINT_ENABLE_ASSERT
-#define lpassert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, "%@", desc); })
-#define lpcassert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, "%@", desc); })
+#define lpassert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC2(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, (desc), "%s", (desc)); })
+#define lpcassert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_FUNCTION_C2(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, (desc), "%s", (desc)); })
 
 #define LPAssert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, "%@", desc); })
 #define LPCAssert(cond, desc) ({ (cond) ? LOGPOINT_ZERO :  LOGPOINT_FUNCTION_C_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, "%@", desc); })
@@ -231,7 +231,7 @@
 #endif
 
 
-#define LPABSTRACT                  lpassert(NULL, @"needs implementation in subclass")
+#define LPABSTRACT                  lpassert(FALSE, "ABSTRACT - needs implementation in subclass")
 
 
 #endif

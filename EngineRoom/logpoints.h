@@ -42,18 +42,20 @@
 /*
  * for generic use in any part of a C, C++, ObjC or ObjC++ source file
  */
-#define LOGPOINT_FUNCTION_C(flags, kind, keys, label, fmt, ...)           LOGPOINT_CREATE( (flags) | LOGPOINT_C, (kind), (keys), (label), NULL, NULL, fmt, ## __VA_ARGS__ )
+#define LOGPOINT_FUNCTION_C(flags, kind, keys, label, fmt, ...)				LOGPOINT_CREATE( (flags) | LOGPOINT_C, (kind), (keys), (label), NULL, NULL, kLogPointFormatInfoNone, fmt, ## __VA_ARGS__ )
+#define LOGPOINT_FUNCTION_C2(flags, kind, keys, label, fmtInfo, fmt, ...)	LOGPOINT_CREATE( (flags) | LOGPOINT_C, (kind), (keys), (label), NULL, NULL, fmtInfo, fmt, ## __VA_ARGS__ )
 
 /*
  * only for use in Objective C methods in ObjC or ObjC++ source files, forwards "self" and "_cmd" to the logpoint invocation
  */
-#define LOGPOINT_METHOD_OBJC(flags, kind, keys, label, fmt, ...)          LOGPOINT_CREATE( (flags) | LOGPOINT_OBJC, (kind), (keys), (label), self, _cmd, fmt, ## __VA_ARGS__ )
+#define LOGPOINT_METHOD_OBJC(flags, kind, keys, label, fmt, ...)			LOGPOINT_CREATE( (flags) | LOGPOINT_OBJC, (kind), (keys), (label), self, _cmd, kLogPointFormatInfoNone, fmt, ## __VA_ARGS__ )
+#define LOGPOINT_METHOD_OBJC2(flags, kind, keys, label, fmtInfo, fmt, ...)	LOGPOINT_CREATE( (flags) | LOGPOINT_OBJC, (kind), (keys), (label), self, _cmd, fmtInfo, fmt, ## __VA_ARGS__ )
 
 /* 
  * only for use in C++ methods in ObjC or ObjC++ source files, forwards "this" to the logpoint invocation
  */
-#define LOGPOINT_METHOD_CXX(flags, kind, keys, label, fmt, ...)           LOGPOINT_CREATE( (flags) | LOGPOINT_CXX, (kind), (keys), (label), this, NULL, fmt, ## __VA_ARGS__ )
-
+#define LOGPOINT_METHOD_CXX(flags, kind, keys, label, fmt, ...)				LOGPOINT_CREATE( (flags) | LOGPOINT_CXX, (kind), (keys), (label), this, NULL, kLogPointFormatInfoNone, fmt, ## __VA_ARGS__ )
+#define LOGPOINT_METHOD_CXX2(flags, kind, keys, label, fmtInfo, fmt, ...)	LOGPOINT_CREATE( (flags) | LOGPOINT_OBJC, (kind), (keys), (label), self, _cmd, fmtInfo, fmt, ## __VA_ARGS__ )
 
 #ifdef __OBJC__
 
@@ -62,17 +64,17 @@
 /*
  * for use in any part of a C, C++, ObjC or ObjC++ source file 
  */
-#define LOGPOINT_FUNCTION_C_NS(flags, kind, keys, label, fmt, ...)        LOGPOINT_FUNCTION_C( (flags) | LOGPOINT_NSSTRING, (kind), (keys), (label), fmt, ## __VA_ARGS__ )
+#define LOGPOINT_FUNCTION_C_NS(flags, kind, keys, label, fmt, ...)        LOGPOINT_FUNCTION_C( (flags) | LOGPOINT_NSSTRING, (kind), (keys), (label), kLogPointFormatInfoNone, fmt, ## __VA_ARGS__ )
 
 /*
  * only for use in Objective C methods in ObjC or ObjC++ source files, forwards "self" and "_cmd" to the logpoint invocation
  */
-#define LOGPOINT_METHOD_OBJC_NS(flags, kind, keys, label, fmt, ...)       LOGPOINT_METHOD_OBJC( (flags) | LOGPOINT_NSSTRING, (kind), (keys), (label), fmt, ## __VA_ARGS__ )
+#define LOGPOINT_METHOD_OBJC_NS(flags, kind, keys, label, fmt, ...)       LOGPOINT_METHOD_OBJC( (flags) | LOGPOINT_NSSTRING, (kind), (keys), (label), kLogPointFormatInfoNone, fmt, ## __VA_ARGS__ )
 
 /* 
  * only for use in C++ methods in ObjC or ObjC++ source files, forwards "this" to the logpoint invocation 
  */
-#define LOGPOINT_METHOD_CXX_NS(flags, kind, keys, label, fmt, ...)        LOGPOINT_METHOD_CXX( (flags) | LOGPOINT_NSSTRING, (kind), (keys), (label), fmt, ## __VA_ARGS__ )
+#define LOGPOINT_METHOD_CXX_NS(flags, kind, keys, label, fmt, ...)        LOGPOINT_METHOD_CXX( (flags) | LOGPOINT_NSSTRING, (kind), (keys), (label), kLogPointFormatInfoNone, fmt, ## __VA_ARGS__ )
 
 #endif 
 /* __OBJC__ */
@@ -86,13 +88,13 @@
 #define LOGPOINT_METHOD_OBJC_AUTO_EXPR(flags, kind, keys, label, valueLabel, value) ({ \
 	__typeof__(value) __valueTmp = (value); \
 	id __msg = LOGPOINT_FORMAT_VALUE(__valueTmp, (valueLabel)); \
-	LOGPOINT_METHOD_OBJC( (flags), (kind), (keys), (label), "%@", __msg ); \
+	LOGPOINT_METHOD_OBJC2( (flags), (kind), (keys), (label), (valueLabel), "%@", __msg ); \
 	__valueTmp; })
 
 #define LOGPOINT_FUNCTION_C_AUTO_EXPR(flags, kind, keys, label, valueLabel, value) ({ \
 	__typeof__(value) __valueTmp = (value); \
 	id __msg = LOGPOINT_FORMAT_VALUE(__valueTmp, (valueLabel)); \
-	LOGPOINT_FUNCTION_C( (flags), (kind), (keys), (label), "%@", __msg ); \
+	LOGPOINT_FUNCTION_C2( (flags), (kind), (keys), (label), (valueLabel), "%@", __msg ); \
 	__valueTmp; })
 
 #endif 
@@ -126,7 +128,7 @@ LOGPOINT_EXTERN_C(kLogPointKindAssert[],    const char, "ASSERT");
 #define kLogPointKeysNone		NULL
 #define kLogPointLabelNone		NULL
 #define kLogPointFormatNone		NULL
-
+#define kLogPointFormatInfoNone NULL
 #endif 
 /* __LOGPOINTS_H__ */
 

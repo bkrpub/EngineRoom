@@ -16,6 +16,7 @@ sub auto_value( $ ) {
 
     my $args = '';
     my $format = '';
+    my $formatInfo = '';
     my $param = '';
 
     for( my $i = 1 ; $i <= $count ; ++$i ) {
@@ -23,6 +24,9 @@ sub auto_value( $ ) {
 	$args .= ", " if $args;
 	$args .= "l$i, v$i";
 	
+	$formatInfo .= qq( ", " ) if $formatInfo;
+	$formatInfo .= qq(l$i);
+
 	$format .= ' | ' if $format;
 	$format .= '%@';
 
@@ -31,7 +35,7 @@ sub auto_value( $ ) {
 
 	for my $style ( qw( METHOD_OBJC FUNCTION_C ) ) {
 
-	    my $substitution = qq<\t\tLOGPOINT_${style}( (flags), (kind), (keys), (label), "$format", $parameters \\\n\t\t)\n>;
+	    my $substitution = qq<\t\tLOGPOINT_${style}2( (flags), (kind), (keys), (label), $formatInfo,  "$format", $parameters \\\n\t\t)\n>;
 	    
 	    my $macro = qq<#define LOGPOINT_${style}_AUTO_VALUE$i(flags, kind, keys, label, $args) \\\n$substitution\n>;
 	    

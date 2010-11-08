@@ -117,11 +117,12 @@
 	@param keys  compile-time constant char pointer, points to comma separated keywords (spaces optional) associated with the logpoint or kLogPointKeysNone
 	@param label compile-time constant char pointer, extra label to decorate the message with
 */	
-#define LOGPOINT_CREATE(flags, kind, keys, label, langspec1, langspec2, fmt, ...) ({ \
+
+#define LOGPOINT_CREATE2(flags, kind, keys, label, langspec1, langspec2, formatInfo, fmt, ...) ({ \
         LOGPOINT_LOCAL_LABEL_DECLARATION /* must come first - see gcc docs */ \
         static LOGPOINT lplogpoint LOGPOINT_SECTION_ATTRIBUTE = \
 	  { LOGPOINT_MAGIC, sizeof(LOGPOINT), (kind), (keys), __UTIL_PRETTY_FUNCTION__, __FILE__, __LINE__, \
-	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, label, #fmt ", " #__VA_ARGS__, NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
+	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, label, (formatInfo) ?: ( (fmt) ? #fmt ", " #__VA_ARGS__ : NULL ), NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
         LOGPOINT_LOCAL_LABEL_CREATE /* after the static - or gcc 4.0.1 will crash */ \
         LOGPOINT_INCREMENT_COUNTER; \
         if( LOGPOINT_IS_ACTIVE(lplogpoint) ) { \
@@ -129,6 +130,7 @@
         } \
 		LOGPOINT_IS_ACTIVE(lplogpoint); /* return value - to be able to detect logpoint activeness in code */ \
 })
+
 
 /* functions used by the logpoints */
 
