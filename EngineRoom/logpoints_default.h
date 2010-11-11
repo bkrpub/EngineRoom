@@ -85,28 +85,6 @@
 #define lpctrace(keys)				LOGPOINT_ZERO
 #endif
 
-#define lpdebug0()		lpkdebug0(kLogPointKeysNone)
-#define lpdebug1(...)	lpkdebug1(kLogPointKeysNone, ## __VA_ARGS__)
-#define lpdebug2(...)	lpkdebug2(kLogPointKeysNone, ## __VA_ARGS__)
-#define lpdebug3(...)	lpkdebug3(kLogPointKeysNone, ## __VA_ARGS__)
-#define lpdebug4(...)	lpkdebug4(kLogPointKeysNone, ## __VA_ARGS__)
-#define lpdebug5(...)	lpkdebug5(kLogPointKeysNone, ## __VA_ARGS__)
-
-#define lpkdebugOneLessThan1 lpkdebug0
-#define lpkdebugOneLessThan2 lpkdebug1
-#define lpkdebugOneLessThan3 lpkdebug2
-#define lpkdebugOneLessThan4 lpkdebug3
-#define lpkdebugOneLessThan5 lpkdebug4
-#define lpkdebugOneLessThan6 lpkdebug5
-#define lpkdebugOneLessThan6 lpkdebug5
-
-#define lpkcdebugOneLessThan1 lpkdebug0
-#define lpkcdebugOneLessThan2 lpkdebug1
-#define lpkcdebugOneLessThan3 lpkdebug2
-#define lpkcdebugOneLessThan4 lpkdebug3
-#define lpkcdebugOneLessThan5 lpkdebug4
-#define lpkcdebugOneLessThan6 lpkdebug5
-#define lpkcdebugOneLessThan6 lpkdebug5
 
 
 #if LOGPOINT_ENABLE_DEBUG
@@ -123,25 +101,57 @@
 #define lpcshow(value)               _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", #value, NULL, NULL, "%@", value)
 #endif
 
+
+
+#define lpdebug0()		lpkdebug0(kLogPointKeysNone)
+#define lpdebug1(...)	lpkdebug1(kLogPointKeysNone, ## __VA_ARGS__)
+#define lpdebug2(...)	lpkdebug2(kLogPointKeysNone, ## __VA_ARGS__)
+#define lpdebug3(...)	lpkdebug3(kLogPointKeysNone, ## __VA_ARGS__)
+#define lpdebug4(...)	lpkdebug4(kLogPointKeysNone, ## __VA_ARGS__)
+#define lpdebug5(...)	lpkdebug5(kLogPointKeysNone, ## __VA_ARGS__)
+
+#define lpkdebugOneLessThan1 lpkdebug0
+#define lpkdebugOneLessThan2 lpkdebug1
+#define lpkdebugOneLessThan3 lpkdebug2
+#define lpkdebugOneLessThan4 lpkdebug3
+#define lpkdebugOneLessThan5 lpkdebug4
+#define lpkdebugOneLessThan6 lpkdebug5
+#define lpkdebugOneLessThan6 lpkdebug5
+
+#define lpkcdebugOneLessThan1 lpkcdebug0
+#define lpkcdebugOneLessThan2 lpkcdebug1
+#define lpkcdebugOneLessThan3 lpkcdebug2
+#define lpkcdebugOneLessThan4 lpkcdebug3
+#define lpkcdebugOneLessThan5 lpkcdebug4
+#define lpkcdebugOneLessThan6 lpkcdebug5
+#define lpkcdebugOneLessThan6 lpkcdebug5
+
 #if LOGPOINT_ENABLE_DEBUG
 
-#define lpkdebugf(keys, fmt, ...)     LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), NULL, fmt, ## __VA_ARGS__)
-#define lpkcdebugf(keys, fmt, ...)    LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), NULL, fmt, ## __VA_ARGS__)
+#define lpkdebugf(keys, fmt, ...)     LOGPOINT_METHOD_OBJC2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, fmt, ## __VA_ARGS__)
+#define lpkcdebugf(keys, fmt, ...)    LOGPOINT_FUNCTION_C2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, fmt, ## __VA_ARGS__)
 
-#define lpdebugf(fmt, ...)			lpkdebugf(kLogPointKeysNone, fmt, ## __VA_ARGS__)
+#define lpdebugf(fmt, ...)			 lpkdebugf(kLogPointKeysNone, fmt, ## __VA_ARGS__)
 #define lpcdebugf(fmt, ...)			lpkcdebugf(kLogPointKeysNone, fmt, ## __VA_ARGS__)
 
 #ifdef __OBJC__
 
 #warning c versions missing
 
-
-#define lpkdebug0(keys)					                LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, kLogPointFormatNone)
+#define lpkdebug0(keys)					    LOGPOINT_METHOD_OBJC_AUTO_VALUE0(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone )
 #define lpkdebug1(keys, v1)					LOGPOINT_METHOD_OBJC_AUTO_VALUE1(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1))
 #define lpkdebug2(keys, v1, v2)				LOGPOINT_METHOD_OBJC_AUTO_VALUE2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2))
 #define lpkdebug3(keys, v1, v2, v3)			LOGPOINT_METHOD_OBJC_AUTO_VALUE3(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3))
 #define lpkdebug4(keys, v1, v2, v3, v4)		LOGPOINT_METHOD_OBJC_AUTO_VALUE4(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4))
 #define lpkdebug5(keys, v1, v2, v3, v4, v5)	LOGPOINT_METHOD_OBJC_AUTO_VALUE5(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4), #v5, (v5))
+
+#define lpkcdebug0(keys)					LOGPOINT_FUNCTION_C_AUTO_VALUE0(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone )
+#define lpkcdebug1(keys, v1)				LOGPOINT_FUNCTION_C_AUTO_VALUE1(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1))
+#define lpkcdebug2(keys, v1, v2)			LOGPOINT_FUNCTION_C_AUTO_VALUE2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2))
+#define lpkcdebug3(keys, v1, v2, v3)		LOGPOINT_FUNCTION_C_AUTO_VALUE3(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3))
+#define lpkcdebug4(keys, v1, v2, v3, v4)	LOGPOINT_FUNCTION_C_AUTO_VALUE4(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4))
+#define lpkcdebug5(keys, v1, v2, v3, v4, v5) LOGPOINT_FUNCTION_C_AUTO_VALUE5(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, #v1, (v1), #v2, (v2), #v3, (v3), #v4, (v4), #v5, (v5))
+
 
 #define lpkdebugn(keys, ...)  ER_VARARGS_TO_NONZERO_ARGS(lpkdebugOneLessThan, (keys), ## __VA_ARGS__)
 #define lpkcdebugn(keys, ...) ER_VARARGS_TO_NONZERO_ARGS(lpkcdebugOneLessThan, (keys), ## __VA_ARGS__)

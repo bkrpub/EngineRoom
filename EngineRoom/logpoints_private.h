@@ -122,7 +122,7 @@
         LOGPOINT_LOCAL_LABEL_DECLARATION /* must come first - see gcc docs */ \
         static LOGPOINT lplogpoint LOGPOINT_SECTION_ATTRIBUTE = \
 	  { LOGPOINT_MAGIC, sizeof(LOGPOINT), (kind), (keys), __UTIL_PRETTY_FUNCTION__, __FILE__, __LINE__, \
-	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, label, (formatInfo) ?: ( (fmt) ? #fmt ", " #__VA_ARGS__ : NULL ), NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
+	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, (label), (formatInfo) ?: ( (fmt) ? #fmt ", " #__VA_ARGS__ : NULL ), NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
         LOGPOINT_LOCAL_LABEL_CREATE /* after the static - or gcc 4.0.1 will crash */ \
         LOGPOINT_INCREMENT_COUNTER; \
         if( LOGPOINT_IS_ACTIVE(lplogpoint) ) { \
