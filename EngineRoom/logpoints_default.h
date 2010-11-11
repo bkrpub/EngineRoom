@@ -131,8 +131,8 @@
 #define lpkdebugf(keys, fmt, ...)     LOGPOINT_METHOD_OBJC2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, fmt, ## __VA_ARGS__)
 #define lpkcdebugf(keys, fmt, ...)    LOGPOINT_FUNCTION_C2(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, fmt, ## __VA_ARGS__)
 
-#define lpdebugf(fmt, ...)			 lpkdebugf(kLogPointKeysNone, fmt, ## __VA_ARGS__)
-#define lpcdebugf(fmt, ...)			lpkcdebugf(kLogPointKeysNone, fmt, ## __VA_ARGS__)
+#define lpdebugf(fmt, ...)			  lpkdebugf(kLogPointKeysNone, fmt, ## __VA_ARGS__)
+#define lpcdebugf(fmt, ...)			  lpkcdebugf(kLogPointKeysNone, fmt, ## __VA_ARGS__)
 
 #ifdef __OBJC__
 
