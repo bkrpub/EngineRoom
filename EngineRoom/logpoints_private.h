@@ -118,7 +118,7 @@
 	@param label compile-time constant char pointer, extra label to decorate the message with
 */	
 
-#define LOGPOINT_CREATE2(flags, kind, keys, label, langspec1, langspec2, formatInfo, fmt, ...) ({ \
+#define LOGPOINT_CREATE(flags, kind, keys, label, langspec1, langspec2, formatInfo, fmt, ...) ({ \
         LOGPOINT_LOCAL_LABEL_DECLARATION /* must come first - see gcc docs */ \
         static LOGPOINT lplogpoint LOGPOINT_SECTION_ATTRIBUTE = \
 	  { LOGPOINT_MAGIC, sizeof(LOGPOINT), (kind), (keys), __UTIL_PRETTY_FUNCTION__, __FILE__, __LINE__, \

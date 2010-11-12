@@ -28,8 +28,8 @@ NSString *kLogPointFilterUserDefaultsKey = @"logPointFilter";
 NSString *kLogPointDumpUserDefaultsKey = @"logPointDump";
 
 #if ! MAINTAINER_WARNINGS
-#undef lpwarning
-#define lpwarning(keys, fmt, ...) /**/
+#undef lpkwarningf
+#define lpkwarningf(keys, fmt, ...) /**/
 #endif
 
 #import <stdlib.h>
@@ -156,10 +156,10 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 
 	if( nil != predicate ) {
 		lp_return_t activated = [self makeLogPointsMatchingPredicate: predicate performSelector: @selector(activate) error: outError];
-		lpwarning("filtering", "activated %u of %u filtered logpoints for '%@'", activated, filtered, [predicate predicateFormat]);
+		lpkwarningf("filtering", "activated %u of %u filtered logpoints for '%@'", activated, filtered, [predicate predicateFormat]);
 		return activated;
 	} else {
-		lpwarning("filtering", "no predicate given");
+		lpkwarningf("filtering", "no predicate given");
 		return LOGPOINT_RETURN_BAD_FILTER;
 	}
 	
@@ -174,13 +174,13 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 	}
     
     if( ! [textualRep respondsToSelector: @selector(length)] || ! [textualRep respondsToSelector: @selector(rangeOfString:)] ) {
-        lpwarning("filtering", "textual representation '%@' does not respond to length:, rangeOfString: - ignoring", textualRep);
+        lpkwarningf("filtering", "textual representation '%@' does not respond to length:, rangeOfString: - ignoring", textualRep);
 		[self setErrorPtr: outError withCode: LOGPOINT_RETURN_BAD_FILTER userInfo: nil];
         return nil;
     }
  
 	if( [textualRep rangeOfString: @"%"].location != NSNotFound ) {
-		lpwarning("filtering", "textual representation '%@' contains a %% character - not supported - ignoring", textual);
+		lpkwarningf("filtering", "textual representation '%@' contains a %% character - not supported - ignoring", textual);
 		[self setErrorPtr: outError withCode: LOGPOINT_RETURN_BAD_FILTER userInfo: 
 		 [NSDictionary dictionaryWithObject: NSLocalizedString(@"% not supported in filter string - ignored", @"") forKey: NSLocalizedFailureReasonErrorKey]];
 		return nil;
@@ -235,12 +235,12 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 		
 		
 		if( 0 == [textual length] ) {
-			lpwarning("filtering", "interpreting empty string as false");
+			lpkwarningf("filtering", "interpreting empty string as false");
 			textual = @"FALSEPREDICATE";
 		}                    
 		
 		if( [textual isEqualToString: @"*"] ) {
-			lpwarning("filtering", "interpreting * string as true");
+			lpkwarningf("filtering", "interpreting * string as true");
 			textual = @"TRUEPREDICATE";
 		}                    	 
 		
@@ -258,7 +258,7 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 		predicate = [NSPredicate predicateWithFormat: finalTextual];
     } 
 	@catch( NSException *exception )  {
-        lpwarning("filtering", "could not parse lpPredicate '%@' (%@)", finalTextual, exception);
+        lpkwarningf("filtering", "could not parse lpPredicate '%@' (%@)", finalTextual, exception);
 
 		NSLog(@"exc: n: %@ r: %@ u: %@", [exception name], [exception reason], [exception userInfo]);
 
@@ -278,7 +278,7 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 		lp_return_t err = logPointApply( NULL /*filter*/, NULL /*filterInfo*/, logPointCollector /*action*/, self /*actionInfo*/, LOGPOINT_OPTION_NONE);
 
 		if( err != LOGPOINT_RETURN_OK ) {
-			lpwarning("logpoints", "could not load logpoints: %s", logPointReturnString(err));
+			lpkwarningf("logpoints", "could not load logpoints: %s", logPointReturnString(err));
 		}
     
 	}

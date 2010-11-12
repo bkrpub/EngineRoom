@@ -27,14 +27,6 @@
 #include "logpoints_default_policy.h"
 #include "logpoints.h"
 
-#ifdef __OBJC__
-
-/* used by logpoints_nslog.h to replace NSLog */
-#define lpNSLog(fmt, ...) LOGPOINT_FUNCTION_C_NS( LOGPOINT_NOFLAGS, "NSLog", kLogPointKeysNone, kLogPointLabelNone, fmt, ## __VA_ARGS__ ) 
-/* (?) lpNSLogv */
-
-#endif
-/* __OBJC__ */
 
 /* (?) enabled ?
 #define lplog(fmt, ...)    LOGPOINT_FUNCTION_C( LOGPOINT_NOFLAGS, "lplog", kLogPointKeysNone, kLogPointLabelNone, fmt, ## __VA_ARGS__ ) 
@@ -45,6 +37,7 @@
 #define lpassert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC2(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, (desc), "%s", (desc)); })
 #define lpcassert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_FUNCTION_C2(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, (desc), "%s", (desc)); })
 
+#warning v1
 #define LPAssert(cond, desc)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, "%@", desc); })
 #define LPCAssert(cond, desc) ({ (cond) ? LOGPOINT_ZERO :  LOGPOINT_FUNCTION_C_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, "%@", desc); })
 #define LPAssertF(cond, fmt, ...)  ({ (cond) ? LOGPOINT_ZERO : LOGPOINT_METHOD_OBJC_NS(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond, fmt, ## __VA_ARGS__); })
@@ -86,20 +79,6 @@
 #endif
 
 
-
-#if LOGPOINT_ENABLE_DEBUG
-#define lpsingle(keys, label, fmt, value)  LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, label " =", fmt, value)
-#define lpcsingle(keys, label, fmt, value)  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, label " =", fmt, value)
-
-#define lpInt(keys, value)          lpsingle(keys, #value, "%d", (int) value)
-#define lpcInt(keys, value)         lpcsingle(keys, #value, "%d", (int) value)
-
-#define lpDouble(keys, value)       _lpSoftLogMessage(#value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %f", #value, value)
-#define lpcDouble(keys, value)       _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %f", #value, value)
-
-#define lpshow(value)               _lpSoftLogMessage(#value, LOGPOINT_OBJC, "DEBUG", #value, self, _cmd, "%@", value)
-#define lpcshow(value)               _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", #value, NULL, NULL, "%@", value)
-#endif
 
 
 
@@ -242,6 +221,38 @@
 
 
 #define LPABSTRACT                  lpassert(FALSE, "ABSTRACT - needs implementation in subclass")
+
+
+#if 0 && LOGPOINT_ENABLE_DEBUG
+#define lpsingle(keys, label, fmt, value)  LOGPOINT_METHOD_OBJC(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, label " =", fmt, value)
+#define lpcsingle(keys, label, fmt, value)  LOGPOINT_FUNCTION_C(LOGPOINT_FLAGS_DEBUG, kLogPointKindDebug, keys, label " =", fmt, value)
+
+#define lpInt(keys, value)          lpsingle(keys, #value, "%d", (int) value)
+#define lpcInt(keys, value)         lpcsingle(keys, #value, "%d", (int) value)
+
+#define lpDouble(keys, value)       _lpSoftLogMessage(#value, LOGPOINT_OBJC, "DEBUG", keys, self, _cmd, "%s = %f", #value, value)
+#define lpcDouble(keys, value)       _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", keys, NULL, NULL, "%s = %f", #value, value)
+
+#define lpshow(value)               _lpSoftLogMessage(#value, LOGPOINT_OBJC, "DEBUG", #value, self, _cmd, "%@", value)
+#define lpcshow(value)               _lpSoftLogMessage(#value, LOGPOINT_C, "DEBUG", #value, NULL, NULL, "%@", value)
+
+#else
+/* !LOGPOINT_ENABLE_DEBUG */
+
+#define lpdebug(keys, ...)          LOGPOINT_ZERO
+#define lpcdebug(keys, ...)         LOGPOINT_ZERO
+
+#define lpInt(keys, ...)            LOGPOINT_ZERO
+#define lpcInt(keys, ...)           LOGPOINT_ZERO
+
+#define lpDouble(keys, ...)         LOGPOINT_ZERO
+#define lpcDouble(keys, ...)        LOGPOINT_ZERO
+
+#define lpshow(v)		    LOGPOINT_ZERO
+#define lpcshow(v)		    LOGPOINT_ZERO
+
+#endif
+
 
 
 #endif
