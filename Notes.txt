@@ -1,4 +1,6 @@
 
+cpp -MM Makefile gen
+
 check what happens if more args than auto macros
 
 clock macros util_watch
