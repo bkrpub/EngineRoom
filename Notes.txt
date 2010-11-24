@@ -1,4 +1,11 @@
 
+asl support
+key,value
+
+threading
+lock for single handle? - hmm
+
+
 cpp -MM Makefile gen
 
 check what happens if more args than auto macros
@@ -55,6 +62,7 @@ format string for composer
 
 how to handle assertions?
 log first? then assertion handler?
+switch assertions to errors
 
 embed without linkage (i.e. AFCache)
 Weak Linkage? @loader_path... @executable_path...

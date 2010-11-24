@@ -1,13 +1,17 @@
 #!/usr/bin/env perl -s 
 
+use strict;
+use warnings;
+
 our $path = "generated";
 
 our $prefix ||= "logpoints";
 our $name ||= "custom";
-our $kind ||= "debug";
-our $count ||= 3;
+our $kinds ||= "switch assert debug info notice warning error";
+our $count ||= 16;
 
 our $auto_value ||= 0;
+our $template ||= 0;
 
 sub auto_value( $ ) {
 
@@ -18,7 +22,7 @@ sub auto_value( $ ) {
     my $args = '';
     my $format = '';
     my $formatInfo = '';
-    my $param = '';
+    my $parameters = '';
 
     for( my $i = 0 ; $i <= $count ; ++$i ) {
 
@@ -38,10 +42,10 @@ sub auto_value( $ ) {
 
 	for my $style ( qw( METHOD_OBJC FUNCTION_C ) ) {
 
-	    my $substitution  = qq<\t\tLOGPOINT_${style}2( (flags), (kind), (keys), (label), $formatInfo,  "$format", $parameters )\n>;
+	    my $substitution  = qq<\t\tLOGPOINT_${style}( (flags), (kind), (keys), (label), $formatInfo,  "$format", $parameters )\n>;
 
 	    if( 0 == $i ) {
-		$substitution = qq<\t\tLOGPOINT_${style}2( (flags), (kind), (keys), (label), kLogPointFormatInfoNone, kLogPointFormatNone )\n>;
+		$substitution = qq<\t\tLOGPOINT_${style}( (flags), (kind), (keys), (label), kLogPointFormatInfoNone, kLogPointFormatNone )\n>;
 	    }
 
 	    my $macro = qq<#define LOGPOINT_${style}_AUTO_VALUE$i(flags, kind, keys, label> . (length($args) ? ", $args" : "") . qq<) \\\a\n$substitution>;
@@ -74,7 +78,7 @@ sub template( % ) {
 
     my $kindFlags = $p{ flags } || "LOGPOINT_FLAGS_${ucKind}";
 
-    my $kindConstant = ${kindConstant} || "kLogPointKind${ucFirstKind}";
+    my $kindConstant = $p{kindConstant} || "kLogPointKind${ucFirstKind}";
 
     my $prefixKind = "$prefix$lcKind";
     my $cPrefixKind = "$cPrefix$lcKind";
@@ -82,29 +86,29 @@ sub template( % ) {
     my $keyedPrefixKind = "$keyedPrefix$lcKind";
     my $keyedCPrefixKind = "$keyedCPrefix$lcKind";
 
-    my $prefixKindF = $p{prefixKindF} || "${prefixKind}f"; 
-    my $cPrefixKindF = $p{cPrefixKindF} || "${cPrefixKind}f"; 
+    my $prefixKindF = $p{prefixKindF} || "${prefixKind}F"; 
+    my $cPrefixKindF = $p{cPrefixKindF} || "${cPrefixKind}F"; 
 
-    my $keyedPrefixKindF = $p{keyedPrefixKindF} || "${keyedPrefixKind}f"; 
-    my $keyedCPrefixKindF = $p{keyedCPrefixKindF} || "${keyedCPrefixKind}f"; 
+    my $keyedPrefixKindF = $p{keyedPrefixKindF} || "${keyedPrefixKind}F"; 
+    my $keyedCPrefixKindF = $p{keyedCPrefixKindF} || "${keyedCPrefixKind}F"; 
 
-    my $prefixKindN = $p{prefixKindN} || "${prefixKind}n"; 
-    my $cPrefixKindN = $p{cPrefixKindN} || "${cPrefixKind}n"; 
+    my $prefixKindN = $p{prefixKindN} || "${prefixKind}N"; 
+    my $cPrefixKindN = $p{cPrefixKindN} || "${cPrefixKind}N"; 
 
-    my $keyedPrefixKindN = $p{keyedPrefixKindN} || "${keyedPrefixKind}n"; 
-    my $keyedCPrefixKindN = $p{keyedCPrefixKindN} || "${keyedCPrefixKind}n"; 
+    my $keyedPrefixKindN = $p{keyedPrefixKindN} || "${keyedPrefixKind}N"; 
+    my $keyedCPrefixKindN = $p{keyedCPrefixKindN} || "${keyedCPrefixKind}N"; 
 
-    my $prefixKindX = $p{prefixKindX} || "${prefixKind}_expr"; 
-    my $cPrefixKindX = $p{cPrefixKindX} || "${cPrefixKind}_expr"; 
+    my $prefixKindX = $p{prefixKindX} || "${prefixKind}X"; 
+    my $cPrefixKindX = $p{cPrefixKindX} || "${cPrefixKind}X"; 
 
-    my $keyedPrefixKindX = $p{keyedPrefixKindX} || "${keyedPrefixKind}_expr"; 
-    my $keyedCPrefixKindX = $p{keyedCPrefixKindX} || "${keyedCPrefixKind}_expr"; 
+    my $keyedPrefixKindX = $p{keyedPrefixKindX} || "${keyedPrefixKind}X"; 
+    my $keyedCPrefixKindX = $p{keyedCPrefixKindX} || "${keyedCPrefixKind}X"; 
 
-    my $prefixKindR = $p{prefixKindR} || "${prefixKind}_return"; 
-    my $cPrefixKindR = $p{cPrefixKindR} || "${cPrefixKind}_return"; 
+    my $prefixKindR = $p{prefixKindR} || "${prefixKind}R"; 
+    my $cPrefixKindR = $p{cPrefixKindR} || "${cPrefixKind}R"; 
 
-    my $keyedPrefixKindR = $p{keyedPrefixKindR} || "${keyedPrefixKind}_return"; 
-    my $keyedCPrefixKindR = $p{keyedCPrefixKindR} || "${keyedCPrefixKind}_return"; 
+    my $keyedPrefixKindR = $p{keyedPrefixKindR} || "${keyedPrefixKind}R"; 
+    my $keyedCPrefixKindR = $p{keyedCPrefixKindR} || "${keyedCPrefixKind}R"; 
 
     my @c = ();
 
@@ -117,8 +121,8 @@ sub template( % ) {
 
     my $v = 2;
 
-    push @cOnOff, qq<#define ${keyedPrefixKindF}(keys, fmt, ...) \a LOGPOINT_METHOD_OBJC$v($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
-    push @cOnOff, qq<#define ${keyedCPrefixKindF}(keys, fmt, ...) \a LOGPOINT_FUNCTION_C$v($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
+    push @cOnOff, qq<#P#define _$keyedPrefixKindF(keys, fmt, ...) \a LOGPOINT_METHOD_OBJC$v($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
+    push @cOnOff, qq<#P#define _$keyedCPrefixKindF(keys, fmt, ...) \a LOGPOINT_FUNCTION_C$v($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
     push @cOnOff, "";
 
     my @tmpMeth = ();
@@ -128,44 +132,50 @@ sub template( % ) {
 
 	my $inargs = ($i ? ", " : "" ) . join(", ", map { "v$_" } 1 .. $i );
 	my $outargs = ($i ? ", " : "" ) . join(", ", map { ( "#v$_", "(v$_)" ) } 1 .. $i );
+	
+	my $extraFlags = ($i == 0 && $kind eq 'switch' ) ? ' | LOGPOINT_SILENT' : '';
 
-	push @tmpMeth, qq<#define $keyedPrefixKind$i(keys$inargs) \a LOGPOINT_METHOD_OBJC_AUTO_VALUE$i($kindFlags, $kindConstant, (keys), kLogPointLabelNone$outargs )>;
-	push @tmpFunc, qq<#define $keyedCPrefixKind$i(keys$inargs) \a LOGPOINT_FUNCTION_C_AUTO_VALUE$i($kindFlags, $kindConstant, (keys), kLogPointLabelNone$outargs )>;
+	my $flags = $kindFlags . $extraFlags;
+
+	push @tmpMeth, qq<#define _$keyedPrefixKind$i(keys$inargs) \a LOGPOINT_METHOD_OBJC_AUTO_VALUE$i($flags, $kindConstant, (keys), kLogPointLabelNone$outargs )>;
+	push @tmpFunc, qq<#define _$keyedCPrefixKind$i(keys$inargs) \a LOGPOINT_FUNCTION_C_AUTO_VALUE$i($flags, $kindConstant, (keys), kLogPointLabelNone$outargs )>;
     }
 
     push @objcOnOff, @tmpMeth, "", @tmpFunc, "";
 
-    push @objcOnOff, qq<#define $keyedPrefixKindN(keys, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedPrefixKind}OneLessThan, (keys), ## __VA_ARGS__)>;
-    push @objcOnOff, qq<#define $keyedCPrefixKindN(keys, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedCPrefixKind}OneLessThan, (keys), ## __VA_ARGS__)>;
+    push @objcOnOff, qq<#P#define _$keyedPrefixKindN(keys, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedPrefixKind}OneLessThan, (keys), ## __VA_ARGS__)>;
+    push @objcOnOff, qq<#P#define _$keyedCPrefixKindN(keys, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedCPrefixKind}OneLessThan, (keys), ## __VA_ARGS__)>;
     push @objcOnOff, "";
 
 
-    push @objcOn, qq<#define $keyedPrefixKindX(keys, value) \a LOGPOINT_METHOD_OBJC_AUTO_EXPR( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, #value, (value))>;
-    push @objcOn, qq<#define $keyedCPrefixKindX(keys, value) \a LOGPOINT_FUNCTION_C_AUTO_EXPR( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, #value, (value))>;
+    push @objcOn, qq<#P#define _$keyedPrefixKindX(keys, value) \a LOGPOINT_METHOD_OBJC_AUTO_EXPR( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, #value, (value))>;
+    push @objcOn, qq<#P#define _$keyedCPrefixKindX(keys, value) \a LOGPOINT_FUNCTION_C_AUTO_EXPR( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, #value, (value))>;
     push @objcOn, "";
 
-    push @objcOff, qq<#define $keyedPrefixKindX(value) \a (value)>;
-    push @objcOff, qq<#define $keyedCPrefixKindX(value) \a (value)>;
+    push @objcOff, qq<#define _$keyedPrefixKindX(value) \a (value)>;
+    push @objcOff, qq<#define _$keyedCPrefixKindX(value) \a (value)>;
     push @objcOff, "";
 
-    push @objcOn, qq<#define $keyedPrefixKindR(keys, value) \a return LOGPOINT_METHOD_OBJC_AUTO_EXPR( $kindFlags, $kindConstant, (keys), "return", #value, (value))>;
-    push @objcOn, qq<#define $keyedCPrefixKindR(keys, value) \a return LOGPOINT_FUNCTION_C_AUTO_EXPR( $kindFlags, $kindConstant, (keys), "return", #value, (value))>;
+    push @objcOn, qq<#P#define _$keyedPrefixKindR(keys, value) \a return LOGPOINT_METHOD_OBJC_AUTO_EXPR( $kindFlags, $kindConstant, (keys), "return", #value, (value))>;
+    push @objcOn, qq<#P#define _$keyedCPrefixKindR(keys, value) \a return LOGPOINT_FUNCTION_C_AUTO_EXPR( $kindFlags, $kindConstant, (keys), "return", #value, (value))>;
     push @objcOn, "";
 
-    push @objcOff, qq<#define $keyedPrefixKindR(value) \a return (value)>;
-    push @objcOff, qq<#define $keyedCPrefixKindR(value) \a return (value)>;
+    push @objcOff, qq<#define _$keyedPrefixKindR(value) \a return (value)>;
+    push @objcOff, qq<#define _$keyedCPrefixKindR(value) \a return (value)>;
     push @objcOff, "";
 
     for( @objcOnOff ) {
-	my( $macro, $substitution ) = split(/ *\a */, $_);
 	push @objcOn, $_;
-	push @objcOff, length($substitution) ? "$macro \a $zero" : $macro;
+	s/#P#/#/;
+	my( $macro, $substitution ) = split(/ *\a */, $_);
+	push @objcOff, length($substitution || '') ? "$macro \a $zero" : defined($macro) ? $macro : '';
     }
 
     for( @cOnOff ) {
-	my( $macro, $substitution ) = split(/ *\a */, $_);
 	push @cOn, $_;
-	push @cOff, length($substitution) ? "$macro \a $zero" : $macro;
+	s/#P#/#/;
+	my( $macro, $substitution ) = split(/ *\a */, $_);
+	push @cOff, length($substitution || '') ? "$macro \a $zero" : defined($macro) ? $macro : '';
     }
 
     push @c, "", "#if LOGPOINT_ENABLE_${ucKind}", "";
@@ -183,21 +193,20 @@ sub template( % ) {
 
     push @c, "", "/* used by varargs voodoo in ER_VARARGS_TO_NONZERO_ARGS */", "";
 
-    push @c, sprintf qq<#define ${keyedPrefixKind}OneLessThan%-2d \a ${keyedPrefixKind}%-2d>, $_+1, $_ for ( 0 .. $count );
+    push @c, sprintf qq<#define _${keyedPrefixKind}OneLessThan%-2d \a _${keyedPrefixKind}%-2d>, $_+1, $_ for ( 0 .. $count );
 
-    push @c, sprintf qq<#define ${keyedCPrefixKind}OneLessThan%-2d \a ${keyedCPrefixKind}%-2d>, $_+1, $_ for ( 0 .. $count );
+    push @c, sprintf qq<#define _${keyedCPrefixKind}OneLessThan%-2d \a _${keyedCPrefixKind}%-2d>, $_+1, $_ for ( 0 .. $count );
 
     push @c, "", "/* non-keyed variants */";
 
-    push @c, qq<#define $prefixKindF(fmt, ...) \a $keyedPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
-    push @c, qq<#define $cPrefixKindF(fmt, ...) \a $keyedCPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
-    push @c, qq<#define $prefixKindN(...) \a $keyedPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
-    push @c, qq<#define $cPrefixKindN(...) \a $keyedCPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
-    push @c, qq<#define $prefixKindX(value) \a $keyedPrefixKindX(kLogPointKeysNone, value)>;
-    push @c, qq<#define $cPrefixKindX(value) \a $keyedCPrefixKindX(kLogPointKeysNone, value)>;
-    push @c, qq<#define $prefixKindR(value) \a $keyedPrefixKindR(kLogPointKeysNone, value)>;
-    push @c, qq<#define $cPrefixKindR(value) \a $keyedCPrefixKindR(kLogPointKeysNone, value)>;
-
+    push @c, qq<#P#define _$prefixKindF(fmt, ...) \a _$keyedPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$cPrefixKindF(fmt, ...) \a _$keyedCPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$prefixKindN(...) \a _$keyedPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$cPrefixKindN(...) \a _$keyedCPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$prefixKindX(value) \a _$keyedPrefixKindX(kLogPointKeysNone, value)>;
+    push @c, qq<#P#define _$cPrefixKindX(value) \a _$keyedCPrefixKindX(kLogPointKeysNone, value)>;
+    push @c, qq<#P#define _$prefixKindR(value) \a _$keyedPrefixKindR(kLogPointKeysNone, value)>;
+    push @c, qq<#P#define _$cPrefixKindR(value) \a _$keyedCPrefixKindR(kLogPointKeysNone, value)>;
 
     return @c;
 }
@@ -218,7 +227,8 @@ sub beautify ( @ ) {
     my $code = join("\n", "", ( map {
 	my( $macro, @rest ) = split(/ *[\a] */, $_);
 	my $sep = " ";
-	@rest ? sprintf("%-*s%s%s", $maxLength, $macro, 
+	$macro = "" unless defined $macro;
+	@rest ? sprintf("%-*s%s%s", ($macro =~ /\\$/) ? 0 : $maxLength, $macro, 
 			$sep,
 			join($sep, @rest)) : $macro;
 			    } @c), "");
@@ -229,24 +239,66 @@ sub beautify ( @ ) {
 }
 
 
-sub main() {
+sub private {
+    my @out = @_;
 
-    my @content = ();
-    my @payload = ();
+    s/^#P#/#/ for @out;
 
-    if ( $auto_value ) {
-	$name = "auto_value";
-	push @payload, auto_value($count);
-    }
+    return @out;
+}
 
-    if ( $template ) {
-	$name = "template";
-	for my $kind ( qw( trace debug info notice warning error ) ) {
-	    push @payload, "", "/* $kind macros */", "", template( count => $count, kind => $kind ), "";
+sub public {
+    my @in = @_;
+    my @out = ();
+
+    my $lastWasPublic = 0;
+
+    for ( @in ) {
+
+	if( m/#P#define\s+(\w+).*?\a.*/m ) {
+	    my $private = $1;
+	    my $public = $1;
+	    $public =~ s/^_//;
+
+# mapping
+	    $public =~ s/N$//;
+	    $public =~ s/F$/f/;
+	    $public =~ s/X$/_expr/;
+	    $public =~ s/R$/_return/;
+
+# lpkswitchf("foo bar", "some %s here", "baz") # verbose
+# lpkswitch("foo bar") # silent
+# lpkswitch("foo bar", myrect) # verbose -> n
+# lpswitchf("some %s here", "baz") # verbose 
+# lpswitch() # silent
+# lpswitch("foo") # verbose
+
+# /mapping
+
+
+	    $_ = "#define $public \a $private";
+	    
+	    $lastWasPublic = 1;
+
+	    push @out, $_;
+	} else {
+	    # copy empty lines trailing public defs
+	    if( $lastWasPublic ) {
+		push @out, $_ if 0 == length $_; 
+		$lastWasPublic = 0;
+	    }
 	}
     }
 
-    my $file = $prefix . '_' . $name . '.h';
+    return @out;
+}
+
+sub output {
+    my $path = shift;
+    my $file = shift;
+    my @payload = @_;
+    my @content = ();
+
     my $marker = $file;
     $marker =~ s/\./_/g;
     $marker = '__' . uc($marker) . '__';
@@ -267,6 +319,34 @@ sub main() {
     return 0;
 }
 
+
+sub main() {
+
+    my @content = ();
+    my @payload = ();
+
+    if ( $auto_value ) {
+	$name = "auto_value";
+	push @payload, auto_value($count);
+    }
+
+    if ( $template ) {
+	$name = "template";
+
+	push @payload, auto_value($count);
+
+	for my $kind ( split(/\s*,\s*|\s/, $kinds) ) {
+	    push @payload, "", "/* $kind macros */", "", template( count => $count, kind => $kind ), "";
+	}
+    }
+
+    my $private = $prefix . '_' . $name . '_private.h';
+    my $public  = $prefix . '_' . $name . '.h';
+
+    output( $path, $private, private( @payload ) );
+    output( $path, $public, public( @payload ) );
+
+}
 
 
 exit &main;
