@@ -8,11 +8,10 @@ our $path = "generated";
 our $prefix ||= "logpoints";
 our $name ||= "custom";
 our $kinds ||= "switch assert debug info notice warning error";
-our $count ||= 3;
+our $count ||= 16;
 
 our $auto_value ||= 0;
 our $template ||= 0;
-our $guts ||= 0;
 
 sub auto_value( $ ) {
 
@@ -120,139 +119,10 @@ sub template( % ) {
     my @objcOff = ();
     my @objcOnOff = ();
 
-    my $v = "";
+    my $v = 2;
 
-    push @cOnOff, qq<#P#define $keyedPrefixKindF(keys, fmt, ...) \a _lpklogF($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
-    push @cOnOff, qq<#P#define $keyedCPrefixKindF(keys, fmt, ...) \a _lpkclogF($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
-    push @cOnOff, "";
-
-
-    push @objcOnOff, qq<#P#define $keyedPrefixKindN(keys, ...) \a _lpklogN($kindFlags, $kindConstant, (keys), kLogPointLabelNone, ## __VA_ARGS__ )>;
-    push @objcOnOff, qq<#P#define $keyedCPrefixKindN(keys, ...) \a _lpkclogN($kindFlags, $kindConstant, (keys), kLogPointLabelNone, ## __VA_ARGS__ )>;
-    push @objcOnOff, "";
-
-
-    push @objcOn, qq<#P#define $keyedPrefixKindX(keys, value) \a _lpklogX( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, (value))>;
-    push @objcOn, qq<#P#define $keyedCPrefixKindX(keys, value) \a _lpkclogX( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, (value))>;
-    push @objcOn, "";
-
-    push @objcOff, qq<#define $keyedPrefixKindX(value) \a (value)>;
-    push @objcOff, qq<#define $keyedCPrefixKindX(value) \a (value)>;
-    push @objcOff, "";
-
-    push @objcOn, qq<#P#define $keyedPrefixKindR(keys, value) \a _lpklogR( $kindFlags, $kindConstant, (keys), "return", (value))>;
-    push @objcOn, qq<#P#define $keyedCPrefixKindR(keys, value) \a _lpkclogR( $kindFlags, $kindConstant, (keys), "return", (value))>;
-    push @objcOn, "";
-
-    push @objcOff, qq<#define $keyedPrefixKindR(value) \a return (value)>;
-    push @objcOff, qq<#define $keyedCPrefixKindR(value) \a return (value)>;
-    push @objcOff, "";
-
-    for( @objcOnOff ) {
-	push @objcOn, $_;
-	s/#P#/#/;
-	my( $macro, $substitution ) = split(/ *\a */, $_);
-	push @objcOff, length($substitution || '') ? "$macro \a $zero" : defined($macro) ? $macro : '';
-    }
-
-    for( @cOnOff ) {
-	push @cOn, $_;
-	s/#P#/#/;
-	my( $macro, $substitution ) = split(/ *\a */, $_);
-	push @cOff, length($substitution || '') ? "$macro \a $zero" : defined($macro) ? $macro : '';
-    }
-
-    push @c, "", "#if LOGPOINT_ENABLE_${ucKind}", "";
-
-    push @c, "#if __OBJC__", "/* currently no value-detect support for C or CXX - see experimental */";
-    push @c, "", @objcOn;
-    push @c, "", "#endif", "/* __OBJC__ */";
-    push @c, "", @cOn;
-    push @c, "", "#else", "/* ! LOGPOINT_ENABLE_${ucKind} */";
-    push @c, "", "#if __OBJC__", "/* currently no value-detect support for C or CXX - see experimental */";
-    push @c, "", @objcOff;
-    push @c, "", "#endif", "/* __OBJC__ */";
-    push @c, "", @cOff;
-    push @c, "", "#endif", "/* LOGPOINT_ENABLE_${ucKind} */";
-
-    push @c, "", "/* non-keyed variants */";
-
-
-    push @c, qq<#P#define $prefixKindF(fmt, ...) \a $keyedPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
-    push @c, qq<#P#define $cPrefixKindF(fmt, ...) \a $keyedCPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
-    push @c, qq<#P#define $prefixKindN(...) \a $keyedPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
-    push @c, qq<#P#define $cPrefixKindN(...) \a $keyedCPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
-    push @c, qq<#P#define $prefixKindX(value) \a $keyedPrefixKindX(kLogPointKeysNone, (value))>;
-    push @c, qq<#P#define $cPrefixKindX(value) \a $keyedCPrefixKindX(kLogPointKeysNone, (value))>;
-    push @c, qq<#P#define $prefixKindR(value) \a $keyedPrefixKindR(kLogPointKeysNone, (value))>;
-    push @c, qq<#P#define $cPrefixKindR(value) \a $keyedCPrefixKindR(kLogPointKeysNone, (value))>;
-
-    return @c;
-}
-
-sub guts( % ) {
-    my %p = @_;
-
-    my $public = $p{ public } || 0;
-
-    my $count = $p{ count } || 3;
-    my $prefix = $p{ prefix } || 'lp';
-    my $cPrefix = $p{ cPrefix } || ( $prefix . 'c' );
-    my $keyedPrefix = $p{ keyedPrefix } || ( $prefix . 'k' );
-    my $keyedCPrefix = $p{ keyedCPrefix } || ( $keyedPrefix . 'c' );
-    my $kind = $p{ kind} || 'log';
-    my $lcKind  = $p{lcKind} || lc($kind);
-    my $ucKind  = $p{ucKind} || uc($kind);
-    my $ucFirstKind = $p{ucFirstKind} || ucfirst($kind);
-    my $zero = $p{zero} || 'LOGPOINT_ZERO';
-
-    my $kindFlags = $p{ flags } || "LOGPOINT_FLAGS_${ucKind}";
-
-    my $kindConstant = $p{kindConstant} || "kLogPointKind${ucFirstKind}";
-
-    my $prefixKind = "$prefix$lcKind";
-    my $cPrefixKind = "$cPrefix$lcKind";
-
-    my $keyedPrefixKind = "$keyedPrefix$lcKind";
-    my $keyedCPrefixKind = "$keyedCPrefix$lcKind";
-
-    my $prefixKindF = $p{prefixKindF} || "${prefixKind}F"; 
-    my $cPrefixKindF = $p{cPrefixKindF} || "${cPrefixKind}F"; 
-
-    my $keyedPrefixKindF = $p{keyedPrefixKindF} || "${keyedPrefixKind}F"; 
-    my $keyedCPrefixKindF = $p{keyedCPrefixKindF} || "${keyedCPrefixKind}F"; 
-
-    my $prefixKindN = $p{prefixKindN} || "${prefixKind}N"; 
-    my $cPrefixKindN = $p{cPrefixKindN} || "${cPrefixKind}N"; 
-
-    my $keyedPrefixKindN = $p{keyedPrefixKindN} || "${keyedPrefixKind}N"; 
-    my $keyedCPrefixKindN = $p{keyedCPrefixKindN} || "${keyedCPrefixKind}N"; 
-
-    my $prefixKindX = $p{prefixKindX} || "${prefixKind}X"; 
-    my $cPrefixKindX = $p{cPrefixKindX} || "${cPrefixKind}X"; 
-
-    my $keyedPrefixKindX = $p{keyedPrefixKindX} || "${keyedPrefixKind}X"; 
-    my $keyedCPrefixKindX = $p{keyedCPrefixKindX} || "${keyedCPrefixKind}X"; 
-
-    my $prefixKindR = $p{prefixKindR} || "${prefixKind}R"; 
-    my $cPrefixKindR = $p{cPrefixKindR} || "${cPrefixKind}R"; 
-
-    my $keyedPrefixKindR = $p{keyedPrefixKindR} || "${keyedPrefixKind}R"; 
-    my $keyedCPrefixKindR = $p{keyedCPrefixKindR} || "${keyedCPrefixKind}R"; 
-
-    my @c = ();
-
-    my @cOn = ();
-    my @cOff = ();
-    my @cOnOff = ();
-    my @objcOn = ();
-    my @objcOff = ();
-    my @objcOnOff = ();
-
-    my $v = "";
-
-    push @cOnOff, qq<#P#define _$keyedPrefixKindF(flags, kind, keys, label, fmtInfo, fmt, ...) \a LOGPOINT_METHOD_OBJC$v((flags), (kind), (keys), (label), (fmtInfo), (fmt), ## __VA_ARGS__)>;
-    push @cOnOff, qq<#P#define _$keyedCPrefixKindF(flags, kind, keys, label, fmtInfo, fmt, ...) \a LOGPOINT_FUNCTION_C$v((flags), (kind), (keys), (label), (fmtInfo), (fmt), ## __VA_ARGS__)>;
+    push @cOnOff, qq<#P#define _$keyedPrefixKindF(keys, fmt, ...) \a LOGPOINT_METHOD_OBJC$v($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
+    push @cOnOff, qq<#P#define _$keyedCPrefixKindF(keys, fmt, ...) \a LOGPOINT_FUNCTION_C$v($kindFlags, $kindConstant, (keys), kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
     push @cOnOff, "";
 
     my @tmpMeth = ();
@@ -263,28 +133,31 @@ sub guts( % ) {
 	my $inargs = ($i ? ", " : "" ) . join(", ", map { "v$_" } 1 .. $i );
 	my $outargs = ($i ? ", " : "" ) . join(", ", map { ( "#v$_", "(v$_)" ) } 1 .. $i );
 	
-	push @tmpMeth, qq<#define _$keyedPrefixKind$i(flags, kind, keys, label$inargs) \a LOGPOINT_METHOD_OBJC_AUTO_VALUE$i((flags), (kind), (keys), (label)$outargs)>;
-	push @tmpMeth, qq<#define _$keyedCPrefixKind$i(flags, kind, keys, label$inargs) \a LOGPOINT_FUNCTION_C_AUTO_VALUE$i((flags), (kind), (keys), (label)$outargs)>;
+	my $extraFlags = ($i == 0 && $kind eq 'switch' ) ? ' | LOGPOINT_SILENT' : '';
+
+	my $flags = $kindFlags . $extraFlags;
+
+	push @tmpMeth, qq<#define _$keyedPrefixKind$i(keys$inargs) \a LOGPOINT_METHOD_OBJC_AUTO_VALUE$i($flags, $kindConstant, (keys), kLogPointLabelNone$outargs )>;
+	push @tmpFunc, qq<#define _$keyedCPrefixKind$i(keys$inargs) \a LOGPOINT_FUNCTION_C_AUTO_VALUE$i($flags, $kindConstant, (keys), kLogPointLabelNone$outargs )>;
     }
 
     push @objcOnOff, @tmpMeth, "", @tmpFunc, "";
 
-    push @objcOnOff, qq<#P#define _$keyedPrefixKindN(flags, kind, keys, label, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedPrefixKind}OneLessThan, (flags), (kind), (keys), (label), ## __VA_ARGS__)>;
-    push @objcOnOff, qq<#P#define _$keyedCPrefixKindN(flags, kind, keys, label, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedCPrefixKind}OneLessThan, (flags), (kind), (keys), (label), ## __VA_ARGS__)>;
+    push @objcOnOff, qq<#P#define _$keyedPrefixKindN(keys, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedPrefixKind}OneLessThan, (keys), ## __VA_ARGS__)>;
+    push @objcOnOff, qq<#P#define _$keyedCPrefixKindN(keys, ...) \a ER_VARARGS_TO_NONZERO_ARGS(${keyedCPrefixKind}OneLessThan, (keys), ## __VA_ARGS__)>;
     push @objcOnOff, "";
 
 
-    push @objcOn, qq<#P#define _$keyedPrefixKindX(flags, kind, keys, label, value) \a LOGPOINT_METHOD_OBJC_AUTO_EXPR( (flags), (kind), (keys), (label), #value, (value))>;
-    push @objcOn, qq<#P#define _$keyedCPrefixKindX(flags, kind, keys, label, value) \a LOGPOINT_FUNCTION_C_AUTO_EXPR( (flags), (kind), (keys), (label), #value, (value))>;
+    push @objcOn, qq<#P#define _$keyedPrefixKindX(keys, value) \a LOGPOINT_METHOD_OBJC_AUTO_EXPR( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, #value, (value))>;
+    push @objcOn, qq<#P#define _$keyedCPrefixKindX(keys, value) \a LOGPOINT_FUNCTION_C_AUTO_EXPR( $kindFlags, $kindConstant, (keys), kLogPointLabelNone, #value, (value))>;
     push @objcOn, "";
 
-    push @objcOff, qq<#define _$keyedPrefixKindX(flags, kind, keys, label, value) \a (value)>;
-    push @objcOff, qq<#define _$keyedCPrefixKindX(flags, kind, keys, label, value) \a (value)>;
+    push @objcOff, qq<#define _$keyedPrefixKindX(value) \a (value)>;
+    push @objcOff, qq<#define _$keyedCPrefixKindX(value) \a (value)>;
     push @objcOff, "";
 
-    push @objcOn, qq<#P#define _$keyedPrefixKindR(flags, kind, keys, label, value) \a return _$keyedPrefixKindX((flags), (kind), (keys), (label), (value))>;
-    push @objcOn, qq<#P#define _$keyedCPrefixKindR(flags, kind, keys, label, value) \a return _$keyedCPrefixKindX((flags), (kind), (keys), (label), (value))>;
-
+    push @objcOn, qq<#P#define _$keyedPrefixKindR(keys, value) \a return LOGPOINT_METHOD_OBJC_AUTO_EXPR( $kindFlags, $kindConstant, (keys), "return", #value, (value))>;
+    push @objcOn, qq<#P#define _$keyedCPrefixKindR(keys, value) \a return LOGPOINT_FUNCTION_C_AUTO_EXPR( $kindFlags, $kindConstant, (keys), "return", #value, (value))>;
     push @objcOn, "";
 
     push @objcOff, qq<#define _$keyedPrefixKindR(value) \a return (value)>;
@@ -323,6 +196,17 @@ sub guts( % ) {
     push @c, sprintf qq<#define _${keyedPrefixKind}OneLessThan%-2d \a _${keyedPrefixKind}%-2d>, $_+1, $_ for ( 0 .. $count );
 
     push @c, sprintf qq<#define _${keyedCPrefixKind}OneLessThan%-2d \a _${keyedCPrefixKind}%-2d>, $_+1, $_ for ( 0 .. $count );
+
+    push @c, "", "/* non-keyed variants */";
+
+    push @c, qq<#P#define _$prefixKindF(fmt, ...) \a _$keyedPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$cPrefixKindF(fmt, ...) \a _$keyedCPrefixKindF(kLogPointKeysNone, (fmt), ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$prefixKindN(...) \a _$keyedPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$cPrefixKindN(...) \a _$keyedCPrefixKindN(kLogPointKeysNone, ## __VA_ARGS__)>;
+    push @c, qq<#P#define _$prefixKindX(value) \a _$keyedPrefixKindX(kLogPointKeysNone, value)>;
+    push @c, qq<#P#define _$cPrefixKindX(value) \a _$keyedCPrefixKindX(kLogPointKeysNone, value)>;
+    push @c, qq<#P#define _$prefixKindR(value) \a _$keyedPrefixKindR(kLogPointKeysNone, value)>;
+    push @c, qq<#P#define _$cPrefixKindR(value) \a _$keyedCPrefixKindR(kLogPointKeysNone, value)>;
 
     return @c;
 }
@@ -371,11 +255,9 @@ sub public {
 
     for ( @in ) {
 
-	if( m/#P#define\s+(\w+)(.*?)\a(.*)/m ) {
+	if( m/#P#define\s+(\w+).*?\a.*/m ) {
 	    my $private = $1;
 	    my $public = $1;
-	    my $args = $2;
-	    my $subst = $3;
 	    $public =~ s/^_//;
 
 # mapping
@@ -396,9 +278,8 @@ sub public {
 # /mapping
 
 
-#	    $_ = "#define $public \a $private";
-	    $_ = "#define $public$args\a$subst";
-    
+	    $_ = "#define $public \a $private";
+	    
 	    $lastWasPublic = 1;
 
 	    push @out, $_;
@@ -451,16 +332,10 @@ sub main() {
 	push @payload, auto_value($count);
     }
 
-    if ( $guts ) {
-	$name = "guts";
-
-	push @payload, auto_value($count);
-
-	push @payload, "", "/* basic log macros */", "", guts( count => $count, kind => 'log' ), "";
-    }
-
     if ( $template ) {
 	$name = "template";
+
+	push @payload, auto_value($count);
 
 	for my $kind ( split(/\s*,\s*|\s/, $kinds) ) {
 	    push @payload, "", "/* $kind macros */", "", template( count => $count, kind => $kind ), "";
