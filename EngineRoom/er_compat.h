@@ -29,6 +29,11 @@
 
 #import <AvailabilityMacros.h>
 
+#ifdef __OBJC__
+
+#import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
 #define COMPAT_OBJECT_GETCLASS(cls) object_getClass(cls)
 #define COMPAT_CLASS_GETNAME(cls) class_getName(cls)
@@ -45,6 +50,9 @@
 #define COMPAT_CLASS_ISMETACLASS(cls) ( class_isMetaClass ? class_isMetaClass( cls ) : ( cls->info & CLS_META ? YES : NO ) )
 #define COMPAT_CLASS_COPYMETHODLIST(cls, countPtr) ( (class_copyMethodList ? class_copyMethodList : class_copyMethodList_emulation)( (cls), (countPtr) ) )
 #endif
+
+#endif
+/* __OBJC__ */
 
 #endif
 /* __APPLE__ */

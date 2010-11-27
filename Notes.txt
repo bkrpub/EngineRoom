@@ -1,4 +1,20 @@
 
+lplog_vprintf
+
+lplog_printf_rvalue
+
+lplog_printf_return
+
+
+
+
+Uli:
+#if DEBUG
+#define PROPERTY(propName)    NSStringFromSelector(@selector(propName))
+#else
+#define PROPERTY(propName)    @#propName
+#endif
+
 asl support
 key,value
 

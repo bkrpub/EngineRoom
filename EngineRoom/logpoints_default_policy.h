@@ -25,6 +25,11 @@
 
 /* compile time feature enable defaults - make sure that these are always included before logpoints.h */
 
+/* undef'ing this will disable all kinds of logging */
+#ifndef LOGPOINT_ENABLE_LPLOG
+#define LOGPOINT_ENABLE_LPLOG 1
+#endif
+
 #ifndef LOGPOINT_COUNT
 #ifdef LOGPOINT_RELEASE_BUILD
 #define LOGPOINT_COUNT 0
@@ -63,7 +68,7 @@
 
 /* default flag sets */
 
-#define LOGPOINT_FLAGS_DEBUG        ( LOGPOINT_PRIORITIZED | LOGPOINT_DEBUG )
+#define LOGPOINT_FLAGS_DEBUG        ( LOGPOINT_PRIORITIZED | LOGPOINT_DEBUG | LOGPOINT_ACTIVE )
 #define LOGPOINT_FLAGS_INFO         ( LOGPOINT_PRIORITIZED | LOGPOINT_INFO )
 #define LOGPOINT_FLAGS_NOTICE       ( LOGPOINT_PRIORITIZED | LOGPOINT_NOTICE )
 #define LOGPOINT_FLAGS_WARNING      ( LOGPOINT_PRIORITIZED | LOGPOINT_WARNING | LOGPOINT_HARD | LOGPOINT_ACTIVE )

@@ -77,6 +77,13 @@ typedef struct logpoint {
 
 #define LOGPOINT_MAGIC_TEST(lp) (LOGPOINT_MAGIC == (lp).magic && LOGPOINT_EXPECTED_SIZE == (lp).size && LOGPOINT_MAGIC2((lp).line) == (lp).magic2 )
 
+/* logpoint markers */
+#define kLogPointKindNone                   NULL
+#define kLogPointKeysNone                   NULL
+#define kLogPointLabelNone                  NULL
+#define kLogPointFormatNone                 NULL
+#define kLogPointFormatInfoNone             NULL
+
 /* logpoint flags */
 #define LOGPOINT_NOFLAGS                    0           /* for readability */
 

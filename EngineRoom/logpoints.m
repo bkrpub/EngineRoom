@@ -86,7 +86,7 @@ id logPointFormatObjCType(const char *type, void *data, const char *label)
 			} else if( 0 == strncmp(type+1, "CGRect=", 7) ) {
 				ret = NSStringFromCGRect( *(CGRect *) data);
 			} else {
-				ret = [NSString stringWithFormat: @"struct(%s)", type]; break;
+			  ret = [NSString stringWithFormat: @"struct(%s)", type]; break;
 			}
 			break;
 
@@ -152,3 +152,4 @@ id logPointFormatObjCType(const char *type, void *data, const char *label)
 		ret ? ret : [NSString stringWithFormat: @"type not decoded (%s)", type]];
 
 }
+
