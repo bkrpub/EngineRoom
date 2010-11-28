@@ -25,6 +25,8 @@
 
 #include "logpoints_types.h"
 #include "logpoints_private.h"
+#include "logpoints_kinds.h"
+
 
 /* error description from lp_return_t */
 const char *logPointFileNameOnly(LOGPOINT *lpp);
@@ -299,10 +301,11 @@ LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER newEmitter);
 
 #if __OBJC__
 
+/* TESTING NSValue *__cmnsv = [[NSValue alloc] initWithBytes: &__cmv objCType: type]; */ /* NSValue secretly supports 'D'... */
+
 #define LOGPOINT_FORMAT_VALUE(v, label) ({ \
 	__typeof__ (v) __valueToFormat = (v) ; \
 	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
-	/* TESTING NSValue *__cmnsv = [[NSValue alloc] initWithBytes: &__cmv objCType: type]; */ /* NSValue secretly supports 'D'... */ \
 	(logPointFormatObjCType ? logPointFormatObjCType : local_logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
 }) 
 

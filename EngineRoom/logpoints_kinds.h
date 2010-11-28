@@ -20,19 +20,37 @@
  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __LOGPOINTS_DEFAULT_H__
-#define __LOGPOINTS_DEFAULT_H__ 1
+#ifndef __LOGPOINTS_DEFAULT_KINDS_H__
+#define __LOGPOINTS_DEFAULT_KINDS_H__ 1
 
-/* make sure to include the policy first (for ENABLE defines/overrides to work) */
-#include "logpoints_default_policy.h"
+/* the following constants must be declared as char[] to be used in static initializers */
 
-#include "logpoints_default_macros.h"
+/* syslog equivalents */
+LOGPOINT_EXTERN_C(kLogPointKindDebug[],     const char, "DEBUG");
+LOGPOINT_EXTERN_C(kLogPointKindInfo[],      const char, "INFO");
+LOGPOINT_EXTERN_C(kLogPointKindNotice[],    const char, "NOTICE");
+LOGPOINT_EXTERN_C(kLogPointKindWarning[],   const char, "WARNING");
+LOGPOINT_EXTERN_C(kLogPointKindError[],     const char, "ERROR");
+LOGPOINT_EXTERN_C(kLogPointKindCritical[],  const char, "CRITICAL");
+LOGPOINT_EXTERN_C(kLogPointKindAlert[],     const char, "ALERT");
+LOGPOINT_EXTERN_C(kLogPointKindEmergency[], const char, "EMERGENCY");
 
-#include "logpoints_kinds.h"
+LOGPOINT_EXTERN_C(kLogPointKindTrace[],     const char, "TRACE");
 
-/* (?) enabled ?
-#define lplog(fmt, ...)    LOGPOINT_FUNCTION_C( LOGPOINT_NOFLAGS, "lplog", kLogPointKeysNone, kLogPointLabelNone, fmt, ## __VA_ARGS__ ) 
-*/
+LOGPOINT_EXTERN_C(kLogPointKindNote[],      const char, "NOTE");
+LOGPOINT_EXTERN_C(kLogPointKindFixMe[],     const char, "FIXME");
+LOGPOINT_EXTERN_C(kLogPointKindToDo[],      const char, "TODO");
+
+LOGPOINT_EXTERN_C(kLogPointKindSwitch[],    const char, "SWITCH");
+
+LOGPOINT_EXTERN_C(kLogPointKindAssert[],    const char, "ASSERT");
+
+
+#define kLogPointKindNone	NULL
+#define kLogPointKeysNone	NULL
+#define kLogPointLabelNone	NULL
+#define kLogPointFormatNone	NULL
+#define kLogPointFormatInfoNone NULL
 
 #endif
 /* __LOGPOINTS_DEFAULT_H__ */

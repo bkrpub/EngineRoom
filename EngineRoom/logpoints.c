@@ -25,7 +25,8 @@
 //#define SELF_TRACE(fmt, ...) fprintf(stderr, "TRC: "##fmt##"\n", __VA_ARGS__) 
 #define SELF_TRACE(fmt, ...) /**/
 
-#include "logpoints.h"
+#include "logpoints_api.h"
+
 #include "er_compat.h"
 
 #ifdef __APPLE_CC__

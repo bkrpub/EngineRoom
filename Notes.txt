@@ -1,4 +1,29 @@
 
+lplog_vprintf
+
+lplog_printf_rvalue
+
+lplog_printf_return
+
+
+
+
+Uli:
+#if DEBUG
+#define PROPERTY(propName)    NSStringFromSelector(@selector(propName))
+#else
+#define PROPERTY(propName)    @#propName
+#endif
+
+asl support
+key,value
+
+threading
+lock for single handle? - hmm
+
+
+cpp -MM Makefile gen
+
 check what happens if more args than auto macros
 
 clock macros util_watch
@@ -53,6 +78,7 @@ format string for composer
 
 how to handle assertions?
 log first? then assertion handler?
+switch assertions to errors
 
 embed without linkage (i.e. AFCache)
 Weak Linkage? @loader_path... @executable_path...

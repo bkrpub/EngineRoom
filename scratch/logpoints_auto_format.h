@@ -20,19 +20,27 @@
  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __LOGPOINTS_DEFAULT_H__
-#define __LOGPOINTS_DEFAULT_H__ 1
+#ifndef __LOGPOINTS_AUTO_FORMAT_H__
+#define __LOGPOINTS_AUTO_FORMAT_H__ 1
 
-/* make sure to include the policy first (for ENABLE defines/overrides to work) */
-#include "logpoints_default_policy.h"
+#if __OBJC__
 
-#include "logpoints_default_macros.h"
+/* TESTING NSValue *__cmnsv = [[NSValue alloc] initWithBytes: &__cmv objCType: type]; */ /* NSValue secretly supports 'D'... */
 
-#include "logpoints_kinds.h"
+#define LOGPOINT_FORMAT_VALUE(v, label) ({ \
+	__typeof__ (v) __valueToFormat = (v) ; \
+	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
+	(logPointFormatObjCType ? logPointFormatObjCType : local_logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
+}) 
 
-/* (?) enabled ?
-#define lplog(fmt, ...)    LOGPOINT_FUNCTION_C( LOGPOINT_NOFLAGS, "lplog", kLogPointKeysNone, kLogPointLabelNone, fmt, ## __VA_ARGS__ ) 
-*/
+/* 
+ * internal helper function in logpoints.m, returns autoreleased string describing the @encode type at *data
+ */ 
+id logPointFormatObjCType(const char *type, void *data, const char *label) __attribute__((weak_import));
 
 #endif
-/* __LOGPOINTS_DEFAULT_H__ */
+/* __OBJC__ */
+
+#endif 
+/* __LOGPOINTS_AUTO_FORMAT_H__ */
+
