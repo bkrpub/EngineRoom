@@ -118,6 +118,9 @@
 	@param label compile-time constant char pointer, extra label to decorate the message with
 */	
 
+/* clang doesn't like it if we don't use the result of ({ }) expressions - and I found no way to #pragma it away */
+static inline LOGPOINT *logPointReturnFromMacro( LOGPOINT *lpp ) { return lpp; }
+
 #define LOGPOINT_CREATE(flags, kind, keys, label, langspec1, langspec2, formatInfo, fmt, ...) ({ \
         LOGPOINT_LOCAL_LABEL_DECLARATION /* must come first - see gcc docs */ \
         static LOGPOINT lplogpoint LOGPOINT_SECTION_ATTRIBUTE = \
@@ -125,11 +128,13 @@
 	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, (label), (formatInfo) ?: ( (fmt) ? #fmt ", " #__VA_ARGS__ : NULL ), NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
         LOGPOINT_LOCAL_LABEL_CREATE /* after the static - or gcc 4.0.1 will crash */ \
         LOGPOINT_INCREMENT_COUNTER; \
+	LOGPOINT *__lpResult = NULL;	\
         if( LOGPOINT_IS_ACTIVE(lplogpoint) ) { \
-			LOGPOINT_INVOKE(&lplogpoint, langspec1, langspec2, fmt, ## __VA_ARGS__); \
+	   LOGPOINT_INVOKE(&lplogpoint, langspec1, langspec2, fmt, ## __VA_ARGS__); \
+	   __lpResult = &lplogpoint; /* non-NULL return signifies an active logpoint */ \
         } \
-		LOGPOINT_IS_ACTIVE(lplogpoint); /* return value - to be able to detect logpoint activeness in code */ \
-})
+	logPointReturnFromMacro( __lpResult );	\
+    })
 
 
 /* functions used by the logpoints */

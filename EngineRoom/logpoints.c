@@ -121,6 +121,7 @@ SELF_TRACE("invoker8");
 
 
   if( LOGPOINT_IS_ASSERT(*lpp) ) {
+#if DEPRECATED_ASSERTION_HANDLING
 #ifdef __OBJC__    
     if( LOGPOINT_IS_OBJC(*lpp) ) {
       [[NSAssertionHandler currentHandler] handleFailureInMethod: (SEL)langspec2 object: (id)langspec1 file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int) lpp->line description: @"%@", msg];
@@ -131,6 +132,7 @@ SELF_TRACE("invoker8");
     abort();
 #else
     abort();
+#endif
 #endif
   }
 SELF_TRACE("invoker9");      
