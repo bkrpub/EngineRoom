@@ -1,5 +1,25 @@
+# xcode noise
+build
 *.pbxuser
-*.perspectivev*
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# xcode 4
+xcuserdata
+*.xcworkspace
+
+# SVN directories
+.svn
+
+# osx noise
+.DS_Store
+profile
+
+# emacs noise
 *~
 *#
+\#*
 
+# vi noise 
+.*.swp
