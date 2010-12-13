@@ -1,4 +1,7 @@
 
+NSError detect in format objc value
+debugDescription?
+
 lplog_vprintf
 
 lplog_printf_rvalue
