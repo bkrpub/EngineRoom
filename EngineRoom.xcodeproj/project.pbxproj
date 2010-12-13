@@ -74,7 +74,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 0422136811FF5B5F0011C415 /* Build configuration list for PBXProject "EngineRoom" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0422136311FF5B5F0011C415;
 			projectDirPath = "";
 			projectReferences = (

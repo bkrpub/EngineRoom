@@ -27,10 +27,10 @@
 #include "logpoints_private.h"
 #include "logpoints_kinds.h"
 
-#define LOGPOINTS_EXPORT __attribute__((visibility("default")))
-#define LOGPOINTS_HIDDEN __attribute__((visibility("hidden")))
-#define LOGPOINTS_WEAK   __attribute__((visibility("weak_import")))
-#define LOGPOINTS_USED   __attribute__((visibility("used")))
+#define LOGPOINTS_EXPORT /* __attribute__((visibility("default"))) */
+#define LOGPOINTS_HIDDEN /* __attribute__((visibility("hidden"))) */
+#define LOGPOINTS_WEAK   /* __attribute__((visibility("weak_import"))) */
+#define LOGPOINTS_USED   /* __attribute__((visibility("used"))) */
 
 
 #ifdef __cplusplus
@@ -110,11 +110,92 @@ LOGPOINTS_EXPORT int logPointPriorityNumberFromName(const char *name);
  *
  */
 
-#warning local client test
-  
-LOGPOINTS_HIDDEN LOGPOINTS_USED LOGPOINT_INVOKER_DECLARATION(local_logPointInvokerDefault)
+/*
+ * all code that uses or declares these types must be compiled in the same language
+ */
+#ifdef __OBJC__
+typedef CFStringRef LOGPOINT_MESSAGE_TYPE;
+#define LOGPOINT_MESSAGE_FORMAT "%@"
+#define LOGPOINT_MESSAGE_EMPTY  CFSTR("")
+#else
+typedef char *LOGPOINT_MESSAGE_TYPE;
+#define LOGPOINT_MESSAGE_FORMAT "%s"
+#define LOGPOINT_MESSAGE_EMPTY  ""
+#endif
+
+/*
+ * this is the first function invoked by a logpoint, full control, all responsibilities yours
+ * if you don't care about ObjC, you can assume that "fmt" is const char *, otherwise it is
+ * LOGPOINT_FLAG(*lpp, LOGPOINT_NSSTRING) ? CFStringRef : const char *
+ */
+typedef lp_return_t (*LOGPOINT_INVOKER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...);
+#define LOGPOINT_INVOKER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...)
+
+LOGPOINTS_EXPORT LOGPOINT_INVOKER_DECLARATION(logPointInvokerDefault);
+LOGPOINTS_EXPORT LOGPOINTS_WEAK LOGPOINT_INVOKER logPointGetInvoker(void);
+LOGPOINTS_EXPORT LOGPOINT_INVOKER logPointSetInvoker(LOGPOINT_INVOKER newInvoker);
+
+
+/*
+ * payload is the result of the users "fmt", ... arguments
+ * if the ObjC version (logpoints.m) is used, payload is a CFStringRef, otherwise a const char *
+ */
+typedef lp_return_t (*LOGPOINT_COMPOSER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, LOGPOINT_MESSAGE_TYPE payload);
+
+#define LOGPOINT_COMPOSER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, LOGPOINT_MESSAGE_TYPE payload)
+
+LOGPOINTS_EXPORT LOGPOINT_COMPOSER_DECLARATION(logPointComposerDefault);
+LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointGetComposer(void);
+LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointSetComposer(LOGPOINT_COMPOSER newComposer);
+
+/*
+ * the composer will call the emitter with a format string and arguments decorating
+ * the message produced by the invoker with metadata like location in source etc.
+ */
+typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...);
+
+#define LOGPOINT_EMITTER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...)
+
+LOGPOINTS_EXPORT LOGPOINT_EMITTER_DECLARATION(logPointEmitterDefault);
+LOGPOINTS_EXPORT LOGPOINT_EMITTER logPointGetEmitter(void);
+LOGPOINTS_EXPORT LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER newEmitter);
+
+
+
+
+#if __OBJC__
+
+/* TESTING NSValue *__cmnsv = [[NSValue alloc] initWithBytes: &__cmv objCType: type]; */ /* NSValue secretly supports 'D'... */
+
+#ifdef LOCAL_CLIENT
+#define LOGPOINT_FORMAT_VALUE(v, label) ({ \
+	__typeof__ (v) __valueToFormat = (v) ; \
+	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
+	(logPointFormatObjCType ? logPointFormatObjCType : local_logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
+}) 
+#else
+#define LOGPOINT_FORMAT_VALUE(v, label) ({ \
+	__typeof__ (v) __valueToFormat = (v) ; \
+	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
+	(logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
+}) 
+#endif
+
+/* 
+ * internal helper function in logpoints.m, returns autoreleased string describing the @encode type at *data
+ */ 
+LOGPOINTS_EXPORT LOGPOINTS_WEAK id logPointFormatObjCType(const char *type, void *data, const char *label);
+
+#endif
+
+#if LOCAL_CLIENT
+static LOGPOINTS_HIDDEN LOGPOINTS_USED LOGPOINT_INVOKER_DECLARATION(local_logPointInvokerDefault)
 {
+#ifdef MAINTAINER_WARNINGS
+#warning local client test
 #warning no non-objc support
+#endif  
+
 	va_list args;
 	va_start(args, fmt);
 	
@@ -134,13 +215,13 @@ LOGPOINTS_HIDDEN LOGPOINTS_USED LOGPOINT_INVOKER_DECLARATION(local_logPointInvok
 	[msg release];
 
 	va_end(args);
-	return ;
+	return LOGPOINT_YES;
 }
 
 /* ObjC ! */
 #import "CrossPlatform_NSString_CGGeometry.h"
 
-LOGPOINTS_HIDDEN LOGPOINTS_USED local_logPointFormatObjCType(const char *type, void *data, const char *label) 
+static LOGPOINTS_HIDDEN LOGPOINTS_USED id local_logPointFormatObjCType(const char *type, void *data, const char *label) 
 {
 	if( NULL == type ) 
 		return @"NILTYPE";
@@ -266,78 +347,10 @@ LOGPOINTS_HIDDEN LOGPOINTS_USED local_logPointFormatObjCType(const char *type, v
 
 }
 
-
-
-
-/*
- * all code that uses or declares these types must be compiled in the same language
- */
-#ifdef __OBJC__
-typedef CFStringRef LOGPOINT_MESSAGE_TYPE;
-#define LOGPOINT_MESSAGE_FORMAT "%@"
-#define LOGPOINT_MESSAGE_EMPTY  CFSTR("")
-#else
-typedef char *LOGPOINT_MESSAGE_TYPE;
-#define LOGPOINT_MESSAGE_FORMAT "%s"
-#define LOGPOINT_MESSAGE_EMPTY  ""
 #endif
-
-/*
- * this is the first function invoked by a logpoint, full control, all responsibilities yours
- * if you don't care about ObjC, you can assume that "fmt" is const char *, otherwise it is
- * LOGPOINT_FLAG(*lpp, LOGPOINT_NSSTRING) ? CFStringRef : const char *
- */
-typedef lp_return_t (*LOGPOINT_INVOKER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...);
-#define LOGPOINT_INVOKER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...)
-
-LOGPOINTS_EXPORT LOGPOINT_INVOKER_DECLARATION(logPointInvokerDefault);
-LOGPOINTS_EXPORT LOGPOINTS_WEAK LOGPOINT_INVOKER logPointGetInvoker(void);
-LOGPOINTS_EXPORT LOGPOINT_INVOKER logPointSetInvoker(LOGPOINT_INVOKER newInvoker);
+/* LOCAL_CLIENT */
 
 
-/*
- * payload is the result of the users "fmt", ... arguments
- * if the ObjC version (logpoints.m) is used, payload is a CFStringRef, otherwise a const char *
- */
-typedef lp_return_t (*LOGPOINT_COMPOSER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, LOGPOINT_MESSAGE_TYPE payload);
-
-#define LOGPOINT_COMPOSER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, LOGPOINT_MESSAGE_TYPE payload)
-
-LOGPOINTS_EXPORT LOGPOINT_COMPOSER_DECLARATION(logPointComposerDefault);
-LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointGetComposer(void);
-LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointSetComposer(LOGPOINT_COMPOSER newComposer);
-
-/*
- * the composer will call the emitter with a format string and arguments decorating
- * the message produced by the invoker with metadata like location in source etc.
- */
-typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...);
-
-#define LOGPOINT_EMITTER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...)
-
-LOGPOINTS_EXPORT LOGPOINT_EMITTER_DECLARATION(logPointEmitterDefault);
-LOGPOINTS_EXPORT LOGPOINT_EMITTER logPointGetEmitter(void);
-LOGPOINTS_EXPORT LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER newEmitter);
-
-
-
-
-#if __OBJC__
-
-/* TESTING NSValue *__cmnsv = [[NSValue alloc] initWithBytes: &__cmv objCType: type]; */ /* NSValue secretly supports 'D'... */
-
-#define LOGPOINT_FORMAT_VALUE(v, label) ({ \
-	__typeof__ (v) __valueToFormat = (v) ; \
-	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
-	(logPointFormatObjCType ? logPointFormatObjCType : local_logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
-}) 
-
-/* 
- * internal helper function in logpoints.m, returns autoreleased string describing the @encode type at *data
- */ 
-LOGPOINTS_EXPORT LOGPOINTS_WEAK id logPointFormatObjCType(const char *type, void *data, const char *label);
-
-#endif
 
 #ifdef __cplusplus
 }

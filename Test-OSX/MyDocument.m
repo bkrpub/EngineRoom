@@ -22,25 +22,28 @@
 
 #import "MyDocument.h"
 #import <EngineRoom/EngineRoom.h>
-#import <EngineRoom/logpoints_bk.h>
+#import <EngineRoom/tracer.h>
+#import <EngineRoom/logpoints_default.h>
 
+#define dbug lpdebug
+#define dbug_return return_lpdebug
 
 @implementation MyDocument
 
 - (IBAction) generateWarning: (id) sender
 {
-	lpwarning("interface", "please do not press this (%@) again\n%@", sender, tracerBacktraceAsString(0));
+	lpkwarningf("interface", "please do not press this (%@) again\n%@", sender, tracerBacktraceAsString(0));
 }
 
 - (IBAction) takeTestValueFrom: (id) sender
 {
-	lpdebug("action", "sender: %@", sender);
+	lpkdebugf("action", "sender: %@", sender);
 
 	/*dbug([sender frame]);*/
 
 	NSString *string = [sender stringValue];
 
-	if( lpdebugswitch("action,expandInput", "trying to expand %@", string) ) {
+	if( lpkswitchf("action,expandInput", "trying to expand %@", string) ) {
 		if( [string isEqualToString: @"*"] ) {
 			[sender setStringValue: @"42"];
 		}
@@ -53,7 +56,7 @@
 		dbug([sender doubleValue]);
 		dbug( NSMakeSize(length, length) );
 	} else {
-		lperror("interface,entry", "empty value from %@", sender);
+		lpkerrorf("interface,entry", "empty value from %@", sender);
 	}
 
 

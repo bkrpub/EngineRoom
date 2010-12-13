@@ -41,7 +41,7 @@
 #endif
 
 #ifndef LOGPOINT_ZERO
-#define LOGPOINT_ZERO ({ 0; }) /* logpoints return whether they were triggered */
+#define LOGPOINT_ZERO logPointReturnFromMacro(NULL) /* logpoints return whether they were triggered */
 #endif
 
 #ifdef __linux__
@@ -82,7 +82,11 @@
 #endif
 
 #ifndef LOGPOINT_INVOKE
+#if LOCAL_CLIENT
 #define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( logPointGetInvoker ? logPointGetInvoker() : local_logPointInvokerDefault)((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ )
+#else
+#define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( logPointGetInvoker() )((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ )
+#endif
 #endif
 
 
