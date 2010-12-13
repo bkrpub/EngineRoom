@@ -36,10 +36,8 @@
 		042214181200584D0011C415 /* tracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 042214031200584D0011C415 /* tracer.m */; };
 		0422157B120073E60011C415 /* EngineRoomController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04221579120073E60011C415 /* EngineRoomController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0422157C120073E60011C415 /* EngineRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422157A120073E60011C415 /* EngineRoomController.m */; };
-		042CA7CF1285B394008249C1 /* logpoints_functions.c.h in Headers */ = {isa = PBXBuildFile; fileRef = 042CA7CE1285B394008249C1 /* logpoints_functions.c.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0445B9E312833F3E00CE2063 /* logpoints_nslog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0445B9E212833F3E00CE2063 /* logpoints_nslog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0445BB891284147800CE2063 /* er_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0445BB881284147800CE2063 /* er_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0445BBA61284C2E800CE2063 /* logpoints_auto_value.h in Headers */ = {isa = PBXBuildFile; fileRef = 0445BBA51284C2E800CE2063 /* logpoints_auto_value.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CED912458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED212458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CEDA12458509004FAD1E /* CrossPlatform_Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED312458509004FAD1E /* CrossPlatform_Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CEDB12458509004FAD1E /* CrossPlatform_Images.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED412458509004FAD1E /* CrossPlatform_Images.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,6 +51,9 @@
 		0473D1F31246BEE2004FAD1E /* ERAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473D1F11246BEE2004FAD1E /* ERAboutWindow.xib */; };
 		0473D1F51246BF64004FAD1E /* AboutIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0473D1F41246BF64004FAD1E /* AboutIcon.png */; };
 		0490DD80124D576B0057D874 /* logpoints_default_policy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0490DD7F124D576B0057D874 /* logpoints_default_policy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C4F4FA12A3424E001C825C /* logpoints_base_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F712A3424E001C825C /* logpoints_base_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C4F4FB12A3424E001C825C /* logpoints_default_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F812A3424E001C825C /* logpoints_default_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C4F4FC12A3424E001C825C /* logpoints_kinds.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F912A3424E001C825C /* logpoints_kinds.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -90,10 +91,8 @@
 		042214031200584D0011C415 /* tracer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tracer.m; sourceTree = "<group>"; };
 		04221579120073E60011C415 /* EngineRoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoomController.h; sourceTree = "<group>"; };
 		0422157A120073E60011C415 /* EngineRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoomController.m; sourceTree = "<group>"; };
-		042CA7CE1285B394008249C1 /* logpoints_functions.c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_functions.c.h; sourceTree = "<group>"; };
 		0445B9E212833F3E00CE2063 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
 		0445BB881284147800CE2063 /* er_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_macros.h; sourceTree = "<group>"; };
-		0445BBA51284C2E800CE2063 /* logpoints_auto_value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_auto_value.h; sourceTree = "<group>"; };
 		0473CED212458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_NSString_CGGeometry.h; sourceTree = "<group>"; };
 		0473CED312458509004FAD1E /* CrossPlatform_Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Utilities.h; sourceTree = "<group>"; };
 		0473CED412458509004FAD1E /* CrossPlatform_Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Images.h; sourceTree = "<group>"; };
@@ -107,6 +106,9 @@
 		0473D1F21246BEE2004FAD1E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ERAboutWindow.xib; sourceTree = "<group>"; };
 		0473D1F41246BF64004FAD1E /* AboutIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AboutIcon.png; path = ../Resources/AboutIcon.png; sourceTree = SOURCE_ROOT; };
 		0490DD7F124D576B0057D874 /* logpoints_default_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_policy.h; sourceTree = "<group>"; };
+		04C4F4F712A3424E001C825C /* logpoints_base_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_base_macros.h; sourceTree = "<group>"; };
+		04C4F4F812A3424E001C825C /* logpoints_default_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_macros.h; sourceTree = "<group>"; };
+		04C4F4F912A3424E001C825C /* logpoints_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_kinds.h; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -149,14 +151,6 @@
 				0473D1EE1246BE2B004FAD1E /* ERAboutWindowController.m */,
 			);
 			path = "Sources-OSX";
-			sourceTree = "<group>";
-		};
-		0445BBA41284C2CF00CE2063 /* generated */ = {
-			isa = PBXGroup;
-			children = (
-				0445BBA51284C2E800CE2063 /* logpoints_auto_value.h */,
-			);
-			path = generated;
 			sourceTree = "<group>";
 		};
 		0473CED1124584EA004FAD1E /* CrossPlatform */ = {
@@ -214,7 +208,9 @@
 		08FB77AEFE84172EC02AAC07 /* Sources-Common */ = {
 			isa = PBXGroup;
 			children = (
-				0445BBA41284C2CF00CE2063 /* generated */,
+				04C4F4F712A3424E001C825C /* logpoints_base_macros.h */,
+				04C4F4F812A3424E001C825C /* logpoints_default_macros.h */,
+				04C4F4F912A3424E001C825C /* logpoints_kinds.h */,
 				0473CED1124584EA004FAD1E /* CrossPlatform */,
 				04221579120073E60011C415 /* EngineRoomController.h */,
 				0422157A120073E60011C415 /* EngineRoomController.m */,
@@ -229,7 +225,6 @@
 				042213F81200584D0011C415 /* LogPoint.m */,
 				042213F91200584D0011C415 /* logpoints_api.h */,
 				042213FA1200584D0011C415 /* logpoints_bk.h */,
-				042CA7CE1285B394008249C1 /* logpoints_functions.c.h */,
 				0490DD7F124D576B0057D874 /* logpoints_default_policy.h */,
 				042213FB1200584D0011C415 /* logpoints_default.h */,
 				0445B9E212833F3E00CE2063 /* logpoints_nslog.h */,
@@ -285,7 +280,6 @@
 				042214101200584D0011C415 /* logpoints_default.h in Headers */,
 				0490DD80124D576B0057D874 /* logpoints_default_policy.h in Headers */,
 				0445B9E312833F3E00CE2063 /* logpoints_nslog.h in Headers */,
-				042CA7CF1285B394008249C1 /* logpoints_functions.c.h in Headers */,
 				042214111200584D0011C415 /* logpoints_private.h in Headers */,
 				042214121200584D0011C415 /* logpoints_types.h in Headers */,
 				042214141200584D0011C415 /* logpoints.h in Headers */,
@@ -297,7 +291,9 @@
 				0473CEDE12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.h in Headers */,
 				0473CEE112458BB4004FAD1E /* CrossPlatform_Target.h in Headers */,
 				0473D1EF1246BE2B004FAD1E /* ERAboutWindowController.h in Headers */,
-				0445BBA61284C2E800CE2063 /* logpoints_auto_value.h in Headers */,
+				04C4F4FA12A3424E001C825C /* logpoints_base_macros.h in Headers */,
+				04C4F4FB12A3424E001C825C /* logpoints_default_macros.h in Headers */,
+				04C4F4FC12A3424E001C825C /* logpoints_kinds.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

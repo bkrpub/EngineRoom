@@ -1,0 +1,12 @@
+		lperror("preconditionFail, documentMerge", "error: %@", error);
+				lperror("postConditionFail, documentMerge", "error: %@", error);
+	LPTRACE;
+	LPLog(@"%@", tracerBacktraceAsString(0));
+	LPLog(@"%@", tracerBacktraceAsString(0));
+	if( lpswitch("dictionaryRepresentationDump", NULL) ) {
+	if( lpswitch("dictionaryRepresentationDump", NULL) ) {
+		lperror("preconditionFail, documentAction", "documentCount: %ld targetRow: %ld dragRowIndexes: %@ documents: %@",
+		lperror("postConditionFail, documentAction", "sources: %@ %@ targets: %@ %@",
+	LPTRACE;
+		LPLog(@"un-observing asset %@ %p (pBlob: %@)", [m_representedObject valueForKey: @"name"], m_representedObject, [m_representedObject valueForKey: @"primaryBlob"]);
+		LPLog(@"observing asset %@ %p (pBlob: %@)", [m_representedObject valueForKey: @"name"], m_representedObject, [m_representedObject valueForKey: @"primaryBlob"]);

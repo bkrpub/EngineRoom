@@ -21,9 +21,9 @@
 
   lpdebug(rect, tv);
   
-  NSNumber *argcNumber = lpdebug_value( [NSNumber numberWithInteger: argc] );
+  NSNumber *argcNumber = lpdebug_expr( [NSNumber numberWithInteger: argc] );
  
-  lpwarning_return( argcNumber );
+  return_lpwarning( argcNumber );
 }
 
 @end
@@ -31,9 +31,16 @@
 
 int main(int argc, char **argv) {
 
+  logPointEnableSimple("");
+
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
   lpcdebug(argc, argv, argv[0], *argv[0]);
+
+  LOGPOINT *lp;
+  if( ( lp = lpcassertf(argv[1], "need an argument") ) ) {
+    lpcdebug(lp);
+  }
 
   [Foo barArgc: argc argv: argv];
 

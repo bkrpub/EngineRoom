@@ -7,15 +7,12 @@ our $path = ".";
 
 our $prefix ||= "logpoints";
 our $name ||= "custom";
-
-our $kinds ||= "switch assert trace debug info notice warning error";
-our @kinds = split(/\s+/, $kinds);
-
-our $count ||= 5;
+our $kinds ||= "switch assert debug info notice warning error";
+our $count ||= 3;
 
 our $tabWidth = 0 unless defined $tabWidth;
 
-our $contexts ||= 'c objc';
+our $contexts ||= 'c objc cxx';
 our @contexts = split(/\s+/, $contexts);
 
 our $default_macros ||= 0;
@@ -73,11 +70,6 @@ sub default_macros( $ ) {
 		if( $name = $names->{ printf } ) {
 		    push @cOnOff,    qq<#define $name(${inKeys}fmt, ...) \a ${base}_${ctx}_printf$v($kindFlags, $kindConstant, $outKeys, kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)>;
 		}
-
-		if( $name = $names->{ assert_printf } ) {
-		    push @cOnOff,    qq<#define $name(${inKeys}cond, fmt, ...) \a ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = ${base}_${ctx}_printf$v($kindFlags, $kindConstant, $outKeys, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } __lpRet; })>;
-		}
-
 		
 		if( $name = $names->{ auto_multiple } ) {
 		    push @objcOnOff, qq<#define $name(${inKeys}...) \a ${base}_${ctx}_auto_multiple$v($kindFlags, $kindConstant, $outKeys, kLogPointLabelNone, ## __VA_ARGS__ )>;
@@ -92,6 +84,8 @@ sub default_macros( $ ) {
 		    push @objcOn,    qq<#define $name(${inKeys}value) \a return ${base}_${ctx}_auto_rvalue$v( $kindFlags, $kindConstant, $outKeys, "return", (value) )>, "";
 		    push @objcOff,   qq<#define $name(${inKeys}value) \a return (value)>;
 		}
+
+
 
 		
 		for( @$on, @$off, @$onOff ) {
@@ -227,7 +221,7 @@ sub base_macros( % ) {
 	push @objcOn, qq<#define ${base}_${ctx}_auto_rvalue$v(flags, kind, keys, label, value) \a ({ \\
         __typeof__(value) __lpValueTmp = (value); \\
         id __lpMsg = LOGPOINT_FORMAT_VALUE(__lpValueTmp, kLogPointLabelNone); \\
-        (void) LOGPOINT_CREATE( (flags)$extraFlags, (kind), (keys), (label), $langSpec, #value, "%@", __lpMsg ); \\
+        LOGPOINT_CREATE( (flags)$extraFlags, (kind), (keys), (label), $langSpec, #value, "%@", __lpMsg ); \\
         __lpValueTmp; })>, "";
 
 	push @objcOff, qq<#define ${base}_${ctx}_auto_rvalue$v(flags, kind, keys, label, value) \a (value)>, "";
@@ -273,7 +267,7 @@ sub base_macros( % ) {
     push @c,     "/* ==== PRIVATE PARTS - will change without notice ==== */";
     push @c,     "/* ==================================================== */";
 
-    push @c, "", "/* used by auto-varargs macro ER_VARARGS_TO_NONZERO_ARGS */", "";
+    push @c, "", "/* used by varargs voodoo in ER_VARARGS_TO_NONZERO_ARGS */", "";
 
     push @c, "", @private, "";
 
@@ -360,7 +354,7 @@ sub main() {
 	    # version suffix of macros
 	    v => '_v1',
 	    
-	    kinds => [ @kinds ],
+	    kinds => [ qw( switch assert debug info notice warning error ) ],
 	    
 	    # basename of api macros
 	    base => 'lplog',
@@ -399,7 +393,7 @@ sub main() {
 		'default' => {
 		    printf => 'lp%K%C%Lf',
 		    auto_multiple => 'lp%K%C%L',
-		    auto_rvalue => 'lp%K%C%L_expr',
+		    auto_rvalue => 'lp%K%C%L_value',
 		    auto_return => 'return_lp%K%C%L',
 		},
 		
@@ -409,13 +403,43 @@ sub main() {
 		},
 		
 		'assert' => {
-		    assert_printf => 'lp%K%C%Lf',
-		    #auto_multiple => 'lp%K%C%L',
-		    #auto_rvalue => 'lp%K%C%L_expr',
-		    #auto_return => 'return_lp%K%C%L',
+		    printf => 'lp%K%C%Lf',
+		    auto_multiple => 'lp%K%C%L',
+		    auto_rvalue => 'lp%K%C%L_value',
+		    auto_return => 'return_lp%K%C%L',
 		},
 	    },
 
+	    # not yet used 
+	    'macros' => {
+
+		'' => { # all languages
+		    'printf' => {
+			macro => '$name(${inKeys}fmt, ...)', 
+			on => '${base}_${ctx}_printf$v($kindFlags, $kindConstant, $outKeys, kLogPointLabelNone, kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__)',
+		    },
+		},
+	
+		'__OBJC__' => {
+		    'auto_multiple' => {
+			macro => '$name(${inKeys}...)', 
+			on => '${base}_${ctx}_auto_multiple$v($kindFlags, $kindConstant, $outKeys, kLogPointLabelNone, ## __VA_ARGS__ )',
+		    },
+		    
+		    'auto_rvalue' => {
+			macro => '$name(${inKeys}value)', 
+			on  => '${base}_${ctx}_auto_rvalue$v( $kindFlags, $kindConstant, $outKeys, #value, (value) )',
+			off => '(value)',
+		    },
+		
+		    'auto_return' => {
+			macro => '$name(${inKeys}value)', 
+			on  => 'return ${base}_${ctx}_auto_rvalue$v( $kindFlags, $kindConstant, $outKeys, "return", (value) )',
+			off => 'return (value)',
+		    },
+		},
+	    }, # macros
+	    
 	};
 
 	
