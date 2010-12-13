@@ -139,12 +139,14 @@ SELF_TRACE("invoker9");
 #if MAINTAINER_WARNINGS
 #warning this will leak for assertion exceptions which are catched
 #endif
+
+ if( NULL != msg ) {
 #ifdef __OBJC__
-  if( NULL != msg ) 
     CFRelease( (CFStringRef) msg);
 #else
-  free( msg );
+    free( msg );
 #endif
+ }
 
 SELF_TRACE("invoker10");      
 
@@ -170,7 +172,7 @@ SELF_TRACE("composer1");
     id objcSelf = (id) langspec1;	
     SEL objcCmd = (SEL) langspec2; 
 SELF_TRACE("composer2 = %p\n", object_getClass);      		
-	// using weak symbols
+        /* using weak symbols */
 	Class objcClass = COMPAT_OBJECT_GETCLASS(objcSelf);
     isClassMethod = COMPAT_CLASS_ISMETACLASS( objcClass );
 
