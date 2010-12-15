@@ -1,4 +1,6 @@
 
+RTTI / C++ reflection ? clang... typeinfo
+
 NSError detect in format objc value
 debugDescription?
 
