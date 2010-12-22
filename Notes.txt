@@ -1,4 +1,9 @@
 
+UserDefaults:
+addSuiteNamed: instead of homebrew
+
+PluginLoader
+
 NSError detect in format objc value
 debugDescription?
 
