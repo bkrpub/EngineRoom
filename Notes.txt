@@ -1,4 +1,8 @@
 
+NSUserDefaults logPointFilter does not work if not yet registered (and not set)
+
+retrigger for loaded plugins
+
 UserDefaults:
 addSuiteNamed: instead of homebrew
 
