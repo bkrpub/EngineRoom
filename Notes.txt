@@ -4,6 +4,8 @@ addSuiteNamed: instead of homebrew
 
 PluginLoader
 
+RTTI / C++ reflection ? clang... typeinfo libelf-tc
+
 NSError detect in format objc value
 debugDescription?
 
