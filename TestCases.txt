@@ -1,0 +1,23 @@
+
+void (^globalBlock)(void) = ^(void) { lpcdebug(); }		       		  
+
+void cFunction(DOMCSSRuleList *ruleList)
+{
+	lpcdebug();
+
+	globalBlock();
+
+	void (^cFunctionLocalBlock)(void) = ^(void){ lpcdebug() };
+
+	cFunctionLocalBlock();
+}
+
+- (void) objectiveCMethod
+{
+	lpdebug();
+
+	void (^objectiveCMethodLocalBlock)(void) = ^(void){ lpdebug() };
+
+	objectiveCMethodLocalBlock();
+}
+
