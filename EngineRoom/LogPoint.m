@@ -402,7 +402,13 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 
 - (NSString *) methodTypeAsString
 {
-    return methodType == 0 ? nil : NSSTRINGWRAPPER(raw->function, 1);
+	switch( methodType ) {
+		case 0:   return nil;
+		case '-': return @"-";
+		case '+': return @"+";
+	}
+	
+	return @"?";
 }
 
 - (NSString *) className
