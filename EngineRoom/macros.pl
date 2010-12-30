@@ -11,7 +11,7 @@ our $name ||= "custom";
 our $kinds ||= "switch assert trace debug info notice warning error";
 our @kinds = split(/\s+/, $kinds);
 
-our $count ||= 5;
+our $count ||= 16;
 
 our $tabWidth = 0 unless defined $tabWidth;
 

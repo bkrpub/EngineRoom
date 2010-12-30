@@ -1,0 +1,2 @@
+1.1.7:
+	fixed methodName detection for calls during block invocations

@@ -318,11 +318,16 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
     selectorName = NULL;
     selectorNameLength = 0;
     
-    methodType = raw->function[0];
+	const char *function = raw->function;
+	
+	// __-[ in block invocations
+	const char *methodTypeLocation = ( '_' == function[0] && '_' == function[1] ) ? function + 2 : function;
+		
+    methodType = *methodTypeLocation;
     if( methodType == '+' || methodType == '-' ) {
         char *delim = strchr(raw->function, ' ');
         if( delim != NULL ) {
-            className = raw->function + 2; // +[
+            className = methodTypeLocation + 2; // -[ 
             classNameLength = (size_t) delim - (size_t) className;
 
             char *closing = strchr(delim + 1, ']');
