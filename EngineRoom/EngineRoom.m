@@ -117,6 +117,11 @@ void __attribute__ ((constructor)) engineRoomConstructor(void)
 	return [[self bundle] infoDictionary];
 }
 
+- (NSString *) version
+{
+	return [[self infoDictionary] objectForKey: (id)kCFBundleVersionKey];
+}
+
 - (NSDictionary *) localizedInfoDictionary
 {
 	return [[self bundle] localizedInfoDictionary];

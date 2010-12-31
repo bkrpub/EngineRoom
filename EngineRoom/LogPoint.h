@@ -25,7 +25,10 @@
 #import "logpoints.h"
 
 extern NSString *kLogPointFilterUserDefaultsKey;
+extern NSString *kLogPointFilterVersionUserDefaultsKey;
+
 extern NSString *kLogPointDumpUserDefaultsKey;
+
 
 @interface LogPoint : NSObject
 {
@@ -36,7 +39,7 @@ extern NSString *kLogPointDumpUserDefaultsKey;
 
     size_t kindLength;
     size_t keysLength;
-    size_t functionLength;
+    size_t symbolNameLength;
     size_t fileLength; 
     size_t labelLength; 
     size_t formatInfoLength; 
@@ -57,7 +60,7 @@ extern NSString *kLogPointDumpUserDefaultsKey;
     size_t selectorNameLength;
 }
 
-// called automagically by a constructor function
+// called automagically by a constructor symbolName
 + (BOOL) setup;
 
 + (lp_return_t) setErrorPtr: (NSError **) outError withCode: (lp_return_t) code userInfo: (NSDictionary *) userInfo;
@@ -85,15 +88,17 @@ extern NSString *kLogPointDumpUserDefaultsKey;
 - (NSString *) commaSeparatedKeys;
 - (NSArray *) keys;
 
-- (NSString *) function;
+- (NSString *) symbolName;
 
 - (unichar) methodType;
 - (NSString *) methodTypeAsString;
 - (NSString *) className;
 - (NSString *) selectorName;
 - (NSString *) selectorNameWithTypePrefix;
-- (NSString *) functionOrSelectorName;
-- (NSString *) functionOrSelectorNameWithTypePrefix;
+- (NSString *) symbolNameOrSelectorName;
+
+- (NSString *) symbolNameOrSelectorNameForDisplay;
+- (NSString *) symbolNameOrSelectorNameWithTypePrefixForDisplay;
 
 - (NSString *) sourcePath;
 - (NSString *) sourceFileName;

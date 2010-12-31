@@ -105,7 +105,10 @@
 	if( 0 > [LogPoint enableOnlyLogPointsMatchingFilterString: filter error: &error] ) {
 		[self presentModalError: error];		
 	} else {
+		NSString *version = [[NSBundle bundleForClass: [LogPoint class]] valueForKeyPath: @"infoDictionary.CFBundleShortVersionString"];
+		
 		[[NSUserDefaults standardUserDefaults] setValue: filter forKey: kLogPointFilterUserDefaultsKey];
+		[[NSUserDefaults standardUserDefaults] setValue: version forKey: kLogPointFilterVersionUserDefaultsKey];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 }

@@ -126,7 +126,7 @@ SELF_TRACE("invoker8");
     if( LOGPOINT_IS_OBJC(*lpp) ) {
       [[NSAssertionHandler currentHandler] handleFailureInMethod: (SEL)langspec2 object: (id)langspec1 file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int) lpp->line description: @"%@", msg];
     } else {
-      [[NSAssertionHandler currentHandler] handleFailureInFunction: [NSString stringWithUTF8String: lpp->function] file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int)lpp->line description: @"%@", msg];
+      [[NSAssertionHandler currentHandler] handleFailureInFunction: [NSString stringWithUTF8String: lpp->symbolName] file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int)lpp->line description: @"%@", msg];
     }
     fprintf(stderr, "Unexpected return from assertion handler\n");
     abort();
@@ -181,7 +181,7 @@ SELF_TRACE("composer3 = %p\n", object_getClassName);
     className = object_getClassName(objcSelf);
 
 SELF_TRACE("composer4 = %p\n", sel_getName);      		
-    methodName = objcCmd ? sel_getName(objcCmd) : lpp->function;
+    methodName = objcCmd ? sel_getName(objcCmd) : lpp->symbolName;
     
     char _instanceInfo[sizeof("0x0123456789abcdef:0123456789")];
     
@@ -202,7 +202,7 @@ SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());
 				    className ? (isClassMethod ? "+[" : "-[") : "", 
 				    className ? className : "", 
 				    className ? " " : "", 
-				    methodName ? methodName : lpp->function, 
+				    methodName ? methodName : lpp->symbolName, 
 				    className ? "]" : "",
 				    instanceInfo ? instanceInfo : "",
 				    instanceInfo ? " " : "",
@@ -210,7 +210,7 @@ SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());
 				    "",
 				    "",
 				    "",
-				    lpp->function,
+				    lpp->symbolName,
 				    "", 
 				    "",
 				    "",
@@ -363,7 +363,7 @@ lp_return_t logPointActionDump(LOGPOINT *lpp, void *actionInfo UTIL_UNUSED)
 	fprintf(stderr, "LOGPOINT: %s %s%s%s%s %s:%llu %s %p %s %.*s\n", 
 		LOGPOINT_IS_ACTIVE(*lpp) ? "ON " : "OFF", 
 		lpp->kind, *keys ? " [" : "", keys, *keys ? "]" : "", 
-		file, (unsigned long long)lpp->line, lpp->function, lpp->address, 
+		file, (unsigned long long)lpp->line, lpp->symbolName, lpp->address, 
 		lpp->label ? lpp->label : "-", formatInfoLen, lpp->formatInfo ? lpp->formatInfo : "-");
 
 	return LOGPOINT_RETURN_OK;
@@ -452,7 +452,7 @@ lp_return_t logPointApplyToData(const char *imageName, LOGPOINT *logpts, size_t 
         if( LOGPOINT_IS_BROKEN(*logpts) ) {
             ++brokenLogPoints;
             fprintf(stderr, "logpoints: broken logpoint in %s - %s:%llu",
-                    logpts->function, logpts->file, (unsigned long long)logpts->line);
+                    logpts->symbolName, logpts->file, (unsigned long long)logpts->line);
         }
 		
         ++nread;

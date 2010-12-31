@@ -51,7 +51,7 @@ typedef struct logpoint {
     lp_uint_t size;
     const char *kind;
     const char *keys;
-    const char *function;
+    const char *symbolName;
     const char *file;
     lp_uint_t line;
     lp_uint_t flags;

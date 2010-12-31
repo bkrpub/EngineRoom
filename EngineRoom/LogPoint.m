@@ -22,14 +22,18 @@
 
 #import "LogPoint.h"
 
-#import "logpoints_bk.h"
+#import "logpoints_default.h"
 
 NSString *kLogPointFilterUserDefaultsKey = @"logPointFilter";
+NSString *kLogPointFilterVersionUserDefaultsKey = @"logPointFilterVersion";
+
 NSString *kLogPointDumpUserDefaultsKey = @"logPointDump";
 
+static const char blockInvokeMarker[] = "_block_invoke_";
+
 #if ! MAINTAINER_WARNINGS
-#undef lpkwarningf
-#define lpkwarningf(keys, fmt, ...) /**/
+//#undef lpkwarningf
+//#define lpkwarningf(keys, fmt, ...) /**/
 #endif
 
 #import <stdlib.h>
@@ -180,7 +184,7 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
     }
  
 	if( [textualRep rangeOfString: @"%"].location != NSNotFound ) {
-		lpkwarningf("filtering", "textual representation '%@' contains a %% character - not supported - ignoring", textual);
+		lpkwarningf("filtering", "textual representation '%@' contains a %% character - not supported - ignoring", textualRep);
 		[self setErrorPtr: outError withCode: LOGPOINT_RETURN_BAD_FILTER userInfo: 
 		 [NSDictionary dictionaryWithObject: NSLocalizedString(@"% not supported in filter string - ignored", @"") forKey: NSLocalizedFailureReasonErrorKey]];
 		return nil;
@@ -211,7 +215,7 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 					format = @"kind CONTAINS '%@'";
 					break;
 				case ':':
-					format = @"functionOrSelectorName BEGINSWITH '%@'";
+					format = @"symbolNameOrSelectorNameForDisplay BEGINSWITH '%@'";
 					break;
 				case '@':
 					format = @"className BEGINSWITH '%@'";
@@ -302,7 +306,6 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 
     kindLength = 0;
     keysLength = 0;
-    functionLength = 0;
     fileLength = 0;
 
     fileName = NULL;
@@ -318,14 +321,15 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
     selectorName = NULL;
     selectorNameLength = 0;
     
-	const char *function = raw->function;
+	const char *symbolName = raw->symbolName ? raw->symbolName : "NULL - BUG";
+	symbolNameLength = strlen(symbolName);
 	
 	// __-[ in block invocations
-	const char *methodTypeLocation = ( '_' == function[0] && '_' == function[1] ) ? function + 2 : function;
+	const char *methodTypeLocation = ( '_' == symbolName[0] && '_' == symbolName[1] ) ? symbolName + 2 : symbolName;
 		
     methodType = *methodTypeLocation;
     if( methodType == '+' || methodType == '-' ) {
-        char *delim = strchr(raw->function, ' ');
+        char *delim = strchr(raw->symbolName, ' ');
         if( delim != NULL ) {
             className = methodTypeLocation + 2; // -[ 
             classNameLength = (size_t) delim - (size_t) className;
@@ -390,9 +394,9 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 }
 
 
-- (NSString *) function
+- (NSString *) symbolName
 {
-    return SIMPLEWRAPPER(function);
+    return SIMPLEWRAPPER(symbolName);
 }
 
 - (unichar) methodType
@@ -418,24 +422,73 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 
 - (NSString *) selectorName
 {
-    return methodType == 0 ? nil : NSSTRINGWRAPPER(selectorName, selectorNameLength);
+    return 0 == methodType ? nil : NSSTRINGWRAPPER(selectorName, selectorNameLength);
 }
 
 - (NSString *) selectorNameWithTypePrefix
 {
-    return methodType == 0 ? nil : [[[self methodTypeAsString] stringByAppendingString: @" "] 
+    return 0 == methodType ? nil : [[[self methodTypeAsString] stringByAppendingString: @" "] 
 		stringByAppendingString: NSSTRINGWRAPPER(selectorName, selectorNameLength)];
 }
 
-- (NSString *) functionOrSelectorName
+- (NSString *) symbolNameOrSelectorName
 {
-    return methodType == 0 ? [self function] : [self selectorName];
+    return 0 == methodType ? [self symbolName] : [self selectorName];
 }
 
-- (NSString *) functionOrSelectorNameWithTypePrefix
+- (NSString *) symbolNameOrSelectorNameWithTypePrefixForDisplay
 {
-    return methodType == 0 ? [self function] : [self selectorNameWithTypePrefix];
+	NSString *type = [self methodTypeAsString];
+	NSString *displayName = [self symbolNameOrSelectorNameForDisplay];
+	return nil == type ? displayName : [[type stringByAppendingString: @" "] stringByAppendingString: displayName];
 }
+
+- (NSString *) symbolNameOrSelectorNameForDisplay
+{ 
+	NSString *formatted = nil;
+	
+	const char *baseSymbolName = raw->symbolName;
+	size_t baseSymbolLength = symbolNameLength;
+	
+	const char *blockInvokeStart = NULL;
+	size_t blockInvokeLength = 0;
+	
+	// __PRETTY_FUNCTION__ for logpoints in blocks:
+	// __global_block_\d
+	// __global_block_\d+_block_invoke_\d+
+	// __cfunction_block_invoke_\d+
+	// __-[Class(Category) selector]_block_invoke_
+	
+	if( '_' == baseSymbolName[0] && '_' == baseSymbolName[1] ) {
+	   blockInvokeStart = strstr(raw->symbolName, blockInvokeMarker);
+		if( NULL != blockInvokeStart ) {
+			blockInvokeLength = strlen( blockInvokeStart );
+			baseSymbolName += 2; // skip __
+			baseSymbolLength -= ( 2 + blockInvokeLength );
+		}
+	}
+	
+	switch (methodType) {
+		case 0: 
+			formatted = NSSTRINGWRAPPER(baseSymbolName, baseSymbolLength);
+			break;
+		case '+':
+		case '-':
+			formatted = [self selectorName];
+			break;
+			
+		default:
+			return [NSString stringWithFormat: @"? methodType 0x%02x '%s'", methodType, [self symbolName]];
+	}
+
+	if( 0 != blockInvokeLength ) {
+		formatted = [formatted stringByAppendingString: @" ^"];
+		formatted = [formatted stringByAppendingString: [NSString stringWithUTF8String: blockInvokeStart + sizeof(blockInvokeMarker) - 1]];
+	}
+		
+	return formatted;
+}
+
 
 - (NSString *) sourcePath
 {

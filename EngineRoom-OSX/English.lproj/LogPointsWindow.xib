@@ -11,7 +11,7 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="342"/>
+			<integer value="345"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -232,7 +232,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Selector / Function</string>
+														<string key="NSContents">Selector / Symbol</string>
 														<reference key="NSSupport" ref="26"/>
 														<object class="NSColor" key="NSBackgroundColor">
 															<int key="NSColorSpace">3</int>
@@ -639,7 +639,7 @@
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSSearchFieldCell" key="NSCell" id="602057669">
 								<int key="NSCellFlags">343014976</int>
-								<int key="NSCellFlags2">268436544</int>
+								<int key="NSCellFlags2">268436480</int>
 								<string key="NSContents"/>
 								<reference key="NSSupport" ref="1039595411"/>
 								<string key="NSPlaceholderString">Search</string>
@@ -723,6 +723,10 @@
 					<string>label</string>
 					<string>selectorNameWithTypePrefix</string>
 					<string>functionOrSelectorNameWithTypePrefix</string>
+					<string>displayFunction</string>
+					<string>symbolNameForDisplay</string>
+					<string>symbolNameOrSelectorNameWithTypePrefixForDisplay</string>
+					<string>symbolNameOrSelectorNameForDisplay</string>
 				</array>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -1110,26 +1114,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: arrangedObjects.functionOrSelectorNameWithTypePrefix</string>
-						<reference key="source" ref="803062204"/>
-						<reference key="destination" ref="30129252"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="803062204"/>
-							<reference key="NSDestination" ref="30129252"/>
-							<string key="NSLabel">value: arrangedObjects.functionOrSelectorNameWithTypePrefix</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">arrangedObjects.functionOrSelectorNameWithTypePrefix</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSConditionallySetsEditable</string>
-								<boolean value="YES" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">612</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">predicate: filterPredicate</string>
 						<reference key="source" ref="5302208"/>
 						<reference key="destination" ref="30129252"/>
@@ -1141,12 +1125,32 @@
 							<string key="NSKeyPath">filterPredicate</string>
 							<dictionary key="NSOptions">
 								<string key="NSDisplayName">predicate</string>
-								<string key="NSPredicateFormat">functionOrSelectorName CONTAINS[c] $value or className CONTAINS[c] $value or formatInfo CONTAINS[c] $value or ANY keys CONTAINS[c] $value or kind CONTAINS[c] $value or label CONTAINS[c] $value</string>
+								<string key="NSPredicateFormat">symbolNameOrSelectorName CONTAINS[c] $value or className CONTAINS[c] $value or formatInfo CONTAINS[c] $value or ANY keys CONTAINS[c] $value or kind CONTAINS[c] $value or label CONTAINS[c] $value</string>
 							</dictionary>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">620</int>
+					<int key="connectionID">623</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: arrangedObjects.symbolNameOrSelectorNameWithTypePrefixForDisplay</string>
+						<reference key="source" ref="803062204"/>
+						<reference key="destination" ref="30129252"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="803062204"/>
+							<reference key="NSDestination" ref="30129252"/>
+							<string key="NSLabel">value: arrangedObjects.symbolNameOrSelectorNameWithTypePrefixForDisplay</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">arrangedObjects.symbolNameOrSelectorNameWithTypePrefixForDisplay</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSConditionallySetsEditable</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">626</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1514,9 +1518,9 @@
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="-3.ImportedFromIB2"/>
-				<string key="342.IBEditorWindowLastContentRect">{{35, 222}, {982, 502}}</string>
+				<string key="342.IBEditorWindowLastContentRect">{{22, 210}, {982, 502}}</string>
 				<string key="342.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="342.IBWindowTemplateEditedContentRect">{{35, 222}, {982, 502}}</string>
+				<string key="342.IBWindowTemplateEditedContentRect">{{22, 210}, {982, 502}}</string>
 				<boolean value="YES" key="342.ImportedFromIB2"/>
 				<boolean value="YES" key="342.windowTemplate.hasMinSize"/>
 				<string key="342.windowTemplate.minSize">{480, 300}</string>
@@ -1651,7 +1655,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">620</int>
+			<int key="maxID">626</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
