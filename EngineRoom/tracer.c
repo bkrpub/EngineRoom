@@ -477,10 +477,11 @@ tracerSymbolStoreShow( TRACER_SYMBOL_STORE *store )
 				  (void*)store,
 				  (unsigned long int)store->symbols_size,
 				  (unsigned long int)store->symbols_capacity,
-				  (unsigned long int)store->symbols_capacity * sizeof(*store->symbols) / 1024UL,
-				  (unsigned long int)store->strtab_capacity / 1024UL,
-				  ((unsigned long int)store->strtab_size + (unsigned long int)store->symbols_capacity * sizeof(*store->symbols)) / 1024UL);
-	
+				  (unsigned long int)store->symbols_capacity * (unsigned long int)sizeof(*store->symbols) / 1024UL,
+				  (unsigned long int) (store->strtab_capacity / 1024),
+				  ((unsigned long int)store->strtab_size + (unsigned long int)store->symbols_capacity * (unsigned long int)sizeof(*store->symbols)) / 1024UL
+				  );
+
 	return TRACER_SUCCESS;
 }
 
