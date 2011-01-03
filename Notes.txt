@@ -1,4 +1,6 @@
 
+Flags: TERSE VERBOSE ... (include what?) format ?
+
 NSUserDefaults logPointFilter does not work if not yet registered (and not set)
 
 retrigger for loaded plugins
@@ -30,7 +32,7 @@ Uli:
 #endif
 
 asl support
-key,value
+key,value -> keys  a=b,...
 
 threading
 lock for single handle? - hmm
