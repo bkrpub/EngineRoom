@@ -1,4 +1,6 @@
 
+userData ( think switch on a specific value )
+
 CFPlugin
 
 Flags: TERSE VERBOSE ... (include what?) format ?
