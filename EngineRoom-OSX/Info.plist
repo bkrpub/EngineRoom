@@ -17,11 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.9b01</string>
+	<string>1.1.9r01</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>0110.90.1</string>
+	<key>Bundle version documentation</key>
+	<string>MMmf.fr.r</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>
