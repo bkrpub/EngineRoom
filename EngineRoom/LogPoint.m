@@ -32,8 +32,8 @@ NSString *kLogPointDumpUserDefaultsKey = @"logPointDump";
 static const char blockInvokeMarker[] = "_block_invoke_";
 
 #if ! MAINTAINER_WARNINGS
-//#undef lpkwarningf
-//#define lpkwarningf(keys, fmt, ...) /**/
+#undef lpkwarningf
+#define lpkwarningf(keys, fmt, ...) /**/
 #endif
 
 #import <stdlib.h>
@@ -66,6 +66,31 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
     return LOGPOINT_RETURN_OK;
 }
 
+#if MAINTAINER_WARNINGS
+#warning should merge with EngineRoom.m
+#endif
++ (id) configurationValueForKey: (NSString *) key
+{
+    static NSUserDefaults *defaults = nil;
+	static NSDictionary *infoDictionary = nil;
+	
+	if( nil == defaults ) {
+		defaults = [[NSUserDefaults standardUserDefaults] retain];
+	}
+	
+	id value = [defaults valueForKey: key];
+	
+	if( nil == value ) {
+		if( nil == infoDictionary ) {
+			infoDictionary = [[[NSBundle mainBundle] infoDictionary] retain];
+		}
+
+		value = [infoDictionary valueForKey: key];
+	}
+
+	return value;
+}
+
 + (BOOL) setup
 {
 	if( setupDone ) 
@@ -78,11 +103,10 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-    id defaults = [NSUserDefaults standardUserDefaults];
-        
-    NSString *filter = [defaults valueForKey: kLogPointFilterUserDefaultsKey];
-    BOOL dump = [defaults boolForKey: kLogPointDumpUserDefaultsKey];
-
+    NSString *filter = [self configurationValueForKey: kLogPointFilterUserDefaultsKey];
+	
+	BOOL dump = [[self configurationValueForKey: kLogPointDumpUserDefaultsKey] boolValue];
+	
 	if( YES == dump ) {
 		logPointDumpAll();
 	}

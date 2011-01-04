@@ -1,4 +1,6 @@
 
+CFPlugin
+
 Flags: TERSE VERBOSE ... (include what?) format ?
 
 NSUserDefaults logPointFilter does not work if not yet registered (and not set)

@@ -38,8 +38,10 @@ ENGINE_ROOM_GLOBAL(NSString *kEngineRoomInstallMenuUserDefaultsKey, @"engineRoom
 #endif
 
 @interface EngineRoom : NSObject {
+#if TARGET_OS_OSX
 	IBOutlet NSMenuItem *engineRoomMenuItem;
-
+#endif
+	
 	EngineRoomController *m_engineRoomController;
 
 	NSUserDefaults *m_standardUserDefaults;

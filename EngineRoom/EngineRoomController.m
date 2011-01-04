@@ -107,9 +107,10 @@
 }
 #endif
 
+#if TARGET_OS_OSX
 - (void) installInMenuItem: (NSMenuItem *) menuItem
 {
-#if TARGET_OS_OSX
+
 	NSString *menuIconPath = [[NSBundle bundleForClass: [self class]] pathForImageResource: @"MenuIcon.png"];
 
 	if( nil == menuItem ) {
@@ -132,13 +133,10 @@
 	if( nil != menuIconPath ) {
 		[menuItem setImage: [[[NSImage alloc] initWithContentsOfFile: menuIconPath] autorelease]];
 	}
-
-#endif
-
-#if TARGET_OS_IPHONE
-	NSLog(@"%s: no iOS specific install routine yet", __PRETTY_FUNCTION__);
-#endif
 }
+#endif
+
+
 
 - (id) init
 {

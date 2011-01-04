@@ -28,6 +28,19 @@
 		04221571120072700011C415 /* tracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422155C120072700011C415 /* tracer.m */; };
 		04221577120073CA0011C415 /* EngineRoomController.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04221575120073CA0011C415 /* EngineRoomController.h */; };
 		04221578120073CA0011C415 /* EngineRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04221576120073CA0011C415 /* EngineRoomController.m */; };
+		04290AB412D2872100E06235 /* CrossPlatform_Images.m in Sources */ = {isa = PBXBuildFile; fileRef = 04290AA812D2872100E06235 /* CrossPlatform_Images.m */; };
+		04290AB512D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 04290AAB12D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.m */; };
+		04290AB812D2891D00E06235 /* er_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAE12D2872100E06235 /* er_macros.h */; };
+		04290AB912D2893500E06235 /* logpoints_nslog.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB312D2872100E06235 /* logpoints_nslog.h */; };
+		04290ABA12D2894800E06235 /* logpoints_default_policy.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB112D2872100E06235 /* logpoints_default_policy.h */; };
+		04290ABB12D2899400E06235 /* CrossPlatform_Target.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAC12D2872100E06235 /* CrossPlatform_Target.h */; };
+		04290ABC12D2899400E06235 /* CrossPlatform_NSString_CGGeometry.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AA912D2872100E06235 /* CrossPlatform_NSString_CGGeometry.h */; };
+		04290ABD12D2899400E06235 /* CrossPlatform_Utilities.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAD12D2872100E06235 /* CrossPlatform_Utilities.h */; };
+		04290ABE12D2899400E06235 /* CrossPlatform_Images.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AA712D2872100E06235 /* CrossPlatform_Images.h */; };
+		04290ABF12D2899400E06235 /* CrossPlatform_NSValue_CGGeometry.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAA12D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.h */; };
+		04290AC012D289E300E06235 /* logpoints_base_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAF12D2872100E06235 /* logpoints_base_macros.h */; };
+		04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB012D2872100E06235 /* logpoints_default_macros.h */; };
+		04290AC212D289E300E06235 /* logpoints_kinds.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB212D2872100E06235 /* logpoints_kinds.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,19 +51,30 @@
 			dstPath = include/EngineRoom;
 			dstSubfolderSpec = 16;
 			files = (
-				0422155D120072700011C415 /* CrossPlatform.h in Copy Headers */,
+				04290AC012D289E300E06235 /* logpoints_base_macros.h in Copy Headers */,
+				04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */,
+				04290AC212D289E300E06235 /* logpoints_kinds.h in Copy Headers */,
 				04221560120072700011C415 /* EngineRoom.h in Copy Headers */,
 				04221562120072700011C415 /* er_compat.h in Copy Headers */,
 				04221564120072700011C415 /* er_util.h in Copy Headers */,
+				04290AB812D2891D00E06235 /* er_macros.h in Copy Headers */,
 				04221565120072700011C415 /* LogPoint.h in Copy Headers */,
 				04221567120072700011C415 /* logpoints_api.h in Copy Headers */,
 				04221568120072700011C415 /* logpoints_bk.h in Copy Headers */,
 				04221569120072700011C415 /* logpoints_default.h in Copy Headers */,
+				04290ABA12D2894800E06235 /* logpoints_default_policy.h in Copy Headers */,
+				04290AB912D2893500E06235 /* logpoints_nslog.h in Copy Headers */,
 				0422156A120072700011C415 /* logpoints_private.h in Copy Headers */,
 				0422156B120072700011C415 /* logpoints_types.h in Copy Headers */,
 				0422156D120072700011C415 /* logpoints.h in Copy Headers */,
 				04221570120072700011C415 /* tracer.h in Copy Headers */,
 				04221577120073CA0011C415 /* EngineRoomController.h in Copy Headers */,
+				04290ABC12D2899400E06235 /* CrossPlatform_NSString_CGGeometry.h in Copy Headers */,
+				04290ABD12D2899400E06235 /* CrossPlatform_Utilities.h in Copy Headers */,
+				04290ABE12D2899400E06235 /* CrossPlatform_Images.h in Copy Headers */,
+				04290ABF12D2899400E06235 /* CrossPlatform_NSValue_CGGeometry.h in Copy Headers */,
+				04290ABB12D2899400E06235 /* CrossPlatform_Target.h in Copy Headers */,
+				0422155D120072700011C415 /* CrossPlatform.h in Copy Headers */,
 			);
 			name = "Copy Headers";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,6 +106,19 @@
 		0422155C120072700011C415 /* tracer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tracer.m; sourceTree = "<group>"; };
 		04221575120073CA0011C415 /* EngineRoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineRoomController.h; sourceTree = "<group>"; };
 		04221576120073CA0011C415 /* EngineRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoomController.m; sourceTree = "<group>"; };
+		04290AA712D2872100E06235 /* CrossPlatform_Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Images.h; sourceTree = "<group>"; };
+		04290AA812D2872100E06235 /* CrossPlatform_Images.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossPlatform_Images.m; sourceTree = "<group>"; };
+		04290AA912D2872100E06235 /* CrossPlatform_NSString_CGGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_NSString_CGGeometry.h; sourceTree = "<group>"; };
+		04290AAA12D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_NSValue_CGGeometry.h; sourceTree = "<group>"; };
+		04290AAB12D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossPlatform_NSValue_CGGeometry.m; sourceTree = "<group>"; };
+		04290AAC12D2872100E06235 /* CrossPlatform_Target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Target.h; sourceTree = "<group>"; };
+		04290AAD12D2872100E06235 /* CrossPlatform_Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Utilities.h; sourceTree = "<group>"; };
+		04290AAE12D2872100E06235 /* er_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_macros.h; sourceTree = "<group>"; };
+		04290AAF12D2872100E06235 /* logpoints_base_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_base_macros.h; sourceTree = "<group>"; };
+		04290AB012D2872100E06235 /* logpoints_default_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_macros.h; sourceTree = "<group>"; };
+		04290AB112D2872100E06235 /* logpoints_default_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_policy.h; sourceTree = "<group>"; };
+		04290AB212D2872100E06235 /* logpoints_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_kinds.h; sourceTree = "<group>"; };
+		04290AB312D2872100E06235 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libEngineRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngineRoom.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -110,21 +147,26 @@
 		04221547120072320011C415 /* Sources-Common */ = {
 			isa = PBXGroup;
 			children = (
+				04290AAF12D2872100E06235 /* logpoints_base_macros.h */,
+				04290AB012D2872100E06235 /* logpoints_default_macros.h */,
+				04290AB212D2872100E06235 /* logpoints_kinds.h */,
+				04290AB712D2873200E06235 /* CrossPlatform */,
 				04221575120073CA0011C415 /* EngineRoomController.h */,
 				04221576120073CA0011C415 /* EngineRoomController.m */,
-				04221548120072700011C415 /* CrossPlatform.h */,
-				04221549120072700011C415 /* CrossPlatform.m */,
 				0422154A120072700011C415 /* EngineRoom_Prefix.pch */,
 				0422154B120072700011C415 /* EngineRoom.h */,
 				0422154C120072700011C415 /* EngineRoom.m */,
 				0422154D120072700011C415 /* er_compat.h */,
 				0422154E120072700011C415 /* er_util.c */,
 				0422154F120072700011C415 /* er_util.h */,
+				04290AAE12D2872100E06235 /* er_macros.h */,
 				04221550120072700011C415 /* LogPoint.h */,
 				04221551120072700011C415 /* LogPoint.m */,
 				04221552120072700011C415 /* logpoints_api.h */,
 				04221553120072700011C415 /* logpoints_bk.h */,
+				04290AB112D2872100E06235 /* logpoints_default_policy.h */,
 				04221554120072700011C415 /* logpoints_default.h */,
+				04290AB312D2872100E06235 /* logpoints_nslog.h */,
 				04221555120072700011C415 /* logpoints_private.h */,
 				04221556120072700011C415 /* logpoints_types.h */,
 				04221557120072700011C415 /* logpoints.c */,
@@ -136,6 +178,22 @@
 			);
 			name = "Sources-Common";
 			path = ../EngineRoom;
+			sourceTree = "<group>";
+		};
+		04290AB712D2873200E06235 /* CrossPlatform */ = {
+			isa = PBXGroup;
+			children = (
+				04290AAC12D2872100E06235 /* CrossPlatform_Target.h */,
+				04290AA912D2872100E06235 /* CrossPlatform_NSString_CGGeometry.h */,
+				04290AAD12D2872100E06235 /* CrossPlatform_Utilities.h */,
+				04290AA712D2872100E06235 /* CrossPlatform_Images.h */,
+				04290AA812D2872100E06235 /* CrossPlatform_Images.m */,
+				04290AAA12D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.h */,
+				04290AAB12D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.m */,
+				04221548120072700011C415 /* CrossPlatform.h */,
+				04221549120072700011C415 /* CrossPlatform.m */,
+			);
+			name = CrossPlatform;
 			sourceTree = "<group>";
 		};
 		0867D691FE84028FC02AAC07 /* EngineRoom-iOS */ = {
@@ -222,6 +280,8 @@
 				0422156E120072700011C415 /* logpoints.m in Sources */,
 				04221571120072700011C415 /* tracer.m in Sources */,
 				04221578120073CA0011C415 /* EngineRoomController.m in Sources */,
+				04290AB412D2872100E06235 /* CrossPlatform_Images.m in Sources */,
+				04290AB512D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,9 +301,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = EngineRoom;
+				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = Debug;
 		};
@@ -256,9 +316,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = EngineRoom;
+				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = Release;
 		};
@@ -271,7 +331,7 @@
 				DYLIB_CURRENT_VERSION = 1.0.0;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = .;
@@ -279,7 +339,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -293,7 +353,7 @@
 				DYLIB_CURRENT_VERSION = 1.0.0;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = .;
@@ -301,7 +361,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -266,10 +266,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C4F4FA12A3424E001C825C /* logpoints_base_macros.h in Headers */,
+				04C4F4FB12A3424E001C825C /* logpoints_default_macros.h in Headers */,
+				04C4F4FC12A3424E001C825C /* logpoints_kinds.h in Headers */,
 				042213E71200581A0011C415 /* ConsoleWindowController.h in Headers */,
 				042213EB1200581A0011C415 /* LogPointArrayController.h in Headers */,
 				042213ED1200581A0011C415 /* LogPointsWindowController.h in Headers */,
-				042214041200584D0011C415 /* CrossPlatform.h in Headers */,
 				042214071200584D0011C415 /* EngineRoom.h in Headers */,
 				042214091200584D0011C415 /* er_compat.h in Headers */,
 				0422140B1200584D0011C415 /* er_util.h in Headers */,
@@ -290,10 +292,8 @@
 				0473CEDB12458509004FAD1E /* CrossPlatform_Images.h in Headers */,
 				0473CEDE12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.h in Headers */,
 				0473CEE112458BB4004FAD1E /* CrossPlatform_Target.h in Headers */,
+				042214041200584D0011C415 /* CrossPlatform.h in Headers */,
 				0473D1EF1246BE2B004FAD1E /* ERAboutWindowController.h in Headers */,
-				04C4F4FA12A3424E001C825C /* logpoints_base_macros.h in Headers */,
-				04C4F4FB12A3424E001C825C /* logpoints_default_macros.h in Headers */,
-				04C4F4FC12A3424E001C825C /* logpoints_kinds.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,7 +435,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1.1.9;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -456,7 +456,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1.1.9;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

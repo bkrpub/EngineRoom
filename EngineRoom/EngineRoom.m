@@ -92,7 +92,14 @@ void __attribute__ ((constructor)) engineRoomConstructor(void)
 {
 	if( nil == m_engineRoomController ) {
 		m_engineRoomController = [[EngineRoomController sharedEngineRoomController] retain];
+#if TARGET_OS_OSX
 		[m_engineRoomController installInMenuItem: engineRoomMenuItem];
+#endif
+
+#if TARGET_OS_IPHONE
+	NSLog(@"%s: no iOS specific install routine yet", __PRETTY_FUNCTION__);
+#endif	
+	
 	} else {
 		// awaking outside of MainMenu nib
 	}

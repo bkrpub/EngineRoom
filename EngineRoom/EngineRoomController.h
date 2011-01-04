@@ -34,8 +34,11 @@
 #if TARGET_OS_OSX
 - (void) traceResponderChain: (id) currentResponder position: (NSInteger *) position;
 - (IBAction) logResponderChain: (id) sender;
-#endif
 
 - (void) installInMenuItem: (NSMenuItem *) menuItem;
+
+#endif
+
+
 
 @end
