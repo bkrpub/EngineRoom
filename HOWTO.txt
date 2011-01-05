@@ -98,3 +98,13 @@ iOS:
      The last paragraph above is the way to set filters for now.
      
 
+
+Useful hints:
+
+In Xcode, double click on the opening bracket of <file:lineno> and
+hit Cmd-Shift-Opt-D (Open this quickly).
+(This does not work if a Find Panel is active - close it)
+
+Credit: 
+http://ancientbuho.posterous.com/xcode-logging-trick-quickly-open-a-logs-locat
+

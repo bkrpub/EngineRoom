@@ -194,7 +194,7 @@ SELF_TRACE("composer4 = %p\n", sel_getName);
 SELF_TRACE("composer5");      		  
 #endif
 SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());      		  
-  lp_return_t ret = (*logPointGetEmitter())(lpp, langspec1, langspec2, "%s %s%s%s%s:%llu %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
+  lp_return_t ret = (*logPointGetEmitter())(lpp, langspec1, langspec2, "%s %s%s%s<%s:%llu> %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
 				    kind, 
 				    *keys ? "[" : "", keys, *keys ? "] " : "", 
 				    logPointFileNameOnly(lpp), (unsigned long long)lpp->line, 
