@@ -82,11 +82,9 @@
 #endif
 
 #ifndef LOGPOINT_INVOKE
-#if LOCAL_CLIENT
-#define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( logPointGetInvoker ? logPointGetInvoker() : local_logPointInvokerDefault)((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ )
-#else
-#define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( logPointGetInvoker() )((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ )
-#endif
+#define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( \
+	NULL == ER_ADDRESS_OF_GLOBAL_OR_EMBEDDED( logPointGetInvoker ) ? LOGPOINT_NO : \
+	(ER_ADDRESS_OF_GLOBAL_OR_EMBEDDED( logPointGetInvoker )())((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ ) )
 #endif
 
 
@@ -122,8 +120,14 @@
 	@param label compile-time constant char pointer, extra label to decorate the message with
 */	
 
-/* clang doesn't like it if we don't use the result of ({ }) expressions - and I found no way to #pragma it away */
+/* clang doesn't like it if we don't use the result of ({ }) expressions -
+   I found no way to #pragma it away and I don't want to force anybody to disable warnings
+ */
 static inline LOGPOINT *logPointReturnFromMacro( LOGPOINT *lpp ) { return lpp; }
+
+#if MAINTAINER_WARNINGS
+#warning BK: The return value from the invoker is ignored. This is because we want to return &lp for switches if ACTIVE. But it hides i.e. printf fail on disk full
+#endif	
 
 #define LOGPOINT_CREATE(flags, kind, keys, label, langspec1, langspec2, formatInfo, fmt, ...) ({ \
         LOGPOINT_LOCAL_LABEL_DECLARATION /* must come first - see gcc docs */ \
@@ -132,10 +136,10 @@ static inline LOGPOINT *logPointReturnFromMacro( LOGPOINT *lpp ) { return lpp; }
 	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, (label), (formatInfo) ?: ( (fmt) ? #fmt ", " #__VA_ARGS__ : NULL ), NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
         LOGPOINT_LOCAL_LABEL_CREATE /* after the static - or gcc 4.0.1 will crash */ \
         LOGPOINT_INCREMENT_COUNTER; \
-	LOGPOINT *__lpResult = NULL;	\
+		LOGPOINT *__lpResult = NULL;	\
         if( LOGPOINT_IS_ACTIVE(lplogpoint) ) { \
-	   LOGPOINT_INVOKE(&lplogpoint, langspec1, langspec2, fmt, ## __VA_ARGS__); \
-	   __lpResult = &lplogpoint; /* non-NULL return signifies an active logpoint */ \
+          (void) LOGPOINT_INVOKE(&lplogpoint, langspec1, langspec2, fmt, ## __VA_ARGS__); \
+          __lpResult = &lplogpoint; /* non-NULL return signifies an active logpoint */ \
         } \
 	logPointReturnFromMacro( __lpResult );	\
     })

@@ -40,7 +40,8 @@
 		04290ABF12D2899400E06235 /* CrossPlatform_NSValue_CGGeometry.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAA12D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.h */; };
 		04290AC012D289E300E06235 /* logpoints_base_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAF12D2872100E06235 /* logpoints_base_macros.h */; };
 		04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB012D2872100E06235 /* logpoints_default_macros.h */; };
-		04290AC212D289E300E06235 /* logpoints_kinds.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB212D2872100E06235 /* logpoints_kinds.h */; };
+		04290AC212D289E300E06235 /* logpoints_default_kinds.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB212D2872100E06235 /* logpoints_default_kinds.h */; };
+		04AA592512D6B8F00097656D /* er_symbols.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04AA591D12D6B8B90097656D /* er_symbols.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,11 +54,12 @@
 			files = (
 				04290AC012D289E300E06235 /* logpoints_base_macros.h in Copy Headers */,
 				04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */,
-				04290AC212D289E300E06235 /* logpoints_kinds.h in Copy Headers */,
+				04290AC212D289E300E06235 /* logpoints_default_kinds.h in Copy Headers */,
 				04221560120072700011C415 /* EngineRoom.h in Copy Headers */,
 				04221562120072700011C415 /* er_compat.h in Copy Headers */,
 				04221564120072700011C415 /* er_util.h in Copy Headers */,
 				04290AB812D2891D00E06235 /* er_macros.h in Copy Headers */,
+				04AA592512D6B8F00097656D /* er_symbols.h in Copy Headers */,
 				04221565120072700011C415 /* LogPoint.h in Copy Headers */,
 				04221567120072700011C415 /* logpoints_api.h in Copy Headers */,
 				04221568120072700011C415 /* logpoints_bk.h in Copy Headers */,
@@ -117,8 +119,9 @@
 		04290AAF12D2872100E06235 /* logpoints_base_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_base_macros.h; sourceTree = "<group>"; };
 		04290AB012D2872100E06235 /* logpoints_default_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_macros.h; sourceTree = "<group>"; };
 		04290AB112D2872100E06235 /* logpoints_default_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_policy.h; sourceTree = "<group>"; };
-		04290AB212D2872100E06235 /* logpoints_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_kinds.h; sourceTree = "<group>"; };
+		04290AB212D2872100E06235 /* logpoints_default_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_kinds.h; sourceTree = "<group>"; };
 		04290AB312D2872100E06235 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
+		04AA591D12D6B8B90097656D /* er_symbols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_symbols.h; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libEngineRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngineRoom.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -149,7 +152,7 @@
 			children = (
 				04290AAF12D2872100E06235 /* logpoints_base_macros.h */,
 				04290AB012D2872100E06235 /* logpoints_default_macros.h */,
-				04290AB212D2872100E06235 /* logpoints_kinds.h */,
+				04290AB212D2872100E06235 /* logpoints_default_kinds.h */,
 				04290AB712D2873200E06235 /* CrossPlatform */,
 				04221575120073CA0011C415 /* EngineRoomController.h */,
 				04221576120073CA0011C415 /* EngineRoomController.m */,
@@ -160,6 +163,7 @@
 				0422154E120072700011C415 /* er_util.c */,
 				0422154F120072700011C415 /* er_util.h */,
 				04290AAE12D2872100E06235 /* er_macros.h */,
+				04AA591D12D6B8B90097656D /* er_symbols.h */,
 				04221550120072700011C415 /* LogPoint.h */,
 				04221551120072700011C415 /* LogPoint.m */,
 				04221552120072700011C415 /* logpoints_api.h */,

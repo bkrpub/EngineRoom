@@ -1,5 +1,5 @@
 /*
- * please ignore this file - it is here because it is used by some prior code 
+ * please ignore this file - it is here because it is still used by some transitional code
  */
 
 /*

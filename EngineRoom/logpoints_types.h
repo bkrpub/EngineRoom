@@ -84,6 +84,7 @@ typedef struct logpoint {
 #define kLogPointFormatNone                 NULL
 #define kLogPointFormatInfoNone             NULL
 
+
 /* logpoint flags */
 #define LOGPOINT_NOFLAGS                    0           /* for readability */
 

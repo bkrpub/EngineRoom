@@ -22,7 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "logpoints.h"
+#import "logpoints_api.h"
 
 extern NSString *kLogPointFilterUserDefaultsKey;
 extern NSString *kLogPointFilterVersionUserDefaultsKey;

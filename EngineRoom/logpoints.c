@@ -22,233 +22,288 @@
 
 #define __LOGPOINTS_C__ 1
 
-//#define SELF_TRACE(fmt, ...) fprintf(stderr, "TRC: "##fmt##"\n", __VA_ARGS__) 
+/* #define SELF_TRACE(fmt, ...) fprintf(stderr, "TRC: "##fmt##"\n", __VA_ARGS__) */
 #define SELF_TRACE(fmt, ...) /**/
+
 
 #include "logpoints_api.h"
 
+/* to define the symbols */
+#include "logpoints_default_kinds.h"
+
 #include "er_compat.h"
+
 
 #ifdef __APPLE_CC__
 #pragma mark Getting and setting LogPoint handlers
 #endif
 
-/* private - may be replaced by thread-local stuff */
-static LOGPOINT_INVOKER  _logPointInvoker  = logPointInvokerDefault;
-static LOGPOINT_COMPOSER _logPointComposer = logPointComposerDefault;
-static LOGPOINT_EMITTER  _logPointEmitter  = logPointEmitterDefault;
+/* private - might be replaced by thread-local stuff */
+static LOGPOINT_INVOKER  _logPointInvoker  = ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
+static LOGPOINT_COMPOSER _logPointComposer = ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
+static LOGPOINT_EMITTER  _logPointEmitter  = ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
 
-LOGPOINT_INVOKER logPointGetInvoker(void) 
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointGetInvoker )(void) 
 { 
-  return _logPointInvoker;
+	return _logPointInvoker;
 }
 
-LOGPOINT_INVOKER logPointSetInvoker(LOGPOINT_INVOKER newInvoker) 
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointSetInvoker )(LOGPOINT_INVOKER newInvoker) 
 { 
-  LOGPOINT_INVOKER previousInvoker = _logPointInvoker;
-  _logPointInvoker = newInvoker ? newInvoker : logPointInvokerDefault;
-  return previousInvoker;
+	LOGPOINT_INVOKER previousInvoker = _logPointInvoker;
+	_logPointInvoker = newInvoker ? newInvoker : ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
+	return previousInvoker;
 }
 
-LOGPOINT_COMPOSER logPointGetComposer(void)
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointGetComposer )(void)
 {
-  return _logPointComposer;
+	return _logPointComposer;
 }
 
-LOGPOINT_COMPOSER logPointSetComposer(LOGPOINT_COMPOSER newComposer)
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointSetComposer )(LOGPOINT_COMPOSER newComposer)
 {
-  LOGPOINT_COMPOSER previousComposer = _logPointComposer;
-  _logPointComposer = newComposer ? newComposer : logPointComposerDefault;
-  return previousComposer;
+	LOGPOINT_COMPOSER previousComposer = _logPointComposer;
+	_logPointComposer = newComposer ? newComposer : ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
+	return previousComposer;
 }
 
-LOGPOINT_EMITTER logPointGetEmitter(void)
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )(void)
 {
-  return _logPointEmitter;
+	return _logPointEmitter;
 }
 
-LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER newEmitter)
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointSetEmitter )(LOGPOINT_EMITTER newEmitter)
 {
-  LOGPOINT_EMITTER previousEmitter = _logPointEmitter;
-  _logPointEmitter = newEmitter ? newEmitter : logPointEmitterDefault;
-  return previousEmitter;
+	LOGPOINT_EMITTER previousEmitter = _logPointEmitter;
+	_logPointEmitter = newEmitter ? newEmitter : ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
+	return previousEmitter;
 }
 
-LOGPOINT_INVOKER_DECLARATION(logPointInvokerDefault)
+#ifdef LOCAL_INVOKER
+#warning clean up 
+
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointInvokerDefault ) )
 {
-  lp_return_t ret = LOGPOINT_YES;
-SELF_TRACE("invoker1");
-  void *msg = NULL;
+#ifdef MAINTAINER_WARNINGS
+#warning local client test
+#warning no non-objc support
+#endif  
+	
+	va_list args;
+	va_start(args, fmt);
+	
+	NSString *msg = nil;
+	
+	if( nil != fmt ) {
+		NSString *nsfmt = LOGPOINT_IS_NSSTRING(*lpp) ? (id)fmt : [[NSString alloc] initWithUTF8String: (const char *)fmt];
+		
+		msg = [[NSString alloc] initWithFormat: nsfmt arguments: args];
+		
+		if( LOGPOINT_IS_NSSTRING(*lpp) ) {
+			[nsfmt release];
+		}
+	}
+	
+	NSLog(@"%s: %s %@", __FUNCTION__, lpp->kind, msg ?: @"NO PAYLOAD");
+	[msg release];
+	
+	va_end(args);
+	return LOGPOINT_YES;
+}
 
-  if( ! LOGPOINT_IS_SILENT( *lpp ) ) {
+#endif
+/* LOCAL_INVOKER */
 
-    if( NULL != fmt ) {
-      va_list args;
-      va_start(args, fmt); 
-      
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointInvokerDefault ) )
+{
+	lp_return_t ret = LOGPOINT_YES;
+	SELF_TRACE("invoker1");
+	void *msg = NULL;
+	
+	if( ! LOGPOINT_IS_SILENT( *lpp ) ) {
+		
+		LOGPOINT_COMPOSER composer = ER_SYMBOL_EMBEDDED_NAME( logPointGetComposer )();
+
+		
+		if( NULL != fmt ) {
+			va_list args;
+			va_start(args, fmt); 
+			
 #ifdef __OBJC__
-      CFStringRef cfFmt = NULL;
-      
-      if( NO == LOGPOINT_IS_NSSTRING(*lpp) ) {
-SELF_TRACE("invoker2");
-	cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, (const char *) fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);
-      } else {
- SELF_TRACE("invoker3");
-	cfFmt = (CFStringRef) fmt;
-      }
-      
-      msg = (void *) CFStringCreateWithFormatAndArguments(kCFAllocatorDefault, NULL /* fmtOptions */, cfFmt, args);
-SELF_TRACE("invoker4");
+			CFStringRef cfFmt = NULL;
+			
+			if( NO == LOGPOINT_IS_NSSTRING(*lpp) ) {
+				SELF_TRACE("invoker2");
+				cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, (const char *) fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);
+			} else {
+				SELF_TRACE("invoker3");
+				cfFmt = (CFStringRef) fmt;
+			}
+			
+			msg = (void *) CFStringCreateWithFormatAndArguments(kCFAllocatorDefault, NULL /* fmtOptions */, cfFmt, args);
+			SELF_TRACE("invoker4");
 #else
-      util_vasprintf((char **) &msg, fmt, args);
+			util_vasprintf((char **) &msg, fmt, args);
 #endif
-//SELF_TRACE("invoker5 comp = %p\n", logPointGetComposer());      
-      ret = (*logPointGetComposer())(lpp, langspec1, langspec2, msg);
-SELF_TRACE("invoker6");      
+			//SELF_TRACE("invoker5 comp = %p\n", composer);      
+			ret = (*composer)(lpp, langspec1, langspec2, msg);
+			SELF_TRACE("invoker6");      
 #ifdef __OBJC__
-      if( NULL != cfFmt )
-	CFRelease( cfFmt );
+			if( NULL != cfFmt )
+				CFRelease( cfFmt );
 #endif
-      
-      va_end(args);
-    } else {
-SELF_TRACE("invoker7 comp = %p\n", logPointGetComposer());      
-      ret = (*logPointGetComposer())(lpp, langspec1, langspec2, NULL);
-SELF_TRACE("invoker8");      
-    } /* fmt != NULL */
-
-  } /* ! SILENT */
-
-
-  if( LOGPOINT_IS_ASSERT(*lpp) ) {
+			
+			va_end(args);
+		} else {
+			SELF_TRACE("invoker7 comp = %p\n", composer);      
+			ret = (*composer)(lpp, langspec1, langspec2, NULL);
+			SELF_TRACE("invoker8");      
+		} /* fmt != NULL */
+		
+	} /* ! SILENT */
+	
+	
+	if( LOGPOINT_IS_ASSERT(*lpp) ) {
 #if DEPRECATED_ASSERTION_HANDLING
 #ifdef __OBJC__    
-    if( LOGPOINT_IS_OBJC(*lpp) ) {
-      [[NSAssertionHandler currentHandler] handleFailureInMethod: (SEL)langspec2 object: (id)langspec1 file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int) lpp->line description: @"%@", msg];
-    } else {
-      [[NSAssertionHandler currentHandler] handleFailureInFunction: [NSString stringWithUTF8String: lpp->symbolName] file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int)lpp->line description: @"%@", msg];
-    }
-    fprintf(stderr, "Unexpected return from assertion handler\n");
-    abort();
+		if( LOGPOINT_IS_OBJC(*lpp) ) {
+			[[NSAssertionHandler currentHandler] handleFailureInMethod: (SEL)langspec2 object: (id)langspec1 file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int) lpp->line description: @"%@", msg];
+		} else {
+			[[NSAssertionHandler currentHandler] handleFailureInFunction: [NSString stringWithUTF8String: lpp->symbolName] file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int)lpp->line description: @"%@", msg];
+		}
+		fprintf(stderr, "Unexpected return from assertion handler\n");
+		abort();
 #else
-    abort();
+		abort();
 #endif
 #endif
-  }
-SELF_TRACE("invoker9");      
+	}
+	SELF_TRACE("invoker9");      
 #if MAINTAINER_WARNINGS
 #warning this will leak for assertion exceptions which are catched
 #endif
-
- if( NULL != msg ) {
+	
+	if( NULL != msg ) {
 #ifdef __OBJC__
-    CFRelease( (CFStringRef) msg);
+		CFRelease( (CFStringRef) msg);
 #else
-    free( msg );
+		free( msg );
 #endif
- }
-
-SELF_TRACE("invoker10");      
-
-  return ret;
+	}
+	
+	SELF_TRACE("invoker10");      
+	
+	return ret;
 }
 
-static int logPointShowInstanceInfo UTIL_UNUSED = 1;
-LOGPOINT_COMPOSER_DECLARATION(logPointComposerDefault)
+
+static int _logPointShowInstanceInfo UTIL_UNUSED = 1;
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefault ) )
 {
 #if MAINTAINER_WARNINGS
 #warning no nssstringmode for keys and label yet
 #endif
-  const char *kind = (kLogPointKindNone == lpp->kind) ? "" : lpp->kind;
-  const char *keys = (kLogPointKeysNone == lpp->keys) ? "" : lpp->keys;
-  const char *label = (kLogPointLabelNone == lpp->label) ? "" : lpp->label;
+	const char *kind = (kLogPointKindNone == lpp->kind) ? "" : lpp->kind;
+	const char *keys = (kLogPointKeysNone == lpp->keys) ? "" : lpp->keys;
+	const char *label = (kLogPointLabelNone == lpp->label) ? "" : lpp->label;
 #ifdef __OBJC__
-  const char *methodName = NULL;
-  const char *className = NULL;
-  char *instanceInfo = NULL;
-  BOOL isClassMethod = NO;
-SELF_TRACE("composer1");      
-  if( LOGPOINT_IS_OBJC(*lpp) ) {
-    id objcSelf = (id) langspec1;	
-    SEL objcCmd = (SEL) langspec2; 
-SELF_TRACE("composer2 = %p\n", object_getClass);      		
+	const char *methodName = NULL;
+	const char *className = NULL;
+	char *instanceInfo = NULL;
+	BOOL isClassMethod = NO;
+	SELF_TRACE("composer1");      
+	if( LOGPOINT_IS_OBJC(*lpp) ) {
+		id objcSelf = (id) langspec1;	
+		SEL objcCmd = (SEL) langspec2; 
+		SELF_TRACE("composer2 = %p\n", object_getClass);      		
         /* using weak symbols */
-	Class objcClass = COMPAT_OBJECT_GETCLASS(objcSelf);
-    isClassMethod = COMPAT_CLASS_ISMETACLASS( objcClass );
-
-SELF_TRACE("composer3 = %p\n", object_getClassName);      		
-
-    className = object_getClassName(objcSelf);
-
-SELF_TRACE("composer4 = %p\n", sel_getName);      		
-    methodName = objcCmd ? sel_getName(objcCmd) : lpp->symbolName;
-    
-    char _instanceInfo[sizeof("0x0123456789abcdef:0123456789")];
-    
-    if( logPointShowInstanceInfo && NO == isClassMethod ) {
-      snprintf(_instanceInfo, sizeof(_instanceInfo), "%p:%u", (void*)objcSelf, (unsigned int) [objcSelf retainCount]);
-      _instanceInfo[ sizeof(_instanceInfo) - 1] = 0;
-      instanceInfo = _instanceInfo;
-    }
-  }
-SELF_TRACE("composer5");      		  
+		Class objcClass = COMPAT_OBJECT_GETCLASS(objcSelf);
+		isClassMethod = COMPAT_CLASS_ISMETACLASS( objcClass );
+		
+		SELF_TRACE("composer3 = %p\n", object_getClassName);      		
+		
+		className = object_getClassName(objcSelf);
+		
+		SELF_TRACE("composer4 = %p\n", sel_getName);      		
+		methodName = objcCmd ? sel_getName(objcCmd) : lpp->symbolName;
+		
+		char _instanceInfo[sizeof("0x0123456789abcdef:0123456789")];
+		
+		if( _logPointShowInstanceInfo && NO == isClassMethod ) {
+			snprintf(_instanceInfo, sizeof(_instanceInfo), "%p:%u", (void*)objcSelf, (unsigned int) [objcSelf retainCount]);
+			_instanceInfo[ sizeof(_instanceInfo) - 1] = 0;
+			instanceInfo = _instanceInfo;
+		}
+	}
+	SELF_TRACE("composer5");      		  
 #endif
-SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());      		  
-  lp_return_t ret = (*logPointGetEmitter())(lpp, langspec1, langspec2, "%s %s%s%s<%s:%llu> %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
-				    kind, 
-				    *keys ? "[" : "", keys, *keys ? "] " : "", 
-				    logPointFileNameOnly(lpp), (unsigned long long)lpp->line, 
+	SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());      		  
+
+	const char *embedded_name = ER_EMBEDDED_NAME_AS_STRING;
+	
+	LOGPOINT_EMITTER emitter = ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )();
+	
+	lp_return_t ret = (*emitter)(lpp, langspec1, langspec2, "%s%s%s %s%s%s<%s:%llu> %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
+											  embedded_name,
+											  *embedded_name ? " " : "",
+											  kind, 
+											  *keys ? "[" : "", keys, *keys ? "] " : "", 
+											  logPointFileNameOnly(lpp), (unsigned long long)lpp->line, 
 #ifdef __OBJC__
-				    className ? (isClassMethod ? "+[" : "-[") : "", 
-				    className ? className : "", 
-				    className ? " " : "", 
-				    methodName ? methodName : lpp->symbolName, 
-				    className ? "]" : "",
-				    instanceInfo ? instanceInfo : "",
-				    instanceInfo ? " " : "",
+											  className ? (isClassMethod ? "+[" : "-[") : "", 
+											  className ? className : "", 
+											  className ? " " : "", 
+											  methodName ? methodName : lpp->symbolName, 
+											  className ? "]" : "",
+											  instanceInfo ? instanceInfo : "",
+											  instanceInfo ? " " : "",
 #else
-				    "",
-				    "",
-				    "",
-				    lpp->symbolName,
-				    "", 
-				    "",
-				    "",
+											  "",
+											  "",
+											  "",
+											  lpp->symbolName,
+											  "", 
+											  "",
+											  "",
 #endif
-				    label, *label && payload ? " " : "", payload ? payload : LOGPOINT_MESSAGE_EMPTY);
-
-SELF_TRACE("composer7");      		  
-  return ret;
+											  label, *label && payload ? " " : "", payload ? payload : LOGPOINT_MESSAGE_EMPTY);
+	
+	SELF_TRACE("composer7");      		  
+	return ret;
 }
 
-LOGPOINT_EMITTER_DECLARATION(logPointEmitterDefault)
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterDefault ) )
 {
-  va_list args;
-  va_start(args, fmt);
-
-  lp_return_t ret = LOGPOINT_YES;
-
+	va_list args;
+	va_start(args, fmt);
+	
+	lp_return_t ret = LOGPOINT_YES;
+	
 #ifdef __OBJC__
-  CFStringRef cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);  
-  NSLogv((NSString*) cfFmt, args);
-  CFRelease(cfFmt);
+	CFStringRef cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);  
+	NSLogv((NSString*) cfFmt, args);
+	CFRelease(cfFmt);
 #else
-  char *log = NULL;
-
-  int len = util_log_vasprintf(&log, fmt, args);
-  if( len+1 != fprintf(stderr, "%s\n", log) )
-    ret = LOGPOINT_NO;
-
-  free(log);
+	char *log = NULL;
+	
+	int len = util_log_vasprintf(&log, fmt, args);
+	if( len+1 != fprintf(stderr, "%s\n", log) )
+		ret = LOGPOINT_NO;
+	
+	free(log);
 #endif
-
-  va_end(args);
-
-  return ret;
+	
+	va_end(args);
+	
+	return ret;
 }
+
+
+#ifndef ER_EMBEDDED_NAME
+
 
 #ifdef __APPLE_CC__
-#pragma mark Private interface
+#pragma mark Private interface (currently unused)
 #endif
 
 static LOGPOINT *__logPointListHead = NULL;
@@ -891,3 +946,5 @@ main(int argc, char **argv)
 #endif
 /* LOGPOINTS_USE_ELF */
 
+#endif 
+/* ER_EMBEDDED_NAME */

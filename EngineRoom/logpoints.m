@@ -20,14 +20,16 @@
  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "logpoints.c"
+// include the non-objc parts
+#import "logpoints.c"
 
 #import "CrossPlatform_NSString_CGGeometry.h"
 
 #if MAINTAINER_WARNINGS
 #warning BK: missing feature: recursive formatting
 #endif
-id logPointFormatObjCType(const char *type, void *data, const char *label) 
+
+ER_SYMBOL_VISIBLE_EMBEDDED id ER_SYMBOL_EMBEDDED_NAME( logPointFormatObjCType ) (const char *type, void *data, const char *label) 
 {
 	if( NULL == type ) 
 		return @"NILTYPE";

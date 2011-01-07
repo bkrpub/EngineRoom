@@ -23,20 +23,26 @@
 #ifndef __LOGPOINTS_API_H__
 #define __LOGPOINTS_API_H__ 1
 
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#endif
+
+#include "er_symbols.h"
+
 #include "logpoints_types.h"
 #include "logpoints_private.h"
-#include "logpoints_kinds.h"
-
-#define LOGPOINTS_EXPORT /* __attribute__((visibility("default"))) */
-#define LOGPOINTS_HIDDEN /* __attribute__((visibility("hidden"))) */
-#define LOGPOINTS_WEAK   /* __attribute__((visibility("weak_import"))) */
-#define LOGPOINTS_USED   /* __attribute__((visibility("used"))) */
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#ifdef __LOGPOINTS_C__
+#define LOGPOINTS_EXPORT			/**/
+#define LOGPOINTS_EXPORT_EMBEDDED	/**/
+#else
+#define LOGPOINTS_EXPORT			extern
+#define LOGPOINTS_EXPORT_EMBEDDED	extern
+#endif
 
 LOGPOINTS_EXPORT const char *logPointFileNameOnly(LOGPOINT *lpp);
 
@@ -131,11 +137,16 @@ typedef char *LOGPOINT_MESSAGE_TYPE;
 typedef lp_return_t (*LOGPOINT_INVOKER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...);
 #define LOGPOINT_INVOKER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...)
 
-LOGPOINTS_EXPORT LOGPOINT_INVOKER_DECLARATION(logPointInvokerDefault);
-LOGPOINTS_EXPORT LOGPOINTS_WEAK LOGPOINT_INVOKER logPointGetInvoker(void);
-LOGPOINTS_EXPORT LOGPOINT_INVOKER logPointSetInvoker(LOGPOINT_INVOKER newInvoker);
+LOGPOINTS_EXPORT LOGPOINT_INVOKER_DECLARATION( logPointInvokerDefault ) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT LOGPOINT_INVOKER logPointGetInvoker(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT LOGPOINT_INVOKER logPointSetInvoker(LOGPOINT_INVOKER newInvoker) ER_SYMBOL_WEAK_IMPORT;
 
-
+#ifdef ER_EMBEDDED_NAME
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointInvokerDefault ) );	
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointGetInvoker )(void);
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointSetInvoker )(LOGPOINT_INVOKER newInvoker);
+#endif
+	
 /*
  * payload is the result of the users "fmt", ... arguments
  * if the ObjC version (logpoints.m) is used, payload is a CFStringRef, otherwise a const char *
@@ -144,10 +155,17 @@ typedef lp_return_t (*LOGPOINT_COMPOSER)(LOGPOINT *lpp, const void *langspec1, c
 
 #define LOGPOINT_COMPOSER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, LOGPOINT_MESSAGE_TYPE payload)
 
-LOGPOINTS_EXPORT LOGPOINT_COMPOSER_DECLARATION(logPointComposerDefault);
-LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointGetComposer(void);
-LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointSetComposer(LOGPOINT_COMPOSER newComposer);
+LOGPOINTS_EXPORT LOGPOINT_COMPOSER_DECLARATION( logPointComposerDefault ) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointGetComposer(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointSetComposer(LOGPOINT_COMPOSER newComposer) ER_SYMBOL_WEAK_IMPORT;
 
+#ifdef ER_EMBEDDED_NAME
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefault ) );	
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointGetComposer )(void);
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointSetComposer )(LOGPOINT_COMPOSER newComposer);
+#endif
+	
+	
 /*
  * the composer will call the emitter with a format string and arguments decorating
  * the message produced by the invoker with metadata like location in source etc.
@@ -156,201 +174,40 @@ typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langspec1, co
 
 #define LOGPOINT_EMITTER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...)
 
-LOGPOINTS_EXPORT LOGPOINT_EMITTER_DECLARATION(logPointEmitterDefault);
-LOGPOINTS_EXPORT LOGPOINT_EMITTER logPointGetEmitter(void);
-LOGPOINTS_EXPORT LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER newEmitter);
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER_DECLARATION( logPointEmitterDefault ) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER logPointGetEmitter(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER newEmitter) ER_SYMBOL_WEAK_IMPORT;
 
-
+#ifdef ER_EMBEDDED_NAME
+	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterDefault ) );	
+	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )(void);
+	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointSetEmitter )(LOGPOINT_EMITTER newEmitter);
+#endif
+	
 
 
 #if __OBJC__
 
 /* TESTING NSValue *__cmnsv = [[NSValue alloc] initWithBytes: &__cmv objCType: type]; */ /* NSValue secretly supports 'D'... */
 
-#ifdef LOCAL_CLIENT
 #define LOGPOINT_FORMAT_VALUE(v, label) ({ \
-	__typeof__ (v) __valueToFormat = (v) ; \
-	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
-	(logPointFormatObjCType ? logPointFormatObjCType : local_logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
+	__typeof__ (v) __erValueToFormat = (v) ; \
+	id (*__erValueFormatter)(const char *, void *, const char *) = ER_ADDRESS_OF_GLOBAL_OR_EMBEDDED( logPointFormatObjCType ); \
+	const char *type = __builtin_types_compatible_p( __typeof__(__erValueToFormat), long double) ? "D" : @encode( __typeof__ (__erValueToFormat) ); \
+	NULL == __erValueFormatter ? @"no_logPointFormatObjCType_weak_link_fail" : __erValueFormatter(type, (void*)&__erValueToFormat, (label)); /* returns autoreleased string */ \
 }) 
-#else
-#define LOGPOINT_FORMAT_VALUE(v, label) ({ \
-	__typeof__ (v) __valueToFormat = (v) ; \
-	char *type = __builtin_types_compatible_p( __typeof__(__valueToFormat), long double) ? "D" : @encode( __typeof__ (__valueToFormat) ); \
-	(logPointFormatObjCType)(type, (void*)&__valueToFormat, (label)); /* returns autoreleased string */ \
-}) 
-#endif
 
 /* 
  * internal helper function in logpoints.m, returns autoreleased string describing the @encode type at *data
  */ 
-LOGPOINTS_EXPORT LOGPOINTS_WEAK id logPointFormatObjCType(const char *type, void *data, const char *label);
-
-#endif
-
-#if LOCAL_CLIENT
-static LOGPOINTS_HIDDEN LOGPOINTS_USED LOGPOINT_INVOKER_DECLARATION(local_logPointInvokerDefault)
-{
-#ifdef MAINTAINER_WARNINGS
-#warning local client test
-#warning no non-objc support
-#endif  
-
-	va_list args;
-	va_start(args, fmt);
+LOGPOINTS_EXPORT id logPointFormatObjCType(const char *type, void *data, const char *label) ER_SYMBOL_WEAK_IMPORT;
 	
-	NSString *msg = nil;
-
-	if( nil != fmt ) {
-	  NSString *nsfmt = LOGPOINT_IS_NSSTRING(*lpp) ? (id)fmt : [[NSString alloc] initWithUTF8String: (const char *)fmt];
-
-	  msg = [[NSString alloc] initWithFormat: nsfmt arguments: args];
-
-	  if( LOGPOINT_IS_NSSTRING(*lpp) ) {
-	    [nsfmt release];
-	  }
-	}
-
-	NSLog(@"localInvoker: %s %@", lpp->kind, msg ?: @"NO PAYLOAD");
-	[msg release];
-
-	va_end(args);
-	return LOGPOINT_YES;
-}
-
-/* ObjC ! */
-#import "CrossPlatform_NSString_CGGeometry.h"
-
-static LOGPOINTS_HIDDEN LOGPOINTS_USED id local_logPointFormatObjCType(const char *type, void *data, const char *label) 
-{
-	if( NULL == type ) 
-		return @"NILTYPE";
-
-	id ret = nil;
-
-	if('r' == *type) { // const
-		++type;
-	}
-
-	void *ptr = *(void **) data;
-		
-	
-	switch( *type ) {
-		case '@':
-			ret = ptr ? [(id) ptr description] : @"nil"; break;
-					
-		case '#':
-			ret = ptr ? [(id) ptr description] : @"Nil"; break;
-
-		case '*': ret = [NSString stringWithFormat: @"char*: '%s'", *(char **)data]; break;
-
-		case 'c': ret = [NSString stringWithFormat: @"char: 0x%02hhx", *(char *)data]; break;
-		case 'C': ret = [NSString stringWithFormat: @"uchar: 0x%02hhx", *(unsigned char *)data]; break;
-		case 's': ret = [NSString stringWithFormat: @"short: 0x%02hx", *(short *)data]; break;
-		case 'S': ret = [NSString stringWithFormat: @"ushort: 0x%02hx", *(unsigned short *)data]; break;
-		case 'i': ret = [NSString stringWithFormat: @"int: 0x%02x", *(int *)data]; break;
-		case 'I': ret = [NSString stringWithFormat: @"uint: 0x%02x", *(unsigned int *)data]; break;
-		case 'l': ret = [NSString stringWithFormat: @"long: 0x%02lx", *(long *)data]; break;
-		case 'L': ret = [NSString stringWithFormat: @"ulong: 0x%02lx", *(unsigned long *)data]; break;
-		case 'q': ret = [NSString stringWithFormat: @"quad: 0x%02llx", *(long long *)data]; break;
-		case 'Q': ret = [NSString stringWithFormat: @"uquad: 0x%02llx", *(unsigned long long *)data]; break;
-		case 'f': ret = [NSString stringWithFormat: @"float: %.*g", __FLT_DIG__, *(float *)data]; break;
-		case 'd': ret = [NSString stringWithFormat: @"double: %.*lg", __DBL_DIG__, *(double *)data]; break;
-
-		/* warning: not officially supported - not generated by @encode but works in NSValue */
-		case 'D': ret = [NSString stringWithFormat: @"double: %.*Lg", __LDBL_DIG__, *(long double *)data]; break;
-
-		case ':': ret = NSStringFromSelector(*(SEL*)data); break;
-
-		case '{': 
-			if( 0 == strncmp(type+1, "_NSRange=", 9) ) {
-				ret = NSStringFromRange( *(NSRange *) data);
-#if TARGET_OS_OSX
-			} else if( 0 == strncmp(type+1, "_NSPoint=", 9) ) {
-				ret = NSStringFromPoint( *(NSPoint *) data);
-			} else if( 0 == strncmp(type+1, "_NSSize=", 8) ) {
-				ret = NSStringFromSize( *(NSSize *) data);
-			} else if( 0 == strncmp(type+1, "_NSRect=", 8) ) {
-				ret = NSStringFromRect( *(NSRect *) data);
+#ifdef ER_EMBEDDED_NAME
+LOGPOINTS_EXPORT_EMBEDDED id ER_SYMBOL_EMBEDDED_NAME( logPointFormatObjCType )(const char *type, void *data, const char *label);
 #endif
-			} else if( 0 == strncmp(type+1, "CGPoint=", 8) ) {
-				ret = NSStringFromCGPoint( *(CGPoint *) data);
-			} else if( 0 == strncmp(type+1, "CGSize=", 7) ) {
-				ret = NSStringFromCGSize( *(CGSize *) data);
-			} else if( 0 == strncmp(type+1, "CGRect=", 7) ) {
-				ret = NSStringFromCGRect( *(CGRect *) data);
-			} else {
-				ret = [NSString stringWithFormat: @"struct(%s)", type]; break;
-			}
-			break;
-
-
-		case '[': ret = [NSString stringWithFormat: @"array(%s)", type]; break;
-
-		case '^': 
-
-			if( 0 == strncmp(type+1, "{__CF", 5)) {
-				if(	0 == strncmp(type+6, "String=", 7) || 0 == strncmp(type+6, "Number=", 7) ) {
-					ret = [(id) ptr description];
-				} else {
-
-					ret = UTIL_AUTORELEASE_CF_AS_ID( CFCopyDescription( (CFTypeRef) ptr) );			
-				}
-			} else {
-				switch( type[1] ) {
-				
-					case '{': ret = [NSString stringWithFormat: @"struct*(%s): %p", type, ptr]; break;
-					case '?': ret = [NSString stringWithFormat: @"func*: %p", ptr]; break;
-					case '^': ret = [NSString stringWithFormat: @"ptr*: %p", ptr]; break;
-					case '*': ret = [NSString stringWithFormat: @"char**: %p", ptr]; break;
-					case 'v': ret = [NSString stringWithFormat: @"void*: %p", ptr]; break;
-
-					case 'B': 
-					case 'c': 
-					case 'C': 
-					case 's': 
-					case 'S': 
-					case 'i': 
-					case 'I': 
-					case 'l': 
-					case 'L': 
-					case 'q': 
-					case 'Q': 
-					case 'f': 
-					case 'd': 
-					case 'D': /* won't be seen - no special case code - so it is ^d */
-					case '@': 
-					case '#': 
-					case ':': 
-						ret = [NSString stringWithFormat: @"basic(%c)*: %p", type[1], ptr]; break;
-
-					default:
-						ret = [NSString stringWithFormat: @"other(%c)*: %p", type[1], ptr]; break;
-				}
-			}
-			break;
-
-		case 'B': ret = @"C++ Bool or C99 _Bool - still unsupported"; break;
-		case 'b': ret = @"bitfield - still unsupported"; break;
-
-		case '?': ret = @"unknown type (?)"; break;
-		
-		default:
-			ret = [NSString stringWithFormat: @"unknown type character '%c'", *type];
-			break;
-	}
-		
-	return [NSString stringWithFormat: @"%s%s%@", 
-		label && *label ? label : "",
-		label && *label ? ": " : "",
-		ret ? ret : [NSString stringWithFormat: @"type not decoded (%s)", type]];
-
-}
 
 #endif
-/* LOCAL_CLIENT */
-
-
+/* __OBJC__ */
 
 #ifdef __cplusplus
 }
