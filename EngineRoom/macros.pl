@@ -245,8 +245,10 @@ sub base_macros( % ) {
 
 	    my $inArgs     = $i ?     join(", ",     "", map { "v$_" } 1 .. $i ) : "";
 	    my $formatInfo = $i ?     join(' ", " ',     map { "#v$_" } 1 .. $i ) : "kLogPointFormatInfoNone";
-	    my $format     = $i ? '"'.join(" | ",        map { '%@' } 1 .. $i ).'"' : "kLogPointFormatNone";
-	    my $parameters = $i ?     join(", ", "",     map { qq< \\\n\t\t\tLOGPOINT_FORMAT_VALUE( (v$_), #v$_ )> } 1 .. $i ) : "";
+	    my $format     = $i ? '"'.join("%s",         map { '%@' } 1 .. $i ).'"' : "kLogPointFormatNone";
+
+#	    my $parameters = $i ?     join(", ", "",     map { qq< \\\n\t\t\tLOGPOINT_FORMAT_VALUE( (v$_), #v$_ )> } 1 .. $i ) : "";
+	    my $parameters = $i ?     ", " . join(", LOGPOINT_PARAMETER_SEPARATOR, ", map { qq< \\\n\t\t\tLOGPOINT_FORMAT_VALUE( (v$_), #v$_ )> } 1 .. $i ) : "";
 	    	    
 	    my $argc = $i + $autoArgcOffset;
 

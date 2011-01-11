@@ -321,6 +321,9 @@ LOGPOINT *_logPointListHead(void)
 #pragma mark Functions to be used with logpoints at runtime
 #endif
 
+#if MAINTAINER_WARNINGS
+#warning BK: make these use the kind constants
+#endif
 static const char *logPointPriorityNames[] = { "EMERGENCY", "ALERT", "CRITICAL", "ERROR", "WARNING", "NOTICE", "INFO", "DEBUG" };
 
 const char *logPointPriorityNameFromNumber(int priority)
