@@ -75,16 +75,23 @@
 #define LOGPOINT_METHODTYPE_CLASS       '+'
 #define LOGPOINT_METHODTYPE_INSTANCE    '-'
 
-#if LOGPOINT_COUNT
-#define LOGPOINT_INCREMENT_COUNTER  ++lplogpoint.count
+#if LOGPOINT_COUNT 
+#if LOGPOINT_COUNT_INACTIVE
+#define LOGPOINT_INCREMENT_COUNTER_ALWAYS    ++lplogpoint.count
+#define LOGPOINT_INCREMENT_COUNTER_IF_ACTIVE LOGPOINT_NOP
 #else
-#define LOGPOINT_INCREMENT_COUNTER  LOGPOINT_NOP
+#define LOGPOINT_INCREMENT_COUNTER_ALWAYS    LOGPOINT_NOP
+#define LOGPOINT_INCREMENT_COUNTER_IF_ACTIVE ++lplogpoint.count
+#endif
+#else
+#define LOGPOINT_INCREMENT_COUNTER_ALWAYS    LOGPOINT_NOP
+#define LOGPOINT_INCREMENT_COUNTER_IF_ACTIVE LOGPOINT_NOP
 #endif
 
 #ifndef LOGPOINT_INVOKE
-#define LOGPOINT_INVOKE(lpp, langspec1, langspec2, fmt, ...) ( \
+#define LOGPOINT_INVOKE(lpp, langSpec1, langSpec2, fmt, ...) ( \
 	NULL == ER_ADDRESS_OF_GLOBAL_OR_EMBEDDED( logPointGetInvoker ) ? LOGPOINT_NO : \
-	(ER_ADDRESS_OF_GLOBAL_OR_EMBEDDED( logPointGetInvoker )())((lpp), (langspec1), (langspec2), (fmt), ## __VA_ARGS__ ) )
+	(ER_ADDRESS_OF_GLOBAL_OR_EMBEDDED( logPointGetInvoker )())((lpp), (langSpec1), (langSpec2), (fmt), ## __VA_ARGS__ ) )
 #endif
 
 
@@ -129,16 +136,17 @@ static inline LOGPOINT *logPointReturnFromMacro( LOGPOINT *lpp ) { return lpp; }
 #warning BK: The return value from the invoker is ignored. This is because we want to return &lp for switches if ACTIVE. But it hides i.e. printf fail on disk full
 #endif	
 
-#define LOGPOINT_CREATE(flags, kind, keys, label, langspec1, langspec2, formatInfo, fmt, ...) ({ \
+#define LOGPOINT_CREATE(flags, kind, keys, label, langSpec1, langSpec2, formatInfo, fmt, ...) ({ \
         LOGPOINT_LOCAL_LABEL_DECLARATION /* must come first - see gcc docs */ \
         static LOGPOINT lplogpoint LOGPOINT_SECTION_ATTRIBUTE = \
 	  { LOGPOINT_MAGIC, sizeof(LOGPOINT), (kind), (keys), __UTIL_PRETTY_FUNCTION__, __FILE__, __LINE__, \
 	    (flags), (LOGPOINT_COUNT) ? 0 : LOGPOINT_NOT_COUNTED, NULL, LOGPOINT_LOCAL_LABEL_ADDRESS, (label), (formatInfo) ?: ( (fmt) ? #fmt ", " #__VA_ARGS__ : NULL ), NULL, 0 /*resv*/, LOGPOINT_MAGIC2(__LINE__) }; \
         LOGPOINT_LOCAL_LABEL_CREATE /* after the static - or gcc 4.0.1 will crash */ \
-        LOGPOINT_INCREMENT_COUNTER; \
+        LOGPOINT_INCREMENT_COUNTER_ALWAYS; \
 		LOGPOINT *__lpResult = NULL;	\
         if( LOGPOINT_IS_ACTIVE(lplogpoint) ) { \
-          (void) LOGPOINT_INVOKE(&lplogpoint, langspec1, langspec2, fmt, ## __VA_ARGS__); \
+			LOGPOINT_INCREMENT_COUNTER_IF_ACTIVE; \
+          (void) LOGPOINT_INVOKE(&lplogpoint, langSpec1, langSpec2, fmt, ## __VA_ARGS__); \
           __lpResult = &lplogpoint; /* non-NULL return signifies an active logpoint */ \
         } \
 	logPointReturnFromMacro( __lpResult );	\

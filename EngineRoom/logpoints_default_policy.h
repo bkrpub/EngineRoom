@@ -36,6 +36,14 @@
 #else
 #define LOGPOINT_COUNT 1
 #endif
+#endif	
+
+#ifndef LOGPOINT_COUNT_INACTIVE
+#ifdef LOGPOINT_RELEASE_BUILD
+#define LOGPOINT_COUNT_INACTIVE 0
+#else
+#define LOGPOINT_COUNT_INACTIVE 1
+#endif
 #endif
 
 #ifndef LOGPOINT_ENABLE_TRACE

@@ -62,17 +62,17 @@
  * support for my own previous usage - bkr 
  */
 
-#define lpSoftLogMessage(flags, kind, keys, langspec1, langspec2, fmt, ...) \
-  _lpSoftLogMessage(#fmt ", " #__VA_ARGS__, (flags), (kind), (keys), (langspec1), (langspec2), fmt, ## __VA_ARGS__)
+#define lpSoftLogMessage(flags, kind, keys, langSpec1, langSpec2, fmt, ...) \
+  _lpSoftLogMessage(#fmt ", " #__VA_ARGS__, (flags), (kind), (keys), (langSpec1), (langSpec2), fmt, ## __VA_ARGS__)
 
-#define lpHardLogMessage(flags, kind, keys, langspec1, langspec2, fmt, ...) \
-  _lpHardLogMessage(#fmt ", " #__VA_ARGS__, (flags), (kind), (keys), (langspec1), (langspec2), fmt, ## __VA_ARGS__)
+#define lpHardLogMessage(flags, kind, keys, langSpec1, langSpec2, fmt, ...) \
+  _lpHardLogMessage(#fmt ", " #__VA_ARGS__, (flags), (kind), (keys), (langSpec1), (langSpec2), fmt, ## __VA_ARGS__)
 
-#define _lpSoftLogMessage(label, flags, kind, keys, langspec1, langspec2, fmt, ...) \
-  LOGPOINT_CREATE( (flags), (kind), (keys), (label), (langspec1), (langspec2), fmt, ## __VA_ARGS__)
+#define _lpSoftLogMessage(label, flags, kind, keys, langSpec1, langSpec2, fmt, ...) \
+  LOGPOINT_CREATE( (flags), (kind), (keys), (label), (langSpec1), (langSpec2), fmt, ## __VA_ARGS__)
 
-#define _lpHardLogMessage(label, flags, kind, keys, langspec1, langspec2, fmt, ...) \
-  LOGPOINT_CREATE( (flags) | LOGPOINT_ACTIVE | LOGPOINT_HARD, (kind), (keys), (label), (langspec1), (langspec2), fmt, ## __VA_ARGS__)
+#define _lpHardLogMessage(label, flags, kind, keys, langSpec1, langSpec2, fmt, ...) \
+  LOGPOINT_CREATE( (flags) | LOGPOINT_ACTIVE | LOGPOINT_HARD, (kind), (keys), (label), (langSpec1), (langSpec2), fmt, ## __VA_ARGS__)
 
 
 #if LOGPOINT_ENABLE_ASSERT

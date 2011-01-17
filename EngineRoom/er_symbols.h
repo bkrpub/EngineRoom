@@ -53,7 +53,7 @@
 #else
 /* ! ER_EMBEDDED_NAME */
 
-#define ER_EMBEDDED_NAME_AS_STRING "CORE"
+#define ER_EMBEDDED_NAME_AS_STRING ""
 
 #define ER_SYMBOL_EMBEDDED_NAME(symbolName) symbolName
 

@@ -146,7 +146,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 			util_vasprintf((char **) &msg, fmt, args);
 #endif
 			//SELF_TRACE("invoker5 comp = %p\n", composer);      
-			ret = (*composer)(lpp, langspec1, langspec2, msg);
+			ret = (*composer)(lpp, langSpec1, langSpec2, msg);
 			SELF_TRACE("invoker6");      
 #ifdef __OBJC__
 			if( NULL != cfFmt )
@@ -156,7 +156,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 			va_end(args);
 		} else {
 			SELF_TRACE("invoker7 comp = %p\n", composer);      
-			ret = (*composer)(lpp, langspec1, langspec2, NULL);
+			ret = (*composer)(lpp, langSpec1, langSpec2, NULL);
 			SELF_TRACE("invoker8");      
 		} /* fmt != NULL */
 		
@@ -167,7 +167,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 #if DEPRECATED_ASSERTION_HANDLING
 #ifdef __OBJC__    
 		if( LOGPOINT_IS_OBJC(*lpp) ) {
-			[[NSAssertionHandler currentHandler] handleFailureInMethod: (SEL)langspec2 object: (id)langspec1 file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int) lpp->line description: @"%@", msg];
+			[[NSAssertionHandler currentHandler] handleFailureInMethod: (SEL)langSpec2 object: (id)langSpec1 file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int) lpp->line description: @"%@", msg];
 		} else {
 			[[NSAssertionHandler currentHandler] handleFailureInFunction: [NSString stringWithUTF8String: lpp->symbolName] file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int)lpp->line description: @"%@", msg];
 		}
@@ -213,8 +213,8 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAM
 	BOOL isClassMethod = NO;
 	SELF_TRACE("composer1");      
 	if( LOGPOINT_IS_OBJC(*lpp) ) {
-		id objcSelf = (id) langspec1;	
-		SEL objcCmd = (SEL) langspec2; 
+		id objcSelf = (id) langSpec1;	
+		SEL objcCmd = (SEL) langSpec2; 
 		SELF_TRACE("composer2 = %p\n", object_getClass);      		
         /* using weak symbols */
 		Class objcClass = COMPAT_OBJECT_GETCLASS(objcSelf);
@@ -243,12 +243,12 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAM
 	
 	LOGPOINT_EMITTER emitter = ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )();
 	
-	lp_return_t ret = (*emitter)(lpp, langspec1, langspec2, "%s%s%s %s%s%s<%s:%llu> %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
+	lp_return_t ret = (*emitter)(lpp, langSpec1, langSpec2, "%s%s%s %s%s%s<%s:%llu> %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
 											  embedded_name,
 											  *embedded_name ? " " : "",
 											  kind, 
 											  *keys ? "[" : "", keys, *keys ? "] " : "", 
-											  logPointFileNameOnly(lpp), (unsigned long long)lpp->line, 
+											  logPointLastPathComponent(lpp->file), (unsigned long long)lpp->line, 
 #ifdef __OBJC__
 											  className ? (isClassMethod ? "+[" : "-[") : "", 
 											  className ? className : "", 
@@ -271,6 +271,449 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAM
 	SELF_TRACE("composer7");      		  
 	return ret;
 }
+
+
+#if 0
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterDefaultUnused ) )
+{
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMAT_FUNCTION_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterUnused ) )
+{
+}
+#endif
+
+/* extensions and userInfo are not yet implemented, pass NULL, NULL - args not yet used */
+ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormatV )( LOGPOINT *lpp, void *langSpec1, void *langSpec2, char *buffer, size_t bufferSize, const void *extensions, void *userInfo, const char *format, va_list args)
+{
+	char tmp[ 64 ]; /* buffer for secondary formatting */ 
+
+	char *endbuffer = buffer + bufferSize - 1;
+	char *cursor = buffer;
+	const char *fmt = format;
+	const char *endfmt = fmt + strlen(fmt);
+	
+	const char *lastValue = NULL;
+	int prefixLength = 0;
+
+	struct timeval time_timeval = { 0, 0 };
+	double time_double = 0.0;
+	struct tm time_tm;
+	
+	for( cursor = buffer ; cursor < endbuffer && fmt < endfmt ; ++fmt ) {
+		
+		if( '%' != *fmt ) { /* also copies the final 0 */
+			*cursor++ = *fmt;
+			continue;
+		}
+
+		const char *startFmt = fmt;
+		
+		const char *value = NULL;
+		int valueLength = -1; /* default - up to \0 */
+
+		int tmpInt;
+		
+		int negateCondition = LOGPOINT_NO;
+
+		int alternateForm = LOGPOINT_NO;
+
+		int zeroPadding = LOGPOINT_NO;
+		
+		int negativeWidth = LOGPOINT_NO;		
+		
+		int alwaysSigned = LOGPOINT_NO;		
+		
+		int positivePadding = LOGPOINT_NO;
+		
+		int separateThousands = LOGPOINT_NO;				
+
+		int position = 0;
+		
+		int width = -1;
+		int widthAsterisk = LOGPOINT_NO;
+		
+		int precision = -1;
+		int precisionAsterisk = LOGPOINT_NO;
+		
+		char altivecSeparator = 0;
+
+		int shortModifier = 0; /* 0 1 2 */
+		int longModifier = 0;  /* " " " */
+		int longDoubleModifier = LOGPOINT_NO;
+		int intmaxtModifier = LOGPOINT_NO;
+		int ptrdifftModifier = LOGPOINT_NO;
+		int quadModifier = LOGPOINT_NO;
+		int sizetModifier = LOGPOINT_NO;
+
+		char delimiter; /* for %W|| */
+		char *nextDelimiter = NULL;
+		
+		int doneWithOptions = LOGPOINT_NO;
+		
+		++fmt; /* skip % */
+		
+		do {
+			switch( *fmt ) {
+				case '#':
+					alternateForm = YES;
+					++fmt;
+					break;
+				
+				case '0':
+					zeroPadding = LOGPOINT_YES;
+					++fmt;
+					break;
+					
+				case '-':
+					negativeWidth = LOGPOINT_YES;
+					++fmt;
+					break;
+					
+				case ' ':
+					positivePadding = LOGPOINT_YES;
+					++fmt;
+					break;
+					
+				case '+':
+					alwaysSigned = LOGPOINT_YES;
+					++fmt;
+					break;					
+
+				case '\'':
+					separateThousands = LOGPOINT_YES;
+					++fmt;
+					break;					
+
+				case '*':
+					widthAsterisk = LOGPOINT_YES;
+					++fmt;
+					break;
+					
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					tmpInt = (int) strtol(fmt, (char **) &fmt, 10); /* bad: handles +- / space */
+					if( '$' == *fmt ) {
+						position = tmpInt;
+					} else {
+						width = tmpInt;
+					}
+					break;
+
+				case '.':
+					++fmt;
+					if( '*' == *fmt ) {
+						precisionAsterisk = LOGPOINT_YES;
+						++fmt;
+					} else {
+						precision = (int) strtol(fmt, (char **) &fmt, 10); /* bad: handles +- / space */
+					}
+					break;
+					
+				case 'h':
+					++shortModifier;
+					++fmt;
+					break;
+					
+				case 'l':
+					++longModifier;
+					++fmt;
+					break;
+					
+				case 'L':
+					longDoubleModifier = LOGPOINT_YES;
+					++fmt;
+					break;
+					
+				case 'j':
+					intmaxtModifier = LOGPOINT_YES;
+					++fmt;
+					break;					
+					
+				case 'q': /* deprecated */
+					quadModifier = LOGPOINT_YES;
+					++fmt;
+					break;					
+
+				case 't':
+					ptrdifftModifier = LOGPOINT_YES;
+					++fmt;
+					break;					
+					
+				case 'z':
+					sizetModifier = LOGPOINT_YES;
+					++fmt;
+					break;					
+				
+					
+				case ',': /* altivec separator extension */
+				case ';':
+				case ':':
+				case '_':
+					altivecSeparator = *fmt++;
+					break;
+					
+				case '!': /* logpoints extension */
+					negateCondition = LOGPOINT_YES;
+					++fmt;
+					break;
+					
+				default:
+					doneWithOptions = YES;
+					break;
+			}
+		} while( LOGPOINT_NO == doneWithOptions );
+		
+				
+		if( negativeWidth && zeroPadding ) {
+			zeroPadding = LOGPOINT_NO;
+		}
+
+		if( alwaysSigned && positivePadding ) {
+			positivePadding = LOGPOINT_NO;
+		}
+		
+#ifdef MAINTAINER_WARNINGS
+#warning position and asterisk (and many other features) are currently unimplemented - both are not relevant for this usage 
+#endif
+		
+		char expander = *fmt;
+
+		/* NOTE: %>[%t%!<-%<] will produce [%t] if %t != NULL, - otherwise */ 			
+			
+		if( '>' == expander ) { /* prefix next % expansion with next character if expansion is non-NULL */
+			*cursor++ = *++fmt;
+			++prefixLength;
+			continue;
+		}
+
+		if( 0.0 == time_double && ( 'U' == expander || 'w' == expander || 'W' == expander ) ) {
+			gettimeofday(&time_timeval, NULL);
+			time_double = time_timeval.tv_sec + 1.0e-6 * time_timeval.tv_usec;
+		}
+		
+
+		size_t spaceLeft = (size_t) (endbuffer - cursor);
+		
+		
+		/* do NOT use printf options chars ( ! + - space _:;, h l L q z t j ' . 0-9 * # ) */
+		switch( expander ) { 
+				
+			case 'A': /* address */
+				snprintf(tmp, sizeof(tmp), "%p", lpp->address);
+				value = tmp;
+				break;																		
+			
+			case 'b': /* binary filename (without path) / %#b with */					
+				value = alternateForm ? lpp->image : logPointLastPathComponent( lpp->image );
+				break;
+
+			case 'B': /* label or %#B for formatInfo */
+				value = alternateForm ? lpp->formatInfo : lpp->label;
+				break;														
+				
+			case 'C': /* class or %#C for class with category */
+				value = "NOT YET";
+				break;																		
+
+			case 'e': /* line number */
+				snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) lpp->line);
+				value = tmp;
+				break;										
+				
+			case 'f': /* filename */					
+				value = alternateForm ? lpp->file : logPointLastPathComponent( lpp->file );
+				break;
+				
+			case 'F': /* flags */					
+				value = "NOT YET";
+				break;				
+
+			case 'i': /* uid %#i euid */					
+				snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) ( alternateForm ? getegid() : getgid() ) );
+				value = tmp;
+				break;								
+				
+			case 'I': /* gid %#I egid */					
+				snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) ( alternateForm ? getegid() : getgid() ) );
+				value = tmp;
+				break;												
+			
+			case 'k': /* kind, need to add upper/lower */
+				value = lpp->kind;
+				break;										
+
+			case 'K': /* keys */
+				value = lpp->keys;
+				break;																		
+		
+				
+			case 'M': /* method */
+#if __OBJC__						
+#if MAINTAINER_WARNINGS
+#warning use symbolName
+#endif
+				if( NULL != langSpec2 ) {
+					value = sel_getName( (SEL) langSpec2 );
+				}
+#endif						
+				break;																		
+				
+			case 'N': /* number of passes/invocations (depends on LOGPOINT_COUNT_ALWAYS) */
+				snprintf(tmp, sizeof(tmp), "%lld", (long long) lpp->count);
+				value = tmp;
+				break;																						
+
+			case 'O': /* object info / %#O for class name */
+				if( NULL != langSpec1 ) {
+					if( alternateForm ) {
+#if __OBJC__						
+						value = object_getClassName( (id) langSpec1 );
+#endif						
+					} else {
+						snprintf(tmp, sizeof(tmp), "%p", langSpec1);
+						value = tmp;
+					}
+
+				}
+				break;
+
+			case 'p': /* priority %#p priorityname */					
+				if( alternateForm ) {
+					snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) LOGPOINT_PRIORITY(*lpp) );
+					value = tmp;
+				} else {
+					value = logPointPriorityNameFromNumber( LOGPOINT_PRIORITY(*lpp) );
+				}
+				break;								
+				
+			case 'P': /* pid %#P ppid */					
+				snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) ( alternateForm ? getppid() : getpid() ) );
+				value = tmp;
+				break;												
+
+			case 'S': /* symbol */
+				value = lpp->symbolName;
+				break;						
+				
+			case 'T': /* thread */
+				value = "NOT YET";
+				break;
+				
+			case 'U': /* time (unixtime as double, %#w for usec, %#.3w for msec ) */				
+				if( alternateForm ) {
+					snprintf(tmp, sizeof(tmp), "%.*lf", precision == -1 ? 6 : precision, time_double - floor(time_double));					
+					value = tmp + 2;
+				} else {
+					snprintf(tmp, sizeof(tmp), "%*.*lf", width == -1 ? 17 : width, precision == -1 ? 6 : precision, time_double);					
+					value = tmp;
+				}
+				break;				
+				
+			case 'W': /* when (formatted time, UTC, %#W for local, usage: %W|%Y-%m-%d %H:%M:%S| delimiter is arbitrary) */
+				delimiter = *++fmt;
+				
+				if( 0 == delimiter || NULL == (nextDelimiter = strchr(++fmt, delimiter) ) ) {
+					fmt = endfmt; /* crisis - bail out */
+					value = "?{%W needs delimiters - i.e. %W|%F|}";
+				} else {
+				
+					if( (int) sizeof(tmp) <= snprintf(tmp, sizeof(tmp), "%.*s", (int) (nextDelimiter - fmt), fmt) ) {
+						fmt = endfmt; /* crisis - bail out */
+						value = "?{%W format too long}";
+					} else {
+
+						if( alternateForm ) {
+							localtime_r(&time_timeval.tv_sec, &time_tm);
+						} else {
+							gmtime_r(&time_timeval.tv_sec, &time_tm);
+						}
+								
+						cursor += strftime(cursor, spaceLeft, tmp, &time_tm); /* returns 0 on failure */
+						fmt = nextDelimiter; /* skip internal format, delimiter is skipped by for loop */
+						/* not using value */
+					}
+				}
+						
+			   break;										
+				
+			case '?': /* embedded name */
+				value = *ER_EMBEDDED_NAME_AS_STRING ? ER_EMBEDDED_NAME_AS_STRING : ( alternateForm ? "MAIN" : NULL );
+				break;
+				
+			case '<': /* output next character if previous % expansion was non-NULL, > is handled above */
+				++fmt;
+				if( negateCondition ? NULL == lastValue : NULL != lastValue ) {
+					*cursor++ = *fmt;
+				}
+				break;				
+								
+			case '%': /* literal % */
+				*cursor++ = '%';
+				break;
+				
+			default: /* ignore %, handle as literal */
+				snprintf(tmp, sizeof(tmp), "?{%.*s}", (int) (fmt - startFmt), startFmt);
+				value = tmp;				
+				break;
+
+		} // switch *fmt
+		
+		if( NULL != value && 0 == *value ) {
+			value = NULL;
+		}
+		
+		if( prefixLength ) {
+			if( negateCondition ? NULL != value : NULL == value ) {
+				cursor -= prefixLength; /* "erase" written prefix if not wanted */
+			}
+
+			prefixLength = 0;
+		}
+		
+		if( NULL != value ) {
+			
+			size_t spaceNeeded = ( valueLength == -1 ) ? strlen( value ) : (size_t) valueLength;
+			
+			if( spaceNeeded >= spaceLeft ) {
+				break;
+			} else {
+		
+				strncpy(cursor, value, spaceNeeded);
+				cursor += spaceNeeded;
+			}
+		}
+			
+		if( '<' != expander ) { /* keep lastValue alive as long as we are producing trailing characters */
+			lastValue = value;			
+		}
+
+	} // for cursor 
+
+	*cursor = '\0';
+
+#ifdef MAINTAINER_WARNINGS
+#warning better return the size IF we had enough space like snprintf - then again its expensive
+#endif
+	return (size_t) (cursor - buffer);
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormat )( LOGPOINT *lpp, void *langSpec1, void *langSpec2, char *buffer, size_t bufferSize, const void *extensions, void *userInfo, const char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	size_t written = logPointFormatV(lpp, langSpec1, langSpec2, buffer, bufferSize, extensions, userInfo, format, args);
+	va_end(args);
+	return written;
+}
+
 
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterDefault ) )
 {
@@ -326,12 +769,12 @@ LOGPOINT *_logPointListHead(void)
 #endif
 static const char *logPointPriorityNames[] = { "EMERGENCY", "ALERT", "CRITICAL", "ERROR", "WARNING", "NOTICE", "INFO", "DEBUG" };
 
-const char *logPointPriorityNameFromNumber(int priority)
+const char *logPointPriorityNameFromNumber(lp_uint_t priority)
 {
   return priority < 0 || priority >= (long) (sizeof(logPointPriorityNames)/sizeof(logPointPriorityNames[0])) ? "BAD_PRIORITY" : logPointPriorityNames[priority];
 }
 
-int logPointPriorityNumberFromName(const char *name)
+lp_uint_t logPointPriorityNumberFromName(const char *name)
 {
   unsigned int i;
   for( i = 0 ; i < sizeof(logPointPriorityNames)/sizeof(logPointPriorityNames[0]) ; ++i ) {
@@ -342,12 +785,16 @@ int logPointPriorityNumberFromName(const char *name)
   return -1;
 }
 
-const char *logPointFileNameOnly(LOGPOINT *lpp)
+const char *logPointLastPathComponent(const char *path)
 {
-  const char *file = strrchr(lpp->file, UTIL_PATH_SEPARATOR);
+	if( NULL == path ) {
+		return NULL;
+	}
+		
+  const char *file = strrchr(path, UTIL_PATH_SEPARATOR);
   
   if( NULL == file || '\0' == file[1] )
-    file = lpp->file;
+    file = path;
   else
     ++file;
 
@@ -397,6 +844,23 @@ lp_return_t logPointApplySimple(const char *filter, lp_uint_t options)
   return logPointApply( logPointFilterSimple /*filter*/, (void*) filter, NULL /*action*/, NULL /*actionInfo*/, options);
 }
 
+lp_return_t logPointDumpAllWithFormat(const char *format)
+{
+  return logPointApply(NULL /*filter*/, NULL /*filterInfo*/, logPointActionDumpWithFormat /*action*/, (void *) format /*actionInfo*/, LOGPOINT_OPTION_NONE);
+}
+
+lp_return_t logPointActionDumpWithFormat(LOGPOINT *lpp, void *actionInfo)
+{
+	char *format = actionInfo;
+	char buffer[512];
+	
+	size_t outputSize = logPointFormat(lpp, NULL, NULL, buffer, sizeof(buffer), NULL, NULL, format);
+	
+	fprintf(stderr, "s: %3ld o: %s\n", (long) outputSize, buffer );  
+	
+	return LOGPOINT_RETURN_OK;
+}
+
 lp_return_t logPointDumpAll(void)
 {
 /*fprintf(stderr, "%s\n", __UTIL_PRETTY_FUNCTION__); */
@@ -406,8 +870,8 @@ lp_return_t logPointDumpAll(void)
 
 lp_return_t logPointActionDump(LOGPOINT *lpp, void *actionInfo UTIL_UNUSED)
 {
-        const char *keys = lpp->keys ? lpp->keys: "";
-	const char *file = logPointFileNameOnly(lpp);
+    const char *keys = lpp->keys ? lpp->keys: "";
+	const char *file = logPointLastPathComponent(lpp->file);
 
 	int formatInfoLen = 1;
 

@@ -103,9 +103,9 @@ typedef struct logpoint {
 #define LOGPOINT_ALERT                      (1 << 28)   
 #define LOGPOINT_EMERGENCY                  (0 << 28)   
 
-#define LOGPOINT_CXX                        (1 << 27)    /* langspec data is for C++ (this, NULL) */
-#define LOGPOINT_OBJC                       (1 << 26)    /* langspec data is for ObjC (self, _cmd) */
-#define LOGPOINT_C                          (1 << 25)    /* langspec data is for C (NULL, NULL) */
+#define LOGPOINT_CXX                        (1 << 27)    /* langSpec data is for C++ (this, NULL) */
+#define LOGPOINT_OBJC                       (1 << 26)    /* langSpec data is for ObjC (self, _cmd) */
+#define LOGPOINT_C                          (1 << 25)    /* langSpec data is for C (NULL, NULL) */
 
 #define LOGPOINT_LANGUAGE_MASK              ( LOGPOINT_C | LOGPOINT_OBJC | LOGPOINT_CXX )
 #define LOGPOINT_LANGUAGE(lp)               ( (lp).flags & LOGPOINT_LANGUAGE_MASK )                      

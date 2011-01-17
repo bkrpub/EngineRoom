@@ -44,8 +44,9 @@ extern "C" {
 #define LOGPOINTS_EXPORT_EMBEDDED	extern
 #endif
 
-LOGPOINTS_EXPORT const char *logPointFileNameOnly(LOGPOINT *lpp);
+LOGPOINTS_EXPORT const char *logPointLastPathComponent(const char *path);
 
+	
 /* error description from lp_return_t */
 const char *logPointReturnString(lp_return_t err);
 
@@ -56,9 +57,11 @@ LOGPOINTS_EXPORT lp_return_t logPointDisableSimple(const char *filter);
 LOGPOINTS_EXPORT lp_return_t logPointApplySimple(const char *filter, lp_uint_t options);
 
 LOGPOINTS_EXPORT lp_return_t logPointDumpAll(void);
-
 LOGPOINTS_EXPORT lp_return_t logPointActionDump(LOGPOINT *lp, void *actionInfo);
 
+LOGPOINTS_EXPORT lp_return_t logPointDumpAllWithFormat(const char *format);
+LOGPOINTS_EXPORT lp_return_t logPointActionDumpWithFormat(LOGPOINT *lpp, void *actionInfo);
+	
 LOGPOINTS_EXPORT int         logPointFilterSimple(LOGPOINT *lp, void *filterInfo);
 
 LOGPOINTS_EXPORT lp_return_t logPointApply(
@@ -70,8 +73,8 @@ LOGPOINTS_EXPORT lp_return_t logPointApply(
 			       );
 
 
-LOGPOINTS_EXPORT const char *logPointPriorityNameFromNumber(int priority);
-LOGPOINTS_EXPORT int logPointPriorityNumberFromName(const char *name);
+LOGPOINTS_EXPORT const char *logPointPriorityNameFromNumber(lp_uint_t priority);
+LOGPOINTS_EXPORT lp_uint_t logPointPriorityNumberFromName(const char *name);
 
 
 
@@ -130,12 +133,21 @@ typedef char *LOGPOINT_MESSAGE_TYPE;
 #endif
 
 /*
+ * these functions produce a textual description of a logpoint
+ * callable with langspec1/2 during invocation and without i.e. for display
+ * the extension, userInfo and arguments following format are currently unused
+ */
+ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormatV )( LOGPOINT *lpp, void *langSpec1, void *langSpec2, char *buffer, size_t bufferSize, const void *extensions, void *userInfo, const char *format, va_list args);
+ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormat )( LOGPOINT *lpp, void *langSpec1, void *langSpec2, char *buffer, size_t bufferSize, const void *extensions, void *userInfo, const char *format, ...);
+
+	
+/*
  * this is the first function invoked by a logpoint, full control, all responsibilities yours
  * if you don't care about ObjC, you can assume that "fmt" is const char *, otherwise it is
  * LOGPOINT_FLAG(*lpp, LOGPOINT_NSSTRING) ? CFStringRef : const char *
  */
-typedef lp_return_t (*LOGPOINT_INVOKER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...);
-#define LOGPOINT_INVOKER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const void *fmt, ...)
+typedef lp_return_t (*LOGPOINT_INVOKER)(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const void *fmt, ...);
+#define LOGPOINT_INVOKER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const void *fmt, ...)
 
 LOGPOINTS_EXPORT LOGPOINT_INVOKER_DECLARATION( logPointInvokerDefault ) ER_SYMBOL_WEAK_IMPORT;
 LOGPOINTS_EXPORT LOGPOINT_INVOKER logPointGetInvoker(void) ER_SYMBOL_WEAK_IMPORT;
@@ -151,9 +163,9 @@ LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointSetI
  * payload is the result of the users "fmt", ... arguments
  * if the ObjC version (logpoints.m) is used, payload is a CFStringRef, otherwise a const char *
  */
-typedef lp_return_t (*LOGPOINT_COMPOSER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, LOGPOINT_MESSAGE_TYPE payload);
+typedef lp_return_t (*LOGPOINT_COMPOSER)(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, LOGPOINT_MESSAGE_TYPE payload);
 
-#define LOGPOINT_COMPOSER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, LOGPOINT_MESSAGE_TYPE payload)
+#define LOGPOINT_COMPOSER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, LOGPOINT_MESSAGE_TYPE payload)
 
 LOGPOINTS_EXPORT LOGPOINT_COMPOSER_DECLARATION( logPointComposerDefault ) ER_SYMBOL_WEAK_IMPORT;
 LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointGetComposer(void) ER_SYMBOL_WEAK_IMPORT;
@@ -170,9 +182,9 @@ LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointSet
  * the composer will call the emitter with a format string and arguments decorating
  * the message produced by the invoker with metadata like location in source etc.
  */
-typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...);
+typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...);
 
-#define LOGPOINT_EMITTER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langspec1, const void *langspec2, const char *fmt, ...)
+#define LOGPOINT_EMITTER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...)
 
 LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER_DECLARATION( logPointEmitterDefault ) ER_SYMBOL_WEAK_IMPORT;
 LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER logPointGetEmitter(void) ER_SYMBOL_WEAK_IMPORT;
@@ -182,6 +194,26 @@ LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER logPointSetEmitter(LOGPOINT_EMITTER n
 	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterDefault ) );	
 	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )(void);
 	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointSetEmitter )(LOGPOINT_EMITTER newEmitter);
+#endif
+
+/*
+ * the formatter will produce the final output decorated with metadata
+ */
+typedef const char * (*LOGPOINT_FORMATTER)(char *buffer, size_t buffer_size, void *userInfo, LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...);
+typedef const char * (*LOGPOINT_FORMAT_FUNCTION)(char *buffer, size_t bufferSize, void *userInfo, LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...);
+	
+#define LOGPOINT_FORMAT_FUNCTION_DECLARATION(name) const char *name(char *buffer, size_t bufferSize, void *userInfo, LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...)
+	
+#define LOGPOINT_FORMATTER_DECLARATION(name) const char * name(char *buffer, size_t buffer_size, void *userInfo, LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...)
+
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_FORMATTER_DECLARATION( logPointFormatterDefault ) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_FORMATTER logPointGetFormatter(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_FORMATTER logPointSetFormatter(LOGPOINT_FORMATTER newFormatter) ER_SYMBOL_WEAK_IMPORT;
+
+#ifdef ER_EMBEDDED_NAME
+	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_FORMATTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterDefault ) );	
+	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_FORMATTER ER_SYMBOL_EMBEDDED_NAME( logPointGetFormatter )(void);
+	LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_FORMATTER ER_SYMBOL_EMBEDDED_NAME( logPointSetFormatter )(LOGPOINT_EMITTER newFormatter);
 #endif
 	
 

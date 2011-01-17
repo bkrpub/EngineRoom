@@ -28,7 +28,8 @@ extern NSString *kLogPointFilterUserDefaultsKey;
 extern NSString *kLogPointFilterVersionUserDefaultsKey;
 
 extern NSString *kLogPointDumpUserDefaultsKey;
-
+extern NSString *kLogPointDumpFormatUserDefaultsKey;
+extern NSString *kLogPointFormatUserDefaultsKey;
 
 @interface LogPoint : NSObject
 {
