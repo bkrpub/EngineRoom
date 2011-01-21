@@ -38,10 +38,15 @@
 #pragma mark Getting and setting LogPoint handlers
 #endif
 
+static char _logPointLogFormatDefault[] = "%#W|%T|.%#.3U %?%< %k %N %>[%K%<]%< O:%O #O: %#O %S %s <%f:%e> DEFAULT";
+
 /* private - might be replaced by thread-local stuff */
-static LOGPOINT_INVOKER  _logPointInvoker  = ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
-static LOGPOINT_COMPOSER _logPointComposer = ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
-static LOGPOINT_EMITTER  _logPointEmitter  = ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
+static LOGPOINT_INVOKER    _logPointInvoker    = ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
+static LOGPOINT_COMPOSER   _logPointComposer   = ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
+static LOGPOINT_EMITTER    _logPointEmitter    = ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
+static LOGPOINT_FORMATTERV _logPointFormatterV = ER_SYMBOL_EMBEDDED_NAME(logPointFormatterVDefault);
+
+static const char *_logPointLogFormat = _logPointLogFormatDefault;
 
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointGetInvoker )(void) 
 { 
@@ -78,6 +83,32 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointSet
 	_logPointEmitter = newEmitter ? newEmitter : ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
 	return previousEmitter;
 }
+
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV ER_SYMBOL_EMBEDDED_NAME( logPointGetFormatterV )(void)
+{
+	return _logPointFormatterV;
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV ER_SYMBOL_EMBEDDED_NAME( logPointSetFormatterV )(LOGPOINT_FORMATTERV newFormatterV)
+{
+	LOGPOINT_FORMATTERV previousFormatterV = _logPointFormatterV;
+	_logPointFormatterV = newFormatterV ? newFormatterV : ER_SYMBOL_EMBEDDED_NAME(logPointFormatterVDefault);
+	return previousFormatterV;
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointGetLogFormat )(void)
+{
+	return _logPointLogFormat;
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointSetLogFormat )(const char * newFormat)
+{
+	const char * previousLogFormat = _logPointLogFormat;
+	_logPointLogFormat = newFormat ? newFormat : ER_SYMBOL_EMBEDDED_NAME(_logPointLogFormatDefault);
+	return previousLogFormat;
+}
+
+
 
 #ifdef LOCAL_INVOKER
 #warning clean up 
@@ -196,9 +227,51 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 	return ret;
 }
 
+#define LOGPOINT_PAYLOAD_FORMAT "%s"
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefault ) )
+{
+	char buffer1[512];
+	char buffer2[512];
+	
+	const char *logFormat = ER_SYMBOL_EMBEDDED_NAME( logPointGetLogFormat )();
+	
+	if( NULL == logFormat || 0 == *logFormat ) {
+		return LOGPOINT_NO;
+	}
+	
+	char *payloadFormat = strstr(logFormat, LOGPOINT_PAYLOAD_FORMAT);
+	char *postPayload = NULL;
+	
+	size_t outputSize;
+	
+	if( payloadFormat ) {
+		postPayload = payloadFormat + sizeof(LOGPOINT_PAYLOAD_FORMAT) - 1;
+		
+		snprintf(buffer2, sizeof(buffer2), "%.*s", (int) (payloadFormat - logFormat), logFormat);
+
+		outputSize = ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer1, sizeof(buffer1), NULL, NULL, buffer2);		
+
+		if( *postPayload ) {
+		   outputSize = ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer2, sizeof(buffer2), NULL, NULL, postPayload);
+		} else {
+			buffer2[0] = 0; 
+		}
+		
+	} else {
+		payload = LOGPOINT_MESSAGE_EMPTY;
+		outputSize = ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer1, sizeof(buffer1), NULL, NULL, logFormat);				
+		buffer2[0] = 0; 
+	}
+	
+	LOGPOINT_EMITTER emitter = ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )();
+	
+	lp_return_t ret = (*emitter)(lpp, langSpec1, langSpec2, "%s" LOGPOINT_MESSAGE_FORMAT "%s", buffer1, payload, buffer2); 		
+
+	return ret;
+}
 
 static int _logPointShowInstanceInfo UTIL_UNUSED = 1;
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefault ) )
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefaultOld ) )
 {
 #if MAINTAINER_WARNINGS
 #warning no nssstringmode for keys and label yet
@@ -274,17 +347,13 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAM
 
 
 #if 0
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterDefaultUnused ) )
-{
-}
-
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMAT_FUNCTION_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterUnused ) )
 {
 }
 #endif
 
 /* extensions and userInfo are not yet implemented, pass NULL, NULL - args not yet used */
-ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormatV )( LOGPOINT *lpp, void *langSpec1, void *langSpec2, char *buffer, size_t bufferSize, const void *extensions, void *userInfo, const char *format, va_list args)
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterVDefault ) ) 
 {
 	char tmp[ 64 ]; /* buffer for secondary formatting */ 
 
@@ -520,11 +589,11 @@ ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormatV )( LO
 				break;														
 				
 			case 'C': /* class or %#C for class with category */
-				value = "NOT YET";
+				//value = className;
 				break;																		
 
 			case 'e': /* line number */
-				snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) lpp->line);
+				snprintf(tmp, sizeof(tmp), "%-*llu", width == -1 ? 1 : width, (unsigned long long) lpp->line);
 				value = tmp;
 				break;										
 				
@@ -680,6 +749,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormatV )( LO
 		
 		if( NULL != value ) {
 			
+#if 0			
 			size_t spaceNeeded = ( valueLength == -1 ) ? strlen( value ) : (size_t) valueLength;
 			
 			if( spaceNeeded >= spaceLeft ) {
@@ -689,6 +759,27 @@ ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormatV )( LO
 				strncpy(cursor, value, spaceNeeded);
 				cursor += spaceNeeded;
 			}
+#else
+			if( -1 == precision && -1 != valueLength ) {
+				precision = valueLength;
+			}
+			
+			if( -1 != precision && -1 != valueLength && valueLength < precision ) {
+				precision = valueLength;
+			}
+			
+			size_t spaceNeeded = snprintf(cursor, spaceLeft, "%*.*s", 
+										width == -1 ? 0 : negativeWidth ? -width : width, 
+										  precision == -1 ? (int) strlen(value) : precision,
+										  value);
+
+			cursor += strlen(cursor);
+			
+			if( spaceNeeded >= spaceLeft ) {
+				break;
+			}
+#endif
+		
 		}
 			
 		if( '<' != expander ) { /* keep lastValue alive as long as we are producing trailing characters */
@@ -705,11 +796,14 @@ ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormatV )( LO
 	return (size_t) (cursor - buffer);
 }
 
-ER_SYMBOL_VISIBLE_EMBEDDED size_t ER_SYMBOL_EMBEDDED_NAME( logPointFormat )( LOGPOINT *lpp, void *langSpec1, void *langSpec2, char *buffer, size_t bufferSize, const void *extensions, void *userInfo, const char *format, ...)
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormat ) ) 
 {
 	va_list args;
 	va_start(args, format);
-	size_t written = logPointFormatV(lpp, langSpec1, langSpec2, buffer, bufferSize, extensions, userInfo, format, args);
+	
+	LOGPOINT_FORMATTERV formatterv = ER_SYMBOL_EMBEDDED_NAME( logPointGetFormatterV )();
+
+	size_t written = (*formatterv)(lpp, langSpec1, langSpec2, buffer, bufferSize, extensions, userInfo, format, args);
 	va_end(args);
 	return written;
 }
@@ -856,7 +950,8 @@ lp_return_t logPointActionDumpWithFormat(LOGPOINT *lpp, void *actionInfo)
 	
 	size_t outputSize = logPointFormat(lpp, NULL, NULL, buffer, sizeof(buffer), NULL, NULL, format);
 	
-	fprintf(stderr, "s: %3ld o: %s\n", (long) outputSize, buffer );  
+	NSLog(@"%s", buffer);
+	//fprintf(stderr, "s: %3ld o: %s\n", (long) outputSize, buffer );  
 	
 	return LOGPOINT_RETURN_OK;
 }

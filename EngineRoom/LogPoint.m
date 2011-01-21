@@ -31,7 +31,7 @@ NSString *kLogPointDumpUserDefaultsKey = @"logPointDump";
 
 NSString *kLogPointDumpFormatUserDefaultsKey = @"logPointDumpFormat";
 
-NSString *kLogPointFormatUserDefaultsKey = @"logPointFormat";
+NSString *kLogPointLogFormatUserDefaultsKey = @"logPointLogFormat";
 
 
 static const char blockInvokeMarker[] = "_block_invoke_";
@@ -109,13 +109,18 @@ lp_return_t logPointCollector(LOGPOINT *lp, void *userInfo)
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     NSString *filter = [self configurationValueForKey: kLogPointFilterUserDefaultsKey];
+
+	NSString *logFormat = [self configurationValueForKey: kLogPointLogFormatUserDefaultsKey];
+	
+	if( nil != logFormat ) {
+		logPointSetLogFormat([logFormat UTF8String]);
+	}
+	
 	
 	BOOL dump = [[self configurationValueForKey: kLogPointDumpUserDefaultsKey] boolValue];
 
 	NSString *dumpFormat = [self configurationValueForKey: kLogPointDumpFormatUserDefaultsKey];
 	
-	// NSString *logFormat = [self configurationValueForKey: kLogPointFormatUserDefaultsKey];
-		
 	if( YES == dump ) {
 		if( nil == dumpFormat ) {
 			logPointDumpAll();

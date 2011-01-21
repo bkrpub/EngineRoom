@@ -1,0 +1,27 @@
+
+just a note for myself
+
+case '!': /* logpoints extension */
+
+case 'A': /* address */
+case 'b': /* binary filename (without path) / %#b with */
+case 'B': /* label or %#B for formatInfo */
+case 'C': /* class or %#C for class with category */
+case 'e': /* line number */
+case 'f': /* filename */
+case 'F': /* flags */
+case 'i': /* uid %#i euid */
+case 'I': /* gid %#I egid */
+case 'k': /* kind, need to add upper/lower */
+case 'M': /* method */
+case 'K': /* keys */
+case 'N': /* number of passes/invocations (depends on LOGPOINT_COUNT_ALWAYS) */
+case 'O': /* object info / %#O for class name */
+case 'p': /* priority %#p priorityname */
+case 'P': /* pid %#P ppid */
+case 'S': /* symbol */
+case 'T': /* thread */
+case 'U': /* time (unixtime as double, %#w for usec, %#.3w for msec ) */
+case 'W': /* when (formatted time, UTC, %#W for local, usage: %W|%Y-%m-%d %H:%M:%S| delimiter is arbitrary) */
+case '?': /* embedded name */
+case '<': /* output next character if previous % expansion was non-NULL, > is handled above */
