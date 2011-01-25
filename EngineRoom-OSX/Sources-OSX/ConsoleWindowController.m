@@ -33,29 +33,37 @@ NSArrayController *globalMessageArrayController = nil;
 LOGPOINT_EMITTER globalSavedEmitter = NULL;
 
 LOGPOINT_EMITTER_DECLARATION(logPointConsoleWindowEmitter)
-{
-#if 0	
-  va_list args;
-  va_start(args, fmt);
-
+{	
+	if( NULL == logFormat || 0 == *logFormat ) {
+		return LOGPOINT_NO;
+	}
+	
+	if( NULL == payload ) {
+		payload = "";
+	}
+	
+	char stackBuffer[LOGPOINT_EMITTER_STACKBUFFER];
+	size_t wantedSize = strlen(payload) + LOGPOINT_MAX_DECORATION_LENGTH;
+	
+	char *buffer = logPointAllocateBufferIfNeeded(stackBuffer, sizeof(stackBuffer), wantedSize);
+	
+	if( NULL != buffer ) {
+		logPointFormat(lpp, langSpec1, langSpec2, buffer, wantedSize, NULL, NULL, logFormat, payload);		
+		
 #if MAINTAINER_WARNINGS
-#warning BK: no NSString support here
+#warning need to check return value 
 #endif
-  CFStringRef cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);  
-  CFStringRef cfMsg = CFStringCreateWithFormatAndArguments(kCFAllocatorDefault, NULL, cfFmt, args);
+		
+		NSString *nsMsg = [NSString stringWithUTF8String: buffer];
 
-  NSLog(@"CONSOLE: %@", cfMsg);
-  [globalMessageArrayController addObject: [NSDictionary dictionaryWithObjectsAndKeys: (NSString*) cfMsg, @"message", nil]];
-
-  CFRelease(cfMsg);
-  CFRelease(cfFmt);
-
-  va_end(args);
-#else
-#warning no logPointConsoleWindowEmitter
-	NSLog(@"logPointConsoleWindowEmitter currently disabled");
-#endif
-
+		NSLog(@"CONSOLE: %s", buffer);
+		[globalMessageArrayController addObject: [NSDictionary dictionaryWithObjectsAndKeys: nsMsg, @"message", nil]];
+		
+		logPointFreeBufferIfNeeded(buffer, stackBuffer);
+		
+	} else {
+		NSLog(@"CONSOLE: logPoints: out of memory - payload: %s", payload);
+	}
 	
   return LOGPOINT_YES;
 }

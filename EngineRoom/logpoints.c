@@ -25,18 +25,6 @@
 /* #define SELF_TRACE(fmt, ...) fprintf(stderr, "TRC: "##fmt##"\n", __VA_ARGS__) */
 #define SELF_TRACE(fmt, ...) /**/
 
-#ifndef LOGPOINT_INVOKER_STACKBUFFER
-#define LOGPOINT_INVOKER_STACKBUFFER 1024
-#endif
-
-#ifndef LOGPOINT_EMITTER_STACKBUFFER
-#define LOGPOINT_EMITTER_STACKBUFFER 1536
-#endif
-
-#ifndef LOGPOINT_MAX_DECORATION_LENGTH
-#define LOGPOINT_MAX_DECORATION_LENGTH 512
-#endif	
-
 #include "logpoints_api.h"
 
 /* to define the symbols */
@@ -56,11 +44,6 @@ static char _logPointLogFormatDefault[] = "%#W|%T|.%#.3U %?%< %k %N %>[%K%<]%< O
 
 /* private - might be replaced by thread-local stuff */
 static LOGPOINT_INVOKER    _logPointInvoker    = ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
-
-#if 0
-static LOGPOINT_COMPOSER   _logPointComposer   = ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
-#endif
-
 static LOGPOINT_EMITTER    _logPointEmitter    = ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
 static LOGPOINT_FORMATTERV _logPointFormatterV = ER_SYMBOL_EMBEDDED_NAME(logPointFormatterVDefault);
 
@@ -77,20 +60,6 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointSet
 	_logPointInvoker = newInvoker ? newInvoker : ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
 	return previousInvoker;
 }
-
-#if 0
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointGetComposer )(void)
-{
-	return _logPointComposer;
-}
-
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointSetComposer )(LOGPOINT_COMPOSER newComposer)
-{
-	LOGPOINT_COMPOSER previousComposer = _logPointComposer;
-	_logPointComposer = newComposer ? newComposer : ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
-	return previousComposer;
-}
-#endif
 
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )(void)
 {
@@ -250,6 +219,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 
 	
 #if 0	
+/* in limbo */
 #ifdef __APPLE__ 
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterAsl ) )
 {
@@ -314,161 +284,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 	}
 
 	return ret;
-	
-#if 0	
-#ifdef __OBJC__	
-	
-	CFStringRef cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);  
-	if( NULL != cfFmt ) {
-		NSLogv((NSString*) cfFmt, args);
-		CFRelease(cfFmt);
-	} else {
-		NSLog(@"logPoints: EMERGENCY emitter could not CFStringCreateWithCStringNoCopy format");
-	}
-	
-#else
-	
-	/* no output error handling - where should we print it to ? */
-	ret = (0 > vfprintf(stderr, fmt, args)) ? LOGPOINT_NO : LOGPOINT_YES;
-	
-#if 0	
-	char *log = NULL;
-	
-	int len = util_log_vasprintf(&log, fmt, args);
-	if( len+1 != fprintf(stderr, "%s\n", log) )
-		ret = LOGPOINT_NO;
-	
-	free(log);
-#endif
-	
-#endif
-	/* __OBJC__ */
-	
-#endif	
-	
 }
-	
-	
-#if 0	
-#define LOGPOINT_PAYLOAD_FORMAT "%s"
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefault ) )
-{
-	char buffer1[512];
-	char buffer2[512];
-	
-	const char *logFormat = ER_SYMBOL_EMBEDDED_NAME( logPointGetLogFormat )();
-	
-	if( NULL == logFormat || 0 == *logFormat ) {
-		return LOGPOINT_NO;
-	}
-	
-	char *payloadFormat = strstr(logFormat, LOGPOINT_PAYLOAD_FORMAT);
-	char *postPayload = NULL;
-	
-	size_t outputSize;
-	
-	if( payloadFormat ) {
-		postPayload = payloadFormat + sizeof(LOGPOINT_PAYLOAD_FORMAT) - 1;
-		
-		snprintf(buffer2, sizeof(buffer2), "%.*s", (int) (payloadFormat - logFormat), logFormat);
-
-		outputSize = ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer1, sizeof(buffer1), NULL, NULL, buffer2);		
-
-		if( *postPayload ) {
-		   outputSize = ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer2, sizeof(buffer2), NULL, NULL, postPayload);
-		} else {
-			buffer2[0] = 0; 
-		}
-		
-	} else {
-		payload = "";
-		outputSize = ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer1, sizeof(buffer1), NULL, NULL, logFormat);				
-		buffer2[0] = 0; 
-	}
-	
-	LOGPOINT_EMITTER emitter = ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )();
-	
-	lp_return_t ret = (*emitter)(lpp, langSpec1, langSpec2, "%s%s%s", buffer1, payload, buffer2); 		
-
-	return ret;
-}
-
-static int _logPointShowInstanceInfo UTIL_UNUSED = 1;
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefaultOld ) )
-{
-#if MAINTAINER_WARNINGS
-#warning no nssstringmode for keys and label yet
-#endif
-	const char *kind = (kLogPointKindNone == lpp->kind) ? "" : lpp->kind;
-	const char *keys = (kLogPointKeysNone == lpp->keys) ? "" : lpp->keys;
-	const char *label = (kLogPointLabelNone == lpp->label) ? "" : lpp->label;
-#ifdef __OBJC__
-	const char *methodName = NULL;
-	const char *className = NULL;
-	char *instanceInfo = NULL;
-	BOOL isClassMethod = NO;
-	SELF_TRACE("composer1");      
-	if( LOGPOINT_IS_OBJC(*lpp) ) {
-		id objcSelf = (id) langSpec1;	
-		SEL objcCmd = (SEL) langSpec2; 
-		SELF_TRACE("composer2 = %p\n", object_getClass);      		
-        /* using weak symbols */
-		Class objcClass = COMPAT_OBJECT_GETCLASS(objcSelf);
-		isClassMethod = COMPAT_CLASS_ISMETACLASS( objcClass );
-		
-		SELF_TRACE("composer3 = %p\n", object_getClassName);      		
-		
-		className = object_getClassName(objcSelf);
-		
-		SELF_TRACE("composer4 = %p\n", sel_getName);      		
-		methodName = objcCmd ? sel_getName(objcCmd) : lpp->symbolName;
-		
-		char _instanceInfo[sizeof("0x0123456789abcdef:0123456789")];
-		
-		if( _logPointShowInstanceInfo && NO == isClassMethod ) {
-			snprintf(_instanceInfo, sizeof(_instanceInfo), "%p:%u", (void*)objcSelf, (unsigned int) [objcSelf retainCount]);
-			_instanceInfo[ sizeof(_instanceInfo) - 1] = 0;
-			instanceInfo = _instanceInfo;
-		}
-	}
-	SELF_TRACE("composer5");      		  
-#endif
-	SELF_TRACE("composer6 emit = %p\n", logPointGetEmitter());      		  
-
-	const char *embedded_name = ER_EMBEDDED_NAME_AS_STRING;
-	
-	LOGPOINT_EMITTER emitter = ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )();
-	
-	lp_return_t ret = (*emitter)(lpp, langSpec1, langSpec2, "%s%s%s %s%s%s<%s:%llu> %s%s%s%s%s %s%s%s%s" LOGPOINT_MESSAGE_FORMAT, 
-											  embedded_name,
-											  *embedded_name ? " " : "",
-											  kind, 
-											  *keys ? "[" : "", keys, *keys ? "] " : "", 
-											  logPointLastPathComponent(lpp->file), (unsigned long long)lpp->line, 
-#ifdef __OBJC__
-											  className ? (isClassMethod ? "+[" : "-[") : "", 
-											  className ? className : "", 
-											  className ? " " : "", 
-											  methodName ? methodName : lpp->symbolName, 
-											  className ? "]" : "",
-											  instanceInfo ? instanceInfo : "",
-											  instanceInfo ? " " : "",
-#else
-											  "",
-											  "",
-											  "",
-											  lpp->symbolName,
-											  "", 
-											  "",
-											  "",
-#endif
-											  label, *label && payload ? " " : "", payload ? payload : "");
-	
-	SELF_TRACE("composer7");      		  
-	return ret;
-}
-#endif
-	
 	
 /* extensions and userInfo are not yet implemented, pass NULL, NULL - args not yet used */
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterVDefault ) ) 

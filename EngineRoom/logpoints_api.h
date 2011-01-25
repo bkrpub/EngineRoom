@@ -44,6 +44,19 @@ extern "C" {
 #define LOGPOINTS_EXPORT_EMBEDDED	extern
 #endif
 
+#ifndef LOGPOINT_INVOKER_STACKBUFFER
+#define LOGPOINT_INVOKER_STACKBUFFER 1024
+#endif
+	
+#ifndef LOGPOINT_EMITTER_STACKBUFFER
+#define LOGPOINT_EMITTER_STACKBUFFER 1536
+#endif
+	
+#ifndef LOGPOINT_MAX_DECORATION_LENGTH
+#define LOGPOINT_MAX_DECORATION_LENGTH 512
+#endif	
+	
+	
 LOGPOINTS_EXPORT const char *logPointLastPathComponent(const char *path);
 
 	
@@ -132,6 +145,15 @@ typedef char *LOGPOINT_MESSAGE_TYPE;
 #define LOGPOINT_MESSAGE_EMPTY  ""
 #endif
 
+	
+LOGPOINTS_EXPORT void * logPointAllocateBufferIfNeeded( void *existingBuffer, size_t existingBufferSize, size_t wantedSize ) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT void logPointFreeBufferIfNeeded( void *buffer, void *existingBuffer ) ER_SYMBOL_WEAK_IMPORT;
+
+#ifdef ER_EMBEDDED_NAME	
+LOGPOINTS_EXPORT_EMBEDDED void * ER_SYMBOL_EMBEDDED_NAME( logPointAllocateBufferIfNeeded )( void *existingBuffer, size_t existingBufferSize, size_t wantedSize );
+LOGPOINTS_EXPORT_EMBEDDED void ER_SYMBOL_EMBEDDED_NAME( logPointFreeBufferIfNeeded )( void *buffer, void *existingBuffer );
+#endif
+	
 /*
  * this is the first function invoked by a logpoint, full control, all responsibilities yours
  * if you don't care about ObjC, you can assume that "fmt" is const char *, otherwise it is
