@@ -34,6 +34,7 @@ LOGPOINT_EMITTER globalSavedEmitter = NULL;
 
 LOGPOINT_EMITTER_DECLARATION(logPointConsoleWindowEmitter)
 {
+#if 0	
   va_list args;
   va_start(args, fmt);
 
@@ -50,7 +51,12 @@ LOGPOINT_EMITTER_DECLARATION(logPointConsoleWindowEmitter)
   CFRelease(cfFmt);
 
   va_end(args);
+#else
+#warning no logPointConsoleWindowEmitter
+	NSLog(@"logPointConsoleWindowEmitter currently disabled");
+#endif
 
+	
   return LOGPOINT_YES;
 }
 

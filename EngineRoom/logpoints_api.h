@@ -154,9 +154,9 @@ LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointSetI
  * payload is the result of the users "fmt", ... arguments
  * if the ObjC version (logpoints.m) is used, payload is a CFStringRef, otherwise a const char *
  */
-typedef lp_return_t (*LOGPOINT_COMPOSER)(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, LOGPOINT_MESSAGE_TYPE payload);
+typedef lp_return_t (*LOGPOINT_COMPOSER)(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *payload);
 
-#define LOGPOINT_COMPOSER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, LOGPOINT_MESSAGE_TYPE payload)
+#define LOGPOINT_COMPOSER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *payload)
 
 LOGPOINTS_EXPORT LOGPOINT_COMPOSER_DECLARATION( logPointComposerDefault ) ER_SYMBOL_WEAK_IMPORT;
 LOGPOINTS_EXPORT LOGPOINT_COMPOSER logPointGetComposer(void) ER_SYMBOL_WEAK_IMPORT;
@@ -173,9 +173,9 @@ LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointSet
  * the composer will call the emitter with a format string and arguments decorating
  * the message produced by the invoker with metadata like location in source etc.
  */
-typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...);
+typedef lp_return_t (*LOGPOINT_EMITTER)(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *logFormat, const char *payload);
 
-#define LOGPOINT_EMITTER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *fmt, ...)
+#define LOGPOINT_EMITTER_DECLARATION(name) lp_return_t name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, const char *logFormat, const char *payload)
 
 LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER_DECLARATION( logPointEmitterDefault ) ER_SYMBOL_WEAK_IMPORT;
 LOGPOINTS_EXPORT_EMBEDDED LOGPOINT_EMITTER logPointGetEmitter(void) ER_SYMBOL_WEAK_IMPORT;
@@ -200,7 +200,6 @@ typedef const char * (*LOGPOINT_FORMAT_FUNCTION)(LOGPOINT *lpp, const void *lang
 
 #define LOGPOINT_FORMAT_FUNCTION_DECLARATION(name) const char *name(LOGPOINT *lpp, const void *langSpec1, const void *langSpec2, char *buffer, size_t bufferSize, const void *extensions, void *userInfo, const char *fmt, ...)
 	
-
 /*
  * these functions produce a textual description of a logpoint
  * callable with langspec1/2 during invocation and without i.e. for display

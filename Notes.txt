@@ -1,4 +1,24 @@
 
+data: fuer image logs
+
+#ifdef DEBUG
+    #if __ppc64__ || __ppc__
+        #define DebugBreak() \
+            if(AmIBeingDebugged()) \
+            { \
+                __asm__("li r0, 20\nsc\nnop\nli r0, 37\nli r4, 2\nsc\nnop\n" \
+                    : : : "memory","r0","r3","r4" ); \
+            }
+    #else
+        #define DebugBreak() if(AmIBeingDebugged()) {__asm__("int $3\n" : : );}
+    #endif
+
+    bool AmIBeingDebugged(void);
+#else
+    #define DebugBreak()
+#endif
+
+
 userData ( think switch on a specific value )
 
 CFPlugin

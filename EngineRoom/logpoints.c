@@ -25,6 +25,17 @@
 /* #define SELF_TRACE(fmt, ...) fprintf(stderr, "TRC: "##fmt##"\n", __VA_ARGS__) */
 #define SELF_TRACE(fmt, ...) /**/
 
+#ifndef LOGPOINT_INVOKER_STACKBUFFER
+#define LOGPOINT_INVOKER_STACKBUFFER 1024
+#endif
+
+#ifndef LOGPOINT_EMITTER_STACKBUFFER
+#define LOGPOINT_EMITTER_STACKBUFFER 1536
+#endif
+
+#ifndef LOGPOINT_MAX_DECORATION_LENGTH
+#define LOGPOINT_MAX_DECORATION_LENGTH 512
+#endif	
 
 #include "logpoints_api.h"
 
@@ -33,6 +44,9 @@
 
 #include "er_compat.h"
 
+#ifdef __OBJC__
+#include <asl.h>
+#endif
 
 #ifdef __APPLE_CC__
 #pragma mark Getting and setting LogPoint handlers
@@ -42,7 +56,11 @@ static char _logPointLogFormatDefault[] = "%#W|%T|.%#.3U %?%< %k %N %>[%K%<]%< O
 
 /* private - might be replaced by thread-local stuff */
 static LOGPOINT_INVOKER    _logPointInvoker    = ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
+
+#if 0
 static LOGPOINT_COMPOSER   _logPointComposer   = ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
+#endif
+
 static LOGPOINT_EMITTER    _logPointEmitter    = ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
 static LOGPOINT_FORMATTERV _logPointFormatterV = ER_SYMBOL_EMBEDDED_NAME(logPointFormatterVDefault);
 
@@ -60,6 +78,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointSet
 	return previousInvoker;
 }
 
+#if 0
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointGetComposer )(void)
 {
 	return _logPointComposer;
@@ -71,6 +90,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER ER_SYMBOL_EMBEDDED_NAME( logPointSe
 	_logPointComposer = newComposer ? newComposer : ER_SYMBOL_EMBEDDED_NAME(logPointComposerDefault);
 	return previousComposer;
 }
+#endif
 
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )(void)
 {
@@ -108,125 +128,228 @@ ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointSetLogF
 	return previousLogFormat;
 }
 
-
-
-#ifdef LOCAL_INVOKER
-#warning clean up 
-
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointInvokerDefault ) )
+ER_SYMBOL_VISIBLE_EMBEDDED void * ER_SYMBOL_EMBEDDED_NAME( logPointAllocateBufferIfNeeded )( void *existingBuffer, size_t existingBufferSize, size_t wantedSize )
 {
-#ifdef MAINTAINER_WARNINGS
-#warning local client test
-#warning no non-objc support
-#endif  
-	
-	va_list args;
-	va_start(args, fmt);
-	
-	NSString *msg = nil;
-	
-	if( nil != fmt ) {
-		NSString *nsfmt = LOGPOINT_IS_NSSTRING(*lpp) ? (id)fmt : [[NSString alloc] initWithUTF8String: (const char *)fmt];
+	if( wantedSize <= existingBufferSize) {
+		/* fprintf(stderr, "Use existing for %ld / ex %ld\n", (long) wantedSize, (long) existingBufferSize); */
+		return existingBuffer;
+	} 
 		
-		msg = [[NSString alloc] initWithFormat: nsfmt arguments: args];
-		
-		if( LOGPOINT_IS_NSSTRING(*lpp) ) {
-			[nsfmt release];
-		}
-	}
+	size_t mallocSize = ( (wantedSize+1) & ~4095 ) + 4096;
 	
-	NSLog(@"%s: %s %@", __FUNCTION__, lpp->kind, msg ?: @"NO PAYLOAD");
-	[msg release];
+	/* fprintf(stderr, "Use malloc %ld for %ld / ex %ld \n", (long) mallocSize, (long) wantedSize, (long) existingBufferSize); */
 	
-	va_end(args);
-	return LOGPOINT_YES;
+	return malloc(mallocSize);
 }
 
-#endif
-/* LOCAL_INVOKER */
+ER_SYMBOL_VISIBLE_EMBEDDED void ER_SYMBOL_EMBEDDED_NAME( logPointFreeBufferIfNeeded )( void *buffer, void *existingBuffer )
+{
+	if( NULL != buffer && buffer != existingBuffer ) {
+		free(buffer);
+	} 
+}
+
 
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointInvokerDefault ) )
 {
-	lp_return_t ret = LOGPOINT_YES;
-	SELF_TRACE("invoker1");
-	void *msg = NULL;
-	
-	if( ! LOGPOINT_IS_SILENT( *lpp ) ) {
-		
-		LOGPOINT_COMPOSER composer = ER_SYMBOL_EMBEDDED_NAME( logPointGetComposer )();
+	if( LOGPOINT_IS_SILENT( *lpp ) ) {
+		return LOGPOINT_YES;
+	}
 
-		
-		if( NULL != fmt ) {
-			va_list args;
-			va_start(args, fmt); 
-			
-#ifdef __OBJC__
-			CFStringRef cfFmt = NULL;
-			
-			if( NO == LOGPOINT_IS_NSSTRING(*lpp) ) {
-				SELF_TRACE("invoker2");
-				cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, (const char *) fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);
-			} else {
-				SELF_TRACE("invoker3");
-				cfFmt = (CFStringRef) fmt;
-			}
-			
-			msg = (void *) CFStringCreateWithFormatAndArguments(kCFAllocatorDefault, NULL /* fmtOptions */, cfFmt, args);
-			SELF_TRACE("invoker4");
-#else
-			util_vasprintf((char **) &msg, fmt, args);
-#endif
-			//SELF_TRACE("invoker5 comp = %p\n", composer);      
-			ret = (*composer)(lpp, langSpec1, langSpec2, msg);
-			SELF_TRACE("invoker6");      
-#ifdef __OBJC__
-			if( NULL != cfFmt )
-				CFRelease( cfFmt );
-#endif
-			
-			va_end(args);
-		} else {
-			SELF_TRACE("invoker7 comp = %p\n", composer);      
-			ret = (*composer)(lpp, langSpec1, langSpec2, NULL);
-			SELF_TRACE("invoker8");      
-		} /* fmt != NULL */
-		
-	} /* ! SILENT */
+	LOGPOINT_EMITTER emitter = ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )();
+	
+	if( NULL == emitter ) {
+		return LOGPOINT_NO;
+	}
+	
+	const char *logFormat = ER_SYMBOL_EMBEDDED_NAME( logPointGetLogFormat )();
+
+	if( NULL == fmt ) {
+		return (*emitter)(lpp, langSpec1, langSpec2, logFormat, NULL);
+	}
 	
 	
-	if( LOGPOINT_IS_ASSERT(*lpp) ) {
-#if DEPRECATED_ASSERTION_HANDLING
-#ifdef __OBJC__    
-		if( LOGPOINT_IS_OBJC(*lpp) ) {
-			[[NSAssertionHandler currentHandler] handleFailureInMethod: (SEL)langSpec2 object: (id)langSpec1 file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int) lpp->line description: @"%@", msg];
-		} else {
-			[[NSAssertionHandler currentHandler] handleFailureInFunction: [NSString stringWithUTF8String: lpp->symbolName] file: [NSString stringWithUTF8String: lpp->file] lineNumber: (int)lpp->line description: @"%@", msg];
+	const char *payload = NULL;
+
+	va_list args;
+	va_start(args, fmt); 
+	
+#ifdef __OBJC__
+	CFStringRef cfFmt = NULL;
+	CFStringRef cfMsg = NULL;
+	
+	if( NO == LOGPOINT_IS_NSSTRING(*lpp) ) {
+		cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, (const char *) fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);
+		
+		if( NULL == cfFmt ) {
+			NSLog(@"logPoints: EMERGENCY can not create CFStringRef from format '%s'\n", fmt);
+			return LOGPOINT_NO;
 		}
-		fprintf(stderr, "Unexpected return from assertion handler\n");
-		abort();
-#else
-		abort();
-#endif
-#endif
-	}
-	SELF_TRACE("invoker9");      
-#if MAINTAINER_WARNINGS
-#warning this will leak for assertion exceptions which are catched
-#endif
+	} 
 	
-	if( NULL != msg ) {
+	cfMsg = CFStringCreateWithFormatAndArguments(kCFAllocatorDefault, NULL /* fmtOptions */, cfFmt ? cfFmt : (CFStringRef) fmt, args);
+	
+	if( NULL != cfFmt ) {
+		CFRelease(cfFmt);
+	}			
+	
+	if( NULL == cfMsg ) {
+		NSLog(@"logPoints: EMERGENCY CFStringCreateWithFormatAndArguments failed for format '%@'\n", cfFmt ? cfFmt : (CFStringRef) fmt);
+		return LOGPOINT_NO;
+	}
+	
+	CFIndex msgLength = CFStringGetLength( cfMsg );
+	
+	CFIndex maximumSize = 1 + CFStringGetMaximumSizeForEncoding(msgLength, kCFStringEncodingUTF8);
+	
+	char stackBuffer[LOGPOINT_INVOKER_STACKBUFFER];
+
+	char *buffer = logPointAllocateBufferIfNeeded(stackBuffer, sizeof(stackBuffer), maximumSize);
+	
+	if( NULL != buffer ) {
+		if( true == CFStringGetCString(cfMsg, buffer, maximumSize, kCFStringEncodingUTF8) ) {
+			payload = buffer;
+		}
+	}
+	
+#else
+	char *mallocedMsg = NULL;
+#warning should use logPointAllocateBufferIfNeeded here too
+	size_t bufferSize = util_vasprintf( &mallocedMsg, (const char *) fmt, args) ) ) {
+	
+	if( (size_t) -1 != bufferSize ) {
+		payload = mallocedMsg;
+	}
+#endif
+/* __OBJC__ */
+	
+	if( NULL == payload ) {
+		payload = "logPoints: EMERGENCY could not allocate memory for payload";
+	}
+	
+	lp_return_t ret = (*emitter)(lpp, langSpec1, langSpec2, logFormat, payload);
+	
 #ifdef __OBJC__
-		CFRelease( (CFStringRef) msg);
-#else
-		free( msg );
-#endif
+	if( NULL != cfMsg ) {
+		CFRelease( cfMsg );
 	}
-	
-	SELF_TRACE("invoker10");      
+
+	if( NULL != buffer ) {
+		logPointFreeBufferIfNeeded(buffer, stackBuffer);
+	}
+#else
+	if( NULL != mallocedMsg ) {
+		free(mallocedMsg);
+	}
+#endif
+
+	va_end(args);
 	
 	return ret;
 }
 
+	
+#if 0	
+#ifdef __APPLE__ 
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterAsl ) )
+{
+	char level[] = { '0' + LOGPOINT_PRIORITY(*lpp), 0 };
+	
+	static int stderrAdded = LOGPOINT_NO;
+	if( LOGPOINT_NO == stderrAdded ) {
+		asl_add_log_file(NULL, fileno(stderr));
+		stderrAdded = LOGPOINT_YES;
+	}
+	
+	aslmsg amsg = asl_new(ASL_TYPE_MSG);
+	
+	if( NULL == amsg ) {
+		return LOGPOINT_NO;
+	}
+	
+	asl_set(amsg, ASL_KEY_LEVEL, level);
+	asl_set(amsg, ASL_KEY_FACILITY, "com.apple.console");
+	
+	lp_return_t ret = (0 == asl_vlog(NULL, amsg, LOGPOINT_PRIORITY(*lpp), fmt, args)) ? LOGPOINT_YES : LOGPOINT_NO;
+	
+	asl_send(NULL, amsg);
+	
+	asl_free(amsg);
+	
+	return ret;
+}
+#endif 
+#endif	
+
+ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterDefault ) )
+{
+	lp_return_t ret = LOGPOINT_YES;
+	
+	if( NULL == logFormat || 0 == *logFormat ) {
+		return LOGPOINT_NO;
+	}
+
+	if( NULL == payload ) {
+		payload = "";
+	}
+	
+	char stackBuffer[LOGPOINT_EMITTER_STACKBUFFER];
+	size_t wantedSize = strlen(payload) + LOGPOINT_MAX_DECORATION_LENGTH;
+	
+	char *buffer = logPointAllocateBufferIfNeeded(stackBuffer, sizeof(stackBuffer), wantedSize);
+	
+	if( NULL != buffer ) {
+		logPointFormat(lpp, langSpec1, langSpec2, buffer, wantedSize, NULL, NULL, logFormat, payload);		
+
+#if MAINTAINER_WARNINGS
+#warning need to check return value 
+#endif
+		
+		ret = ( 0 > fprintf(stderr, "%s\n", buffer) ) ? LOGPOINT_NO : LOGPOINT_YES;
+
+		logPointFreeBufferIfNeeded(buffer, stackBuffer);
+		
+	} else {
+		ret = ( 0 > fprintf(stderr, "logPoints: out of memory - payload: %s\n", payload) ) ? LOGPOINT_NO : LOGPOINT_YES;
+	}
+
+	return ret;
+	
+#if 0	
+#ifdef __OBJC__	
+	
+	CFStringRef cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);  
+	if( NULL != cfFmt ) {
+		NSLogv((NSString*) cfFmt, args);
+		CFRelease(cfFmt);
+	} else {
+		NSLog(@"logPoints: EMERGENCY emitter could not CFStringCreateWithCStringNoCopy format");
+	}
+	
+#else
+	
+	/* no output error handling - where should we print it to ? */
+	ret = (0 > vfprintf(stderr, fmt, args)) ? LOGPOINT_NO : LOGPOINT_YES;
+	
+#if 0	
+	char *log = NULL;
+	
+	int len = util_log_vasprintf(&log, fmt, args);
+	if( len+1 != fprintf(stderr, "%s\n", log) )
+		ret = LOGPOINT_NO;
+	
+	free(log);
+#endif
+	
+#endif
+	/* __OBJC__ */
+	
+#endif	
+	
+}
+	
+	
+#if 0	
 #define LOGPOINT_PAYLOAD_FORMAT "%s"
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointComposerDefault ) )
 {
@@ -258,14 +381,14 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAM
 		}
 		
 	} else {
-		payload = LOGPOINT_MESSAGE_EMPTY;
+		payload = "";
 		outputSize = ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer1, sizeof(buffer1), NULL, NULL, logFormat);				
 		buffer2[0] = 0; 
 	}
 	
 	LOGPOINT_EMITTER emitter = ER_SYMBOL_EMBEDDED_NAME( logPointGetEmitter )();
 	
-	lp_return_t ret = (*emitter)(lpp, langSpec1, langSpec2, "%s" LOGPOINT_MESSAGE_FORMAT "%s", buffer1, payload, buffer2); 		
+	lp_return_t ret = (*emitter)(lpp, langSpec1, langSpec2, "%s%s%s", buffer1, payload, buffer2); 		
 
 	return ret;
 }
@@ -339,19 +462,14 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_COMPOSER_DECLARATION( ER_SYMBOL_EMBEDDED_NAM
 											  "",
 											  "",
 #endif
-											  label, *label && payload ? " " : "", payload ? payload : LOGPOINT_MESSAGE_EMPTY);
+											  label, *label && payload ? " " : "", payload ? payload : "");
 	
 	SELF_TRACE("composer7");      		  
 	return ret;
 }
-
-
-#if 0
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMAT_FUNCTION_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterUnused ) )
-{
-}
 #endif
-
+	
+	
 /* extensions and userInfo are not yet implemented, pass NULL, NULL - args not yet used */
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointFormatterVDefault ) ) 
 {
@@ -654,20 +772,15 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_N
 				}
 				break;
 
-			case 'p': /* priority %#p priorityname */					
-				if( alternateForm ) {
-					snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) LOGPOINT_PRIORITY(*lpp) );
-					value = tmp;
-				} else {
-					value = logPointPriorityNameFromNumber( LOGPOINT_PRIORITY(*lpp) );
-				}
-				break;								
-				
 			case 'P': /* pid %#P ppid */					
 				snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) ( alternateForm ? getppid() : getpid() ) );
 				value = tmp;
 				break;												
 
+			case 's': /* payload */
+				value = va_arg(args, char *);
+				break;										
+				
 			case 'S': /* symbol */
 				value = lpp->symbolName;
 				break;						
@@ -712,6 +825,15 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_N
 				}
 						
 			   break;										
+
+			case 'Y': /* priority %#p priorityname */					
+				if( alternateForm ) {
+					snprintf(tmp, sizeof(tmp), "%llu", (unsigned long long) LOGPOINT_PRIORITY(*lpp) );
+					value = tmp;
+				} else {
+					value = logPointPriorityNameFromNumber( LOGPOINT_PRIORITY(*lpp) );
+				}
+				break;								
 				
 			case '?': /* embedded name */
 				value = *ER_EMBEDDED_NAME_AS_STRING ? ER_EMBEDDED_NAME_AS_STRING : ( alternateForm ? "MAIN" : NULL );
@@ -808,32 +930,6 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTER_DECLARATION( ER_SYMBOL_EMBEDDED_NA
 	return written;
 }
 
-
-ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME( logPointEmitterDefault ) )
-{
-	va_list args;
-	va_start(args, fmt);
-	
-	lp_return_t ret = LOGPOINT_YES;
-	
-#ifdef __OBJC__
-	CFStringRef cfFmt = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, fmt, kCFStringEncodingUTF8, kCFAllocatorNull /* don't free */);  
-	NSLogv((NSString*) cfFmt, args);
-	CFRelease(cfFmt);
-#else
-	char *log = NULL;
-	
-	int len = util_log_vasprintf(&log, fmt, args);
-	if( len+1 != fprintf(stderr, "%s\n", log) )
-		ret = LOGPOINT_NO;
-	
-	free(log);
-#endif
-	
-	va_end(args);
-	
-	return ret;
-}
 
 
 #ifndef ER_EMBEDDED_NAME
@@ -946,12 +1042,11 @@ lp_return_t logPointDumpAllWithFormat(const char *format)
 lp_return_t logPointActionDumpWithFormat(LOGPOINT *lpp, void *actionInfo)
 {
 	char *format = actionInfo;
-	char buffer[512];
+	char buffer[LOGPOINT_EMITTER_STACKBUFFER];
 	
-	size_t outputSize = logPointFormat(lpp, NULL, NULL, buffer, sizeof(buffer), NULL, NULL, format);
+	logPointFormat(lpp, NULL, NULL, buffer, sizeof(buffer), NULL, NULL, format);
 	
-	NSLog(@"%s", buffer);
-	//fprintf(stderr, "s: %3ld o: %s\n", (long) outputSize, buffer );  
+	fprintf(stderr, "%s\n", buffer);
 	
 	return LOGPOINT_RETURN_OK;
 }

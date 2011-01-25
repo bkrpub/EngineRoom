@@ -88,24 +88,24 @@ typedef struct logpoint {
 /* logpoint flags */
 #define LOGPOINT_NOFLAGS                    0           /* for readability */
 
-#define LOGPOINT_PRIORITIZED                (1 << 31)   /* message has a syslog-compatible priority in bits 30-28 */
+#define LOGPOINT_PRIORITIZED                (1U << 31)   /* message has a syslog-compatible priority in bits 30-28 */
 #define LOGPOINT_IS_PRIORITIZED(lp)         LOGPOINT_FLAG((lp), LOGPOINT_PRIORITIZED)
 
-#define LOGPOINT_PRIORITY_MASK              (7 << 28)
-#define LOGPOINT_PRIORITY(lp)               ( ( (lp).flags << 28 ) & 7 )
+#define LOGPOINT_PRIORITY_MASK              (7U << 28)
+#define LOGPOINT_PRIORITY(lp)               ((int)( ( (lp).flags >> 28 ) & 7 ))
 
-#define LOGPOINT_DEBUG                      (7 << 28)   
-#define LOGPOINT_INFO                       (6 << 28)   
-#define LOGPOINT_NOTICE                     (5 << 28)   
-#define LOGPOINT_WARNING                    (4 << 28)   
-#define LOGPOINT_ERROR                      (3 << 28)   
-#define LOGPOINT_CRITICAL                   (2 << 28)   
-#define LOGPOINT_ALERT                      (1 << 28)   
-#define LOGPOINT_EMERGENCY                  (0 << 28)   
+#define LOGPOINT_DEBUG                      (7U << 28)   
+#define LOGPOINT_INFO                       (6U << 28)   
+#define LOGPOINT_NOTICE                     (5U << 28)   
+#define LOGPOINT_WARNING                    (4U << 28)   
+#define LOGPOINT_ERROR                      (3U << 28)   
+#define LOGPOINT_CRITICAL                   (2U << 28)   
+#define LOGPOINT_ALERT                      (1U << 28)   
+#define LOGPOINT_EMERGENCY                  (0U << 28)   
 
-#define LOGPOINT_CXX                        (1 << 27)    /* langSpec data is for C++ (this, NULL) */
-#define LOGPOINT_OBJC                       (1 << 26)    /* langSpec data is for ObjC (self, _cmd) */
-#define LOGPOINT_C                          (1 << 25)    /* langSpec data is for C (NULL, NULL) */
+#define LOGPOINT_CXX                        (1U << 27)    /* langSpec data is for C++ (this, NULL) */
+#define LOGPOINT_OBJC                       (1U << 26)    /* langSpec data is for ObjC (self, _cmd) */
+#define LOGPOINT_C                          (1U << 25)    /* langSpec data is for C (NULL, NULL) */
 
 #define LOGPOINT_LANGUAGE_MASK              ( LOGPOINT_C | LOGPOINT_OBJC | LOGPOINT_CXX )
 #define LOGPOINT_LANGUAGE(lp)               ( (lp).flags & LOGPOINT_LANGUAGE_MASK )                      
@@ -114,17 +114,17 @@ typedef struct logpoint {
 #define LOGPOINT_IS_OBJC(lp)                LOGPOINT_FLAG((lp), LOGPOINT_OBJC)
 #define LOGPOINT_IS_C(lp)                   LOGPOINT_FLAG((lp), LOGPOINT_C)
 
-#define LOGPOINT_NOTE                       (1 << 10)   /* logpoint is used for developer notes */
-#define LOGPOINT_TRACE                      (1 << 9)    /* logpoint is used for tracer messages */
-#define LOGPOINT_SWITCH                     (1 << 8)    /* logpoint is used to conditionally enable other code */
-#define LOGPOINT_ASSERT                     (1 << 7)    /* handled as an assertion according to environment  */
-#define LOGPOINT_NSSTRING                   (1 << 6)    /* user strings stored in the logpoint are nsstring instances (work in progress, ObjC only) */
-#define LOGPOINT_BACKTRACE                  (1 << 5)    /* logpoint should obtain a stacktrace */
-#define LOGPOINT_SILENT                     (1 << 4)    /* does not emit log message - used for switches */
-#define LOGPOINT_BROKEN                     (1 << 3)    /* used by clients (experimental, i.e. caveman.h) */
-#define LOGPOINT_DYNAMIC_CODE               (1 << 2)    /* is in dynamically linked code */
-#define LOGPOINT_HARD                       (1 << 1)    /* unconditional, not affected by default filtering */
-#define LOGPOINT_ACTIVE                     (1 << 0)    /* does logpoint currently log ?  */
+#define LOGPOINT_NOTE                       (1U << 10)   /* logpoint is used for developer notes */
+#define LOGPOINT_TRACE                      (1U << 9)    /* logpoint is used for tracer messages */
+#define LOGPOINT_SWITCH                     (1U << 8)    /* logpoint is used to conditionally enable other code */
+#define LOGPOINT_ASSERT                     (1U << 7)    /* handled as an assertion according to environment  */
+#define LOGPOINT_NSSTRING                   (1U << 6)    /* user strings stored in the logpoint are nsstring instances (work in progress, ObjC only) */
+#define LOGPOINT_BACKTRACE                  (1U << 5)    /* logpoint should obtain a stacktrace */
+#define LOGPOINT_SILENT                     (1U << 4)    /* does not emit log message - used for switches */
+#define LOGPOINT_BROKEN                     (1U << 3)    /* used by clients (experimental, i.e. caveman.h) */
+#define LOGPOINT_DYNAMIC_CODE               (1U << 2)    /* is in dynamically linked code */
+#define LOGPOINT_HARD                       (1U << 1)    /* unconditional, not affected by default filtering */
+#define LOGPOINT_ACTIVE                     (1U << 0)    /* does logpoint currently log ?  */
 
 
 #define LOGPOINT_FLAG(lp,bitValue)          (((lp).flags & (bitValue)) ? 1 : 0)
