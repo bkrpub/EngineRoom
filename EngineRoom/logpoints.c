@@ -40,14 +40,43 @@
 #pragma mark Getting and setting LogPoint handlers
 #endif
 
-static char _logPointLogFormatDefault[] = "%#W|%T|.%#.3U %?%< %k %N %>[%K%<]%< O:%O #O: %#O %S %s <%f:%e> DEFAULT";
+static char ER_SYMBOL_EMBEDDED_NAME(_logPointLogFormatDefault)[] = 
+"%#W|%T|.%#.3U %?%< %k %N %S %>[%K%<]%< %s%< %#O%<:%O%< <%f:%e>";
 
 /* private - might be replaced by thread-local stuff */
 static LOGPOINT_INVOKER    _logPointInvoker    = ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
 static LOGPOINT_EMITTER    _logPointEmitter    = ER_SYMBOL_EMBEDDED_NAME(logPointEmitterDefault);
 static LOGPOINT_FORMATTERV _logPointFormatterV = ER_SYMBOL_EMBEDDED_NAME(logPointFormatterVDefault);
 
-static const char *_logPointLogFormat = _logPointLogFormatDefault;
+static const char *_logPointLogFormat = ER_SYMBOL_EMBEDDED_NAME(_logPointLogFormatDefault);
+
+ER_SYMBOL_VISIBLE_EMBEDDED lp_uint_t ER_SYMBOL_EMBEDDED_NAME( logPointDataFormat )(void) 
+{ 
+	return LOGPOINT_DATA_FORMAT;
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointEmbeddedName )(void) 
+{ 
+#ifdef ER_EMBEDDED_NAME
+	return ER_EMBEDDED_NAME_AS_STRING;
+#else
+	return NULL;
+#endif
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointLibraryVersion )(void) 
+{
+	return ER_STRINGIFY(ER_VERSION);
+}
+
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointLibraryIdentifier )(void) 
+{ 
+#ifdef ER_EMBEDDED_NAME
+	return "logPoints from EngineRoom " ER_STRINGIFY(ER_VERSION) " embedded as " ER_EMBEDDED_NAME_AS_STRING;
+#else
+	return "logPoints from EngineRoom " ER_STRINGIFY(ER_VERSION) " (non-embedded)";
+#endif
+}
 
 ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER ER_SYMBOL_EMBEDDED_NAME( logPointGetInvoker )(void) 
 { 
@@ -173,7 +202,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 	
 	char stackBuffer[LOGPOINT_INVOKER_STACKBUFFER];
 
-	char *buffer = logPointAllocateBufferIfNeeded(stackBuffer, sizeof(stackBuffer), maximumSize);
+	char *buffer = ER_SYMBOL_EMBEDDED_NAME( logPointAllocateBufferIfNeeded )(stackBuffer, sizeof(stackBuffer), maximumSize);
 	
 	if( NULL != buffer ) {
 		if( true == CFStringGetCString(cfMsg, buffer, maximumSize, kCFStringEncodingUTF8) ) {
@@ -204,7 +233,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_INVOKER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 	}
 
 	if( NULL != buffer ) {
-		logPointFreeBufferIfNeeded(buffer, stackBuffer);
+		ER_SYMBOL_EMBEDDED_NAME( logPointFreeBufferIfNeeded )(buffer, stackBuffer);
 	}
 #else
 	if( NULL != mallocedMsg ) {
@@ -266,10 +295,10 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 	char stackBuffer[LOGPOINT_EMITTER_STACKBUFFER];
 	size_t wantedSize = strlen(payload) + LOGPOINT_MAX_DECORATION_LENGTH;
 	
-	char *buffer = logPointAllocateBufferIfNeeded(stackBuffer, sizeof(stackBuffer), wantedSize);
+	char *buffer = ER_SYMBOL_EMBEDDED_NAME( logPointAllocateBufferIfNeeded )(stackBuffer, sizeof(stackBuffer), wantedSize);
 	
 	if( NULL != buffer ) {
-		logPointFormat(lpp, langSpec1, langSpec2, buffer, wantedSize, NULL, NULL, logFormat, payload);		
+		ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, langSpec1, langSpec2, buffer, wantedSize, NULL, NULL, logFormat, payload);		
 
 #if MAINTAINER_WARNINGS
 #warning need to check return value 
@@ -277,7 +306,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_EMITTER_DECLARATION( ER_SYMBOL_EMBEDDED_NAME
 		
 		ret = ( 0 > fprintf(stderr, "%s\n", buffer) ) ? LOGPOINT_NO : LOGPOINT_YES;
 
-		logPointFreeBufferIfNeeded(buffer, stackBuffer);
+		ER_SYMBOL_EMBEDDED_NAME( logPointFreeBufferIfNeeded )(buffer, stackBuffer);
 		
 	} else {
 		ret = ( 0 > fprintf(stderr, "logPoints: out of memory - payload: %s\n", payload) ) ? LOGPOINT_NO : LOGPOINT_YES;
@@ -515,7 +544,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_N
 				break;																		
 			
 			case 'b': /* binary filename (without path) / %#b with */					
-				value = alternateForm ? lpp->image : logPointLastPathComponent( lpp->image );
+				value = alternateForm ? lpp->image : ER_SYMBOL_EMBEDDED_NAME( logPointLastPathComponent )( lpp->image );
 				break;
 
 			case 'B': /* label or %#B for formatInfo */
@@ -532,7 +561,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_N
 				break;										
 				
 			case 'f': /* filename */					
-				value = alternateForm ? lpp->file : logPointLastPathComponent( lpp->file );
+				value = alternateForm ? lpp->file : ER_SYMBOL_EMBEDDED_NAME( logPointLastPathComponent )( lpp->file );
 				break;
 				
 			case 'F': /* flags */					
@@ -650,7 +679,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTERV_DECLARATION( ER_SYMBOL_EMBEDDED_N
 					value = logPointPriorityNameFromNumber( LOGPOINT_PRIORITY(*lpp) );
 				}
 				break;								
-				
+
 			case '?': /* embedded name */
 				value = *ER_EMBEDDED_NAME_AS_STRING ? ER_EMBEDDED_NAME_AS_STRING : ( alternateForm ? "MAIN" : NULL );
 				break;
@@ -748,24 +777,6 @@ ER_SYMBOL_VISIBLE_EMBEDDED LOGPOINT_FORMATTER_DECLARATION( ER_SYMBOL_EMBEDDED_NA
 
 
 
-#ifndef ER_EMBEDDED_NAME
-
-
-#ifdef __APPLE_CC__
-#pragma mark Private interface (currently unused)
-#endif
-
-static LOGPOINT *__logPointListHead = NULL;
-
-LOGPOINT *_logPointListHead(void);
-
-LOGPOINT *_logPointListHead(void)
-{
-  return __logPointListHead;
-}
-
-
-
 #ifdef __APPLE_CC__
 #pragma mark Functions to be used with logpoints at runtime
 #endif
@@ -775,12 +786,12 @@ LOGPOINT *_logPointListHead(void)
 #endif
 static const char *logPointPriorityNames[] = { "EMERGENCY", "ALERT", "CRITICAL", "ERROR", "WARNING", "NOTICE", "INFO", "DEBUG" };
 
-const char *logPointPriorityNameFromNumber(lp_uint_t priority)
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointPriorityNameFromNumber )(lp_uint_t priority)
 {
   return priority < 0 || priority >= (long) (sizeof(logPointPriorityNames)/sizeof(logPointPriorityNames[0])) ? "BAD_PRIORITY" : logPointPriorityNames[priority];
 }
 
-lp_uint_t logPointPriorityNumberFromName(const char *name)
+ER_SYMBOL_VISIBLE_EMBEDDED lp_uint_t ER_SYMBOL_EMBEDDED_NAME( logPointPriorityNumberFromName )(const char *name)
 {
   unsigned int i;
   for( i = 0 ; i < sizeof(logPointPriorityNames)/sizeof(logPointPriorityNames[0]) ; ++i ) {
@@ -791,7 +802,7 @@ lp_uint_t logPointPriorityNumberFromName(const char *name)
   return -1;
 }
 
-const char *logPointLastPathComponent(const char *path)
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointLastPathComponent )(const char *path)
 {
 	if( NULL == path ) {
 		return NULL;
@@ -807,7 +818,7 @@ const char *logPointLastPathComponent(const char *path)
   return file;
 }
 
-const char *logPointReturnString(lp_return_t err)
+ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointReturnString )(lp_return_t err)
 {
   switch(err) {
   case LOGPOINT_RETURN_STOP:
@@ -836,48 +847,48 @@ const char *logPointReturnString(lp_return_t err)
   return "LOGPOINT_RETURN_UNKNOWN";
 }
 
-lp_return_t logPointReset(void) { return logPointDisableSimple(""); }
-lp_return_t logPointEnableSimple(const char *filter) { return logPointApplySimple(filter, LOGPOINT_OPTION_ENABLE); }
-lp_return_t logPointDisableSimple(const char *filter) { return logPointApplySimple(filter, LOGPOINT_OPTION_DISABLE); }
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointReset )(void) { return ER_SYMBOL_EMBEDDED_NAME( logPointDisableSimple )(""); }
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointEnableSimple )(const char *filter) { return ER_SYMBOL_EMBEDDED_NAME( logPointApplySimple )(filter, LOGPOINT_OPTION_ENABLE); }
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointDisableSimple )(const char *filter) { return ER_SYMBOL_EMBEDDED_NAME( logPointApplySimple )(filter, LOGPOINT_OPTION_DISABLE); }
 
-lp_return_t logPointApplySimple(const char *filter, lp_uint_t options)
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointApplySimple )(const char *filter, lp_uint_t options)
 {
 /*fprintf(stderr, "%s\n", __UTIL_PRETTY_FUNCTION__); */
 
   if( NULL == filter ) 
     return LOGPOINT_RETURN_OK;
 
-  return logPointApply( logPointFilterSimple /*filter*/, (void*) filter, NULL /*action*/, NULL /*actionInfo*/, options);
+  return ER_SYMBOL_EMBEDDED_NAME( logPointApply )( ER_SYMBOL_EMBEDDED_NAME( logPointFilterSimple ) /*filter*/, (void*) filter, NULL /*action*/, NULL /*actionInfo*/, options);
 }
 
-lp_return_t logPointDumpAllWithFormat(const char *format)
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointDumpAllWithFormat )(const char *format)
 {
-  return logPointApply(NULL /*filter*/, NULL /*filterInfo*/, logPointActionDumpWithFormat /*action*/, (void *) format /*actionInfo*/, LOGPOINT_OPTION_NONE);
+  return ER_SYMBOL_EMBEDDED_NAME( logPointApply )(NULL /*filter*/, NULL /*filterInfo*/, ER_SYMBOL_EMBEDDED_NAME( logPointActionDumpWithFormat ) /*action*/, (void *) format /*actionInfo*/, LOGPOINT_OPTION_NONE);
 }
 
-lp_return_t logPointActionDumpWithFormat(LOGPOINT *lpp, void *actionInfo)
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointActionDumpWithFormat )(LOGPOINT *lpp, void *actionInfo)
 {
 	char *format = actionInfo;
 	char buffer[LOGPOINT_EMITTER_STACKBUFFER];
 	
-	logPointFormat(lpp, NULL, NULL, buffer, sizeof(buffer), NULL, NULL, format);
+	ER_SYMBOL_EMBEDDED_NAME( logPointFormat )(lpp, NULL, NULL, buffer, sizeof(buffer), NULL, NULL, format);
 	
 	fprintf(stderr, "%s\n", buffer);
 	
 	return LOGPOINT_RETURN_OK;
 }
 
-lp_return_t logPointDumpAll(void)
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointDumpAll )(void)
 {
 /*fprintf(stderr, "%s\n", __UTIL_PRETTY_FUNCTION__); */
 
-  return logPointApply(NULL /*filter*/, NULL /*filterInfo*/, logPointActionDump /*action*/, NULL /*actionInfo*/, LOGPOINT_OPTION_NONE);
+  return ER_SYMBOL_EMBEDDED_NAME( logPointApply )(NULL /*filter*/, NULL /*filterInfo*/, ER_SYMBOL_EMBEDDED_NAME( logPointActionDump ) /*action*/, NULL /*actionInfo*/, LOGPOINT_OPTION_NONE);
 }
 
-lp_return_t logPointActionDump(LOGPOINT *lpp, void *actionInfo UTIL_UNUSED)
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointActionDump )(LOGPOINT *lpp, void *actionInfo UTIL_UNUSED)
 {
     const char *keys = lpp->keys ? lpp->keys: "";
-	const char *file = logPointLastPathComponent(lpp->file);
+    const char *file = ER_SYMBOL_EMBEDDED_NAME( logPointLastPathComponent )(lpp->file);
 
 	int formatInfoLen = 1;
 
@@ -897,7 +908,7 @@ lp_return_t logPointActionDump(LOGPOINT *lpp, void *actionInfo UTIL_UNUSED)
 	return LOGPOINT_RETURN_OK;
 }
 
-int logPointFilterSimple(LOGPOINT *lpp, void *filterInfo)
+ER_SYMBOL_VISIBLE_EMBEDDED int ER_SYMBOL_EMBEDDED_NAME( logPointFilterSimple )(LOGPOINT *lpp, void *filterInfo)
 {
 	char *filter = filterInfo;
 	/*fprintf(stderr, "%s (%s)\n", __UTIL_PRETTY_FUNCTION__, filter); */
@@ -939,7 +950,7 @@ int logPointFilterSimple(LOGPOINT *lpp, void *filterInfo)
 }
 
 
-lp_return_t logPointApplyToData(const char *imageName, LOGPOINT *logpts, size_t logSizeInBytes, 
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointApplyToData )(const char *imageName, LOGPOINT *logpts, size_t logSizeInBytes, 
 	LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options)
 {
 /*fprintf(stderr, "%s\n", __UTIL_PRETTY_FUNCTION__); */
@@ -1016,13 +1027,13 @@ lp_return_t logPointApplyToData(const char *imageName, LOGPOINT *logpts, size_t 
     return LOGPOINT_RETURN_OK;
 }
 
-lp_return_t logPointApply( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options )
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointApply )( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options )
 {
 /*fprintf(stderr, "%s\n", __UTIL_PRETTY_FUNCTION__); */
 
-  lp_return_t ret = logPointPlatformApply(filter, filterInfo, action, actionInfo, options);
+  lp_return_t ret = ER_SYMBOL_EMBEDDED_NAME( logPointPlatformApply )(filter, filterInfo, action, actionInfo, options);
   if( LOGPOINT_RETURN_OK != ret ) {
-    fprintf(stderr, "logpoints: internal error (%s)\n", logPointReturnString(ret));
+    fprintf(stderr, "logpoints: internal error (%s)\n", ER_SYMBOL_EMBEDDED_NAME( logPointReturnString )(ret));
   }
 
   return ret;
@@ -1039,7 +1050,7 @@ lp_return_t logPointApply( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WO
 #import <mach-o/stab.h>
 #import <mach-o/fat.h>
 
-lp_return_t logPointPlatformApply( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options )
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointPlatformApply )( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options )
 {
   const char *segname = LOGPOINT_SEGMENT;
   const char *sectname = LOGPOINT_SECTION;
@@ -1096,7 +1107,7 @@ lp_return_t logPointPlatformApply( LOGPOINT_FILTER filter, void *filterInfo, LOG
 
 	/* fprintf(stderr, "%d: %s\n\tmh %p dyn: %d slide: %p log: %p siz: %ld\n", i, imageName, mhp, walkingDynamic, slide, logpts, logSizeInBytes); */
                 
-        ret = logPointApplyToData(imageName, logpts, logSizeInBytes, filter, filterInfo, action, actionInfo, options | (walkingDynamic ? LOGPOINT_OPTION_WALKING_DYNAMIC : 0));
+        ret = ER_SYMBOL_EMBEDDED_NAME( logPointApplyToData )(imageName, logpts, logSizeInBytes, filter, filterInfo, action, actionInfo, options | (walkingDynamic ? LOGPOINT_OPTION_WALKING_DYNAMIC : 0));
 	if( ret != LOGPOINT_RETURN_OK )
 	  break;
     }
@@ -1108,6 +1119,8 @@ lp_return_t logPointPlatformApply( LOGPOINT_FILTER filter, void *filterInfo, LOG
 
 #endif 
 /* __APPLE__ */
+
+#ifndef ER_EMBEDDED_NAME
 
 #ifdef LOGPOINT_USE_ELF
 
@@ -1141,6 +1154,16 @@ struct logPointImageList {
   const char **images; 
 };
 
+
+static LOGPOINT *__logPointListHead = NULL;
+	
+LOGPOINT *_logPointListHead(void);
+
+LOGPOINT *_logPointListHead(void)
+{
+	return __logPointListHead;
+}
+	
 static int getImageListCallback(struct dl_phdr_info *info, size_t size, void *data)
 {
 #if BK_DEBUG

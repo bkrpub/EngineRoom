@@ -23,9 +23,24 @@
 #ifndef __ER_MACROS_H__
 #define __ER_MACROS_H__
 
+#define _ER_VERSION      1.1.10r2
+#define _ER_VERSION_HEX 0x0111002 
+/* Apples CFBundleVersion has arcane restrictions 
+ Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease 
+*/
+
+#ifndef ER_VERSION
+#define ER_VERSION		_ER_VERSION
+#define ER_VERSION_HEX  _ER_VERSION_HEX
+#else
+#if _ER_VERSION_HEX != ER_VERSION_HEX
+#error EngineRoom: Version number in er_macros.h does not match external definition
+#endif
+#endif
+
 /*
  * expands to the number of arguments (up to 20) it was given
- * returns 1 for 1 AND zero arguments, see ER_COUNT_ARGS_PLUS1 for a solution
+ * returns 1 for 1 AND zero arguments, see ER_COUNT_ARGS_PLUS1 for a solutionBundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease
  * credit for the technique goes to Steven Fuerst 
  * http://locklessinc.com/articles/overloading/ 
  */
@@ -34,6 +49,10 @@
 
 /* expands to the number of arguments plus 1 - and works for the no argument case */
 #define ER_COUNT_ARGS_PLUS1(...) ER_COUNT_NONZERO_ARGS(dummy, ## __VA_ARGS__)
+
+/* helper macro to convert preprocessor symbols into strings */
+#define _ER_STRINGIFY(s) #s
+#define ER_STRINGIFY(s) _ER_STRINGIFY(s)
 
 /* helper macro to combine tokens */
 #define ER_CAT(A, B) _ER_CAT_HELPER(A, B)

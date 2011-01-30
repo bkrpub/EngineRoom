@@ -1,4 +1,6 @@
 
+Test outside xcode for embedded stuff (in XCode, all apps are linked against us)
+
 data: fuer image logs
 
 #ifdef DEBUG

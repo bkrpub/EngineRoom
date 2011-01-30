@@ -444,11 +444,14 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_CFLAGS = (
+					"-DER_VERSION_HEX=$(ER_VERSION_HEX)",
+					"-DER_VERSION=$(ER_VERSION)",
+				);
 				PRODUCT_NAME = EngineRoom;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -468,6 +471,10 @@
 				GCC_PREFIX_HEADER = ../EngineRoom/EngineRoom_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_CFLAGS = (
+					"-DER_VERSION_HEX=$(ER_VERSION_HEX)",
+					"-DER_VERSION=$(ER_VERSION)",
+				);
 				PRODUCT_NAME = EngineRoom;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -477,6 +484,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ER_VERSION = 1.1.10r2;
+				ER_VERSION_BUNDLE = 0111.00.2;
+				ER_VERSION_HEX = 0x0111002;
+				ER_VERSION_INFO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -521,6 +532,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ER_VERSION = 1.1.10r2;
+				ER_VERSION_BUNDLE = 0111.00.2;
+				ER_VERSION_HEX = 0x0111002;
+				ER_VERSION_INFO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;

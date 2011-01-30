@@ -55,40 +55,66 @@ extern "C" {
 #ifndef LOGPOINT_MAX_DECORATION_LENGTH
 #define LOGPOINT_MAX_DECORATION_LENGTH 512
 #endif	
-	
-	
-LOGPOINTS_EXPORT const char *logPointLastPathComponent(const char *path);
 
+LOGPOINTS_EXPORT const char * logPointEmbeddedName(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT lp_uint_t logPointDataFormat(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT const char * logPointLibraryVersion(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT const char * logPointLibraryIdentifier(void) ER_SYMBOL_WEAK_IMPORT;
 	
+LOGPOINTS_EXPORT const char *logPointLastPathComponent(const char *path) ER_SYMBOL_WEAK_IMPORT;
+
 /* error description from lp_return_t */
-const char *logPointReturnString(lp_return_t err);
+LOGPOINTS_EXPORT const char *logPointReturnString(lp_return_t err) ER_SYMBOL_WEAK_IMPORT;
 
-LOGPOINTS_EXPORT lp_return_t logPointReset(void);
-LOGPOINTS_EXPORT lp_return_t logPointEnableSimple(const char *filter);
-LOGPOINTS_EXPORT lp_return_t logPointDisableSimple(const char *filter);
+LOGPOINTS_EXPORT lp_return_t logPointReset(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT lp_return_t logPointEnableSimple(const char *filter) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT lp_return_t logPointDisableSimple(const char *filter) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT lp_return_t logPointApplySimple(const char *filter, lp_uint_t options) ER_SYMBOL_WEAK_IMPORT;
 
-LOGPOINTS_EXPORT lp_return_t logPointApplySimple(const char *filter, lp_uint_t options);
+LOGPOINTS_EXPORT lp_return_t logPointApply( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options ) ER_SYMBOL_WEAK_IMPORT;
 
-LOGPOINTS_EXPORT lp_return_t logPointDumpAll(void);
-LOGPOINTS_EXPORT lp_return_t logPointActionDump(LOGPOINT *lp, void *actionInfo);
+LOGPOINTS_EXPORT lp_return_t logPointDumpAll(void) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT lp_return_t logPointActionDump(LOGPOINT *lp, void *actionInfo) ER_SYMBOL_WEAK_IMPORT;
 
-LOGPOINTS_EXPORT lp_return_t logPointDumpAllWithFormat(const char *format);
-LOGPOINTS_EXPORT lp_return_t logPointActionDumpWithFormat(LOGPOINT *lpp, void *actionInfo);
+LOGPOINTS_EXPORT lp_return_t logPointDumpAllWithFormat(const char *format) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT lp_return_t logPointActionDumpWithFormat(LOGPOINT *lpp, void *actionInfo) ER_SYMBOL_WEAK_IMPORT;
 	
-LOGPOINTS_EXPORT int         logPointFilterSimple(LOGPOINT *lp, void *filterInfo);
+LOGPOINTS_EXPORT int         logPointFilterSimple(LOGPOINT *lp, void *filterInfo) ER_SYMBOL_WEAK_IMPORT;
 
-LOGPOINTS_EXPORT lp_return_t logPointApply(
-			       LOGPOINT_FILTER filter, 
-			       void *filterInfo,
-			       LOGPOINT_WORKER action, 
-			       void *actionInfo,
-			       lp_uint_t options
-			       );
+LOGPOINTS_EXPORT const char *logPointPriorityNameFromNumber(lp_uint_t priority) ER_SYMBOL_WEAK_IMPORT;
+LOGPOINTS_EXPORT lp_uint_t logPointPriorityNumberFromName(const char *name) ER_SYMBOL_WEAK_IMPORT;
 
+LOGPOINTS_EXPORT lp_return_t logPointApplyToData(const char *imageName, LOGPOINT *logpts, size_t logSizeInBytes,  LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options) ER_SYMBOL_WEAK_IMPORT;	
+LOGPOINTS_EXPORT lp_return_t logPointPlatformApply( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options ) ER_SYMBOL_WEAK_IMPORT;
 
-LOGPOINTS_EXPORT const char *logPointPriorityNameFromNumber(lp_uint_t priority);
-LOGPOINTS_EXPORT lp_uint_t logPointPriorityNumberFromName(const char *name);
+#ifdef ER_EMBEDDED_NAME
+LOGPOINTS_EXPORT_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointEmbeddedName )(void);
+LOGPOINTS_EXPORT_EMBEDDED lp_uint_t ER_SYMBOL_EMBEDDED_NAME( logPointDataFormat )(void);
+LOGPOINTS_EXPORT_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointLibraryVersion )(void);
+LOGPOINTS_EXPORT_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointLibraryIdentifier )(void);
 
+LOGPOINTS_EXPORT_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointLastPathComponent )(const char *path);
+
+LOGPOINTS_EXPORT_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointReturnString )(lp_return_t err);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointReset )(void);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointEnableSimple )(const char *filter);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointDisableSimple )(const char *filter);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointApplySimple )(const char *filter, lp_uint_t options);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointApply )( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options );
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointDumpAllWithFormat )(const char *format);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointActionDumpWithFormat )(LOGPOINT *lpp, void *actionInfo);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointDumpAll )(void);
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointActionDump )(LOGPOINT *lpp, void *actionInfo);
+LOGPOINTS_EXPORT_EMBEDDED int ER_SYMBOL_EMBEDDED_NAME( logPointFilterSimple )(LOGPOINT *lpp, void *filterInfo);
+
+LOGPOINTS_EXPORT_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointPriorityNameFromNumber )(lp_uint_t priority);
+LOGPOINTS_EXPORT_EMBEDDED lp_uint_t ER_SYMBOL_EMBEDDED_NAME( logPointPriorityNumberFromName )(const char *name);
+
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointApplyToData )(const char *imageName, LOGPOINT *logpts, size_t logSizeInBytes,  LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options);	
+LOGPOINTS_EXPORT_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointPlatformApply )( LOGPOINT_FILTER filter, void *filterInfo, LOGPOINT_WORKER action, void *actionInfo, lp_uint_t options );
+	
+	
+#endif
 
 
 /* used as a return from filter functions and invocations */
