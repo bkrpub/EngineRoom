@@ -23,8 +23,8 @@
 #ifndef __ER_MACROS_H__
 #define __ER_MACROS_H__
 
-#define _ER_VERSION      1.1.10r2
-#define _ER_VERSION_HEX 0x0111002 
+#define _ER_VERSION      1.1.11r3
+#define _ER_VERSION_HEX 0x0111103 
 /* Apples CFBundleVersion has arcane restrictions 
  Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease 
 */

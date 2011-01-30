@@ -484,9 +484,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				ER_VERSION = 1.1.10r2;
-				ER_VERSION_BUNDLE = 0111.00.2;
-				ER_VERSION_HEX = 0x0111002;
+				ER_VERSION = 1.1.11r0;
+				ER_VERSION_BUNDLE = 0111.10.0;
+				ER_VERSION_HEX = 0x0111100;
 				ER_VERSION_INFO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -532,9 +532,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				ER_VERSION = 1.1.10r2;
-				ER_VERSION_BUNDLE = 0111.00.2;
-				ER_VERSION_HEX = 0x0111002;
+				ER_VERSION = 1.1.11r0;
+				ER_VERSION_BUNDLE = 0111.10.0;
+				ER_VERSION_HEX = 0x0111100;
 				ER_VERSION_INFO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;

@@ -121,8 +121,14 @@ ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointGetLogF
 
 ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointSetLogFormat )(const char * newFormat)
 {
+	const char *newFormatCopy = newFormat ? strdup(newFormat) : NULL; /* allocation failure falls back to default */
+
+#if MAINTAINER_WARNINGS
+#warning logPointSetLogFormat leaks every format string to avoid threading complexity
+#endif
+	
 	const char * previousLogFormat = _logPointLogFormat;
-	_logPointLogFormat = newFormat ? newFormat : ER_SYMBOL_EMBEDDED_NAME(_logPointLogFormatDefault);
+	_logPointLogFormat = newFormatCopy ? newFormatCopy : ER_SYMBOL_EMBEDDED_NAME(_logPointLogFormatDefault);
 	return previousLogFormat;
 }
 
@@ -847,7 +853,7 @@ ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointReturnS
   return "LOGPOINT_RETURN_UNKNOWN";
 }
 
-ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointReset )(void) { return ER_SYMBOL_EMBEDDED_NAME( logPointDisableSimple )(""); }
+ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointReset )(void) { return ER_SYMBOL_EMBEDDED_NAME( logPointDisableSimple )("*"); }
 ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointEnableSimple )(const char *filter) { return ER_SYMBOL_EMBEDDED_NAME( logPointApplySimple )(filter, LOGPOINT_OPTION_ENABLE); }
 ER_SYMBOL_VISIBLE_EMBEDDED lp_return_t ER_SYMBOL_EMBEDDED_NAME( logPointDisableSimple )(const char *filter) { return ER_SYMBOL_EMBEDDED_NAME( logPointApplySimple )(filter, LOGPOINT_OPTION_DISABLE); }
 
@@ -918,9 +924,14 @@ ER_SYMBOL_VISIBLE_EMBEDDED int ER_SYMBOL_EMBEDDED_NAME( logPointFilterSimple )(L
 	
 	size_t filterLen = strlen(filter);
 	
-	if( 0 == filterLen )
-		return LOGPOINT_YES;
+	if( 0 == filterLen ) {
+		return LOGPOINT_NO;
+	}
 	
+	if( '*' == filter[0] && 0 == filter[1] ) {
+		return LOGPOINT_YES;
+	}
+		
 	char *begin = filter;
 	char *end;
 	
