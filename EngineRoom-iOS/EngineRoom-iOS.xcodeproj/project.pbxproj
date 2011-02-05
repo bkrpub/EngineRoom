@@ -42,6 +42,8 @@
 		04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB012D2872100E06235 /* logpoints_default_macros.h */; };
 		04290AC212D289E300E06235 /* logpoints_default_kinds.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB212D2872100E06235 /* logpoints_default_kinds.h */; };
 		04AA592512D6B8F00097656D /* er_symbols.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04AA591D12D6B8B90097656D /* er_symbols.h */; };
+		04C5168B12FCE40F00C907EF /* er_nserror.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04C5168A12FCE3D000C907EF /* er_nserror.h */; };
+		04C5168C12FCE40F00C907EF /* er_localized.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04C5168912FCE3D000C907EF /* er_localized.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +62,8 @@
 				04221564120072700011C415 /* er_util.h in Copy Headers */,
 				04290AB812D2891D00E06235 /* er_macros.h in Copy Headers */,
 				04AA592512D6B8F00097656D /* er_symbols.h in Copy Headers */,
+				04C5168B12FCE40F00C907EF /* er_nserror.h in Copy Headers */,
+				04C5168C12FCE40F00C907EF /* er_localized.h in Copy Headers */,
 				04221565120072700011C415 /* LogPoint.h in Copy Headers */,
 				04221567120072700011C415 /* logpoints_api.h in Copy Headers */,
 				04221568120072700011C415 /* logpoints_bk.h in Copy Headers */,
@@ -122,6 +126,8 @@
 		04290AB212D2872100E06235 /* logpoints_default_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_kinds.h; sourceTree = "<group>"; };
 		04290AB312D2872100E06235 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
 		04AA591D12D6B8B90097656D /* er_symbols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_symbols.h; sourceTree = "<group>"; };
+		04C5168912FCE3D000C907EF /* er_localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_localized.h; sourceTree = "<group>"; };
+		04C5168A12FCE3D000C907EF /* er_nserror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_nserror.h; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libEngineRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngineRoom.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -164,6 +170,8 @@
 				0422154F120072700011C415 /* er_util.h */,
 				04290AAE12D2872100E06235 /* er_macros.h */,
 				04AA591D12D6B8B90097656D /* er_symbols.h */,
+				04C5168A12FCE3D000C907EF /* er_nserror.h */,
+				04C5168912FCE3D000C907EF /* er_localized.h */,
 				04221550120072700011C415 /* LogPoint.h */,
 				04221551120072700011C415 /* LogPoint.m */,
 				04221552120072700011C415 /* logpoints_api.h */,

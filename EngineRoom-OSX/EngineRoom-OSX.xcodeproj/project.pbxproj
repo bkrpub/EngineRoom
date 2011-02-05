@@ -56,6 +56,8 @@
 		04C4F4FA12A3424E001C825C /* logpoints_base_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F712A3424E001C825C /* logpoints_base_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C4F4FB12A3424E001C825C /* logpoints_default_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F812A3424E001C825C /* logpoints_default_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C4F4FC12A3424E001C825C /* logpoints_default_kinds.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F912A3424E001C825C /* logpoints_default_kinds.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C5160812FCC33D00C907EF /* er_nserror.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C5160712FCC33D00C907EF /* er_nserror.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C5160A12FCC3C000C907EF /* er_localized.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C5160912FCC3C000C907EF /* er_localized.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -111,6 +113,8 @@
 		04C4F4F712A3424E001C825C /* logpoints_base_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_base_macros.h; sourceTree = "<group>"; };
 		04C4F4F812A3424E001C825C /* logpoints_default_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_macros.h; sourceTree = "<group>"; };
 		04C4F4F912A3424E001C825C /* logpoints_default_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_kinds.h; sourceTree = "<group>"; };
+		04C5160712FCC33D00C907EF /* er_nserror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_nserror.h; sourceTree = "<group>"; };
+		04C5160912FCC3C000C907EF /* er_localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_localized.h; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -238,6 +242,8 @@
 				042214011200584D0011C415 /* tracer.c */,
 				042214021200584D0011C415 /* tracer.h */,
 				042214031200584D0011C415 /* tracer.m */,
+				04C5160712FCC33D00C907EF /* er_nserror.h */,
+				04C5160912FCC3C000C907EF /* er_localized.h */,
 			);
 			name = "Sources-Common";
 			path = ../EngineRoom;
@@ -281,6 +287,8 @@
 				0422140B1200584D0011C415 /* er_util.h in Headers */,
 				0445BB891284147800CE2063 /* er_macros.h in Headers */,
 				049299E712D682DB0056392E /* er_symbols.h in Headers */,
+				04C5160812FCC33D00C907EF /* er_nserror.h in Headers */,
+				04C5160A12FCC3C000C907EF /* er_localized.h in Headers */,
 				0422140C1200584D0011C415 /* LogPoint.h in Headers */,
 				0422140E1200584D0011C415 /* logpoints_api.h in Headers */,
 				0422140F1200584D0011C415 /* logpoints_bk.h in Headers */,
