@@ -283,8 +283,8 @@ LOGPOINTS_EXPORT_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointSetLogFo
 #define LOGPOINT_FORMAT_VALUE(v, label) ({ \
 	__typeof__ (v) __erValueToFormat = (v) ; \
 	id (*__erValueFormatter)(const char *, void *, const char *) = ER_ADDRESS_OF_GLOBAL_OR_EMBEDDED( logPointFormatObjCType ); \
-	const char *type = __builtin_types_compatible_p( __typeof__(__erValueToFormat), long double) ? "D" : @encode( __typeof__ (__erValueToFormat) ); \
-	NULL == __erValueFormatter ? @"no_logPointFormatObjCType_weak_link_fail" : __erValueFormatter(type, (void*)&__erValueToFormat, (label)); /* returns autoreleased string */ \
+	const char *__erValueType = __builtin_types_compatible_p( __typeof__(__erValueToFormat), long double) ? "D" : @encode( __typeof__ (__erValueToFormat) ); \
+	NULL == __erValueFormatter ? @"no_logPointFormatObjCType_weak_link_fail" : __erValueFormatter(__erValueType, (void*)&__erValueToFormat, (label)); /* returns autoreleased string */ \
 }) 
 
 /* 
