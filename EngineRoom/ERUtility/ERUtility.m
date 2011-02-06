@@ -112,7 +112,8 @@ NSDictionary *ERDictionaryWithKeysAndObjects(id *array, NSUInteger count)
 	
 	if( data ) {
 		success = [data writeToURL: URL options: NSDataWritingAtomic error: outError];
-		
+
+#if TARGET_OS_OSX
 		if( YES == success && nil != bundleIdentifier ) {
 			NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
 			
@@ -126,6 +127,8 @@ NSDictionary *ERDictionaryWithKeysAndObjects(id *array, NSUInteger count)
 				ER_SET_NSERROR_REASON( outError, NSPOSIXErrorDomain, EINVAL, @"cantOpenURLWithWorkspace: %@", URL);
 			}
 		} 
+#endif
+/* TARGET_OS_OSX */
 	}
 	
 	return success ? URL : nil;

@@ -118,7 +118,7 @@
 		04C4F4F712A3424E001C825C /* logpoints_base_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_base_macros.h; sourceTree = "<group>"; };
 		04C4F4F812A3424E001C825C /* logpoints_default_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_macros.h; sourceTree = "<group>"; };
 		04C4F4F912A3424E001C825C /* logpoints_default_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_kinds.h; sourceTree = "<group>"; };
-		04C5160912FCC3C000C907EF /* Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Convenience.h; path = ../Convenience.h; sourceTree = "<group>"; };
+		04C5160912FCC3C000C907EF /* Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convenience.h; sourceTree = "<group>"; };
 		04C5172312FD8E6D00C907EF /* ERUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERUtility.h; sourceTree = "<group>"; };
 		04C5172412FD8E6D00C907EF /* ERUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERUtility.m; sourceTree = "<group>"; };
 		04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundle_ERResourceExtensions.h; sourceTree = "<group>"; };
@@ -188,13 +188,12 @@
 		04C5175412FDBF6F00C907EF /* ERUtility */ = {
 			isa = PBXGroup;
 			children = (
-				04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */,
 				04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */,
-				04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */,
 				04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */,
+				04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */,
+				04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */,
 				04C5172312FD8E6D00C907EF /* ERUtility.h */,
 				04C5172412FD8E6D00C907EF /* ERUtility.m */,
-				04C5160912FCC3C000C907EF /* Convenience.h */,
 			);
 			path = ERUtility;
 			sourceTree = "<group>";
@@ -238,6 +237,7 @@
 		08FB77AEFE84172EC02AAC07 /* Sources-Common */ = {
 			isa = PBXGroup;
 			children = (
+				04C5160912FCC3C000C907EF /* Convenience.h */,
 				04C5175412FDBF6F00C907EF /* ERUtility */,
 				04C4F4F712A3424E001C825C /* logpoints_base_macros.h */,
 				04C4F4F812A3424E001C825C /* logpoints_default_macros.h */,
