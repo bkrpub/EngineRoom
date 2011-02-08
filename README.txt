@@ -1,115 +1,67 @@
 
-** this documentation does not yet exist ** work in progress **
+What?
 
-Using EngineRoom in your Application
-------------------------------------
+EngineRoom is a framework designed to free you from some of the chores of application development.
 
-Recommendations:
-	Put the EngineRoom folder beneath your project folder.
-	Use a shared build directory (Xcode -> Preferences -> Building)
+Component: logpoints
 
-These instructions are for use with the above setup.
-Not using a shared build directory will need more project adjustments.
+Logpoints are a logging and debugging facility for C based languages with strong support
+for the dynamism and introspective capabilities of Objective-C.
 
-Now open your project, select the project itself and choose
-Add -> Existing files.
+Logpoints are built on three basic ideas:
 
-Navigate to
+	  * log messages are powerful tools which complement debuggers
 
-OSX: EngineRoom/EngineRoom-OSX and choose EngineRoom-OSX.xcodeproj
-iOS: EngineRoom/EngineRoom-iOS and choose EngineRoom-iOS.xcodeproj
+	  * the more the better - but only if you need them
 
-Do not tick "Copy".
+	  * team friction due to log message congestion is to be avoided
 
-On opening the new entry it should reveal 
+	  * one should be able (if desired) to ship a fully instrumented build
+	    without sacrificing performance.
+	  
 
-OSX: EngineRoom.framework
-iOS: libEngineRoom.a
+The basic idea is to make the log message a first class citizen.
+LogPoints are data structures which can be manipulated (i.e. enabled / disabled) at runtime.
+This is achieved by creating static structures in a separate linker segment.
 
-OSX: Create a new Copy Files Build Phase with target "Frameworks" and drag the
-     framework to it (from the EngineRoom project).
-
-     Option-Drag the framework from there to your targets 'Link Binary with Libraries'.
-
-iOS: Drag the libEngineRoom.a from the EngineRoom project to your targets 'Link Binary with Libraries' 
-
-Open the inspector for your target, Tab "General", 
-add EngineRoom-OSX as a dependency.
-
-iOS: Add '-all_load' and '-ObjC' to 'Other Linker Flags'
-     (needed to load the ObjC classes and the initFunction)
-
-OSX: Open your MainMenu NIB and add an NSObject, set its class to EngineRoom,
-     this will provide you with a LogPoint Menu.
-     If you prefer a MenuItem, add one and connect EngineRoom's engineRoomMenuItem outlet to it.
-     And try clicking the item.
+Debug messages are off by default - developers enabled those they currently need by
+specifying a filter.
 
 
-I recommend adding 
-
---- 8< ---
-
-#import <EngineRoom/EngineRoom.h> 
-#import <EngineRoom/logpoints_default.h>
-
-// useful for testing - makes your NSLog()s into logpoints
-#import <EngineRoom/logpoints_nslog.h> 
-
---- >8 ---
-
-to your prefix header (Other Sources -> YourProject_Prefix.pch)
-
-Now recompile and run.
-
-On OSX: 
-   hit Option-Command-.
-   You can enter predicates in the textfields to activate LogPoints.
-
-   There is shorthand available - still a moving target - therefore undocumented:
-
-   but here is an example:
-
-   if you enter:
-
-   :selectorPrefix ; @ClassPrefix ; #keyword ; ?drag
-
-   EngineRoom will activate LogPoints matching the following predicate:
-
-   ( symbolNameOrSelectorNameForDisplay BEGINSWITH 'selectorPrefix' ) OR 
-   ( className BEGINSWITH 'ClassPrefix' ) OR 
-   ( keys CONTAINS 'keyword' ) OR 
-   ( formatInfo CONTAINS 'drag' )
-
-   formatInfo is (more or less) the format string you gave to your log message.
+See HOWTO.txt for usage instructions.
 
 
-The startup filter is written to your apps user defaults and can be modified like this:
+Now for the commercials:
 
-$ defaults write your.app.identifier logPointFilter '...'
+	       * just type what you want to see - no (mandatory) format strings, %ld's and casts to long
 
-$ defaults write your.app.identifier logPointDump -bool YES
+	       	      Number of arguments and their types can be detected and formatted accordingly:
+	       	      
+		        NSWindow *mainWindow = [NSApp mainWindow];
 
-will produce a dump of all logpoints for testing purposes
-
-Both of these keys can be included in your Info.plist to be used
-as a fallback if no defaults are set.
-
-iOS: 
-     The last paragraph above is the way to set filters for now.
-     
+			lpdebug( mainWindow.title, mainWindow.frame, [[NSApp orderedDocuments] count] );
 
 
-Useful hints:
+	       * no tools needed, one framework, one #import
 
-In Xcode, double click on the opening bracket of <file:lineno> and
-hit Cmd-Shift-Opt-D (Open this quickly).
-(This does not work if a Find Panel is active - close it)
+	* team friendly
 
-Performance:
-Since EngineRoom is under active development, 
-it has all optimization turned off for the Debug Configuration.
+	       * silence is golden - debug messages default to "off"
 
+	       * every developer enables his own set of messages
 
-Credit: 
-http://ancientbuho.posterous.com/xcode-logging-trick-quickly-open-a-logs-locat
+	       * working sets can be passed on in form of predicates and written to user defaults
+
+	* dynamic
+
+	       * messages (called logpoints) are data structures - objects even - your app can manipulate them
+
+	       * runtime switchable using predicates on class, method, file, keywords and more
+
+	       * conditional code execution based on enabled logpoints (i.e. debug drawing)
+
+	* high performance - designed to be able to ship fully instrumented builds to testers (or end users)
+
+	       * overhead for a runtime-disabled message is a single bit test a ~1ns on a 2.5GHz MacBook Pro
+
 
