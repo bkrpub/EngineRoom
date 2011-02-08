@@ -56,6 +56,13 @@
 		04C4F4FA12A3424E001C825C /* logpoints_base_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F712A3424E001C825C /* logpoints_base_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C4F4FB12A3424E001C825C /* logpoints_default_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F812A3424E001C825C /* logpoints_default_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C4F4FC12A3424E001C825C /* logpoints_default_kinds.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F912A3424E001C825C /* logpoints_default_kinds.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C5160A12FCC3C000C907EF /* Convenience.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C5160912FCC3C000C907EF /* Convenience.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C5172512FD8E6D00C907EF /* ERUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C5172312FD8E6D00C907EF /* ERUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C5172612FD8E6D00C907EF /* ERUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5172412FD8E6D00C907EF /* ERUtility.m */; };
+		04C5175912FDBFC400C907EF /* NSBundle_ERResourceExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C5175A12FDBFC400C907EF /* NSBundle_ERResourceExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */; };
+		04C5175B12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04C5175C12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -111,6 +118,13 @@
 		04C4F4F712A3424E001C825C /* logpoints_base_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_base_macros.h; sourceTree = "<group>"; };
 		04C4F4F812A3424E001C825C /* logpoints_default_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_macros.h; sourceTree = "<group>"; };
 		04C4F4F912A3424E001C825C /* logpoints_default_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_kinds.h; sourceTree = "<group>"; };
+		04C5160912FCC3C000C907EF /* Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convenience.h; sourceTree = "<group>"; };
+		04C5172312FD8E6D00C907EF /* ERUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERUtility.h; sourceTree = "<group>"; };
+		04C5172412FD8E6D00C907EF /* ERUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERUtility.m; sourceTree = "<group>"; };
+		04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundle_ERResourceExtensions.h; sourceTree = "<group>"; };
+		04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundle_ERResourceExtensions.m; sourceTree = "<group>"; };
+		04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPropertyListSerialization_ERBackPortExtensions.h; sourceTree = "<group>"; };
+		04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPropertyListSerialization_ERBackPortExtensions.m; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -171,6 +185,19 @@
 			name = CrossPlatform;
 			sourceTree = "<group>";
 		};
+		04C5175412FDBF6F00C907EF /* ERUtility */ = {
+			isa = PBXGroup;
+			children = (
+				04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */,
+				04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */,
+				04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */,
+				04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */,
+				04C5172312FD8E6D00C907EF /* ERUtility.h */,
+				04C5172412FD8E6D00C907EF /* ERUtility.m */,
+			);
+			path = ERUtility;
+			sourceTree = "<group>";
+		};
 		0867D691FE84028FC02AAC07 /* EngineRoom-OSX */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +237,8 @@
 		08FB77AEFE84172EC02AAC07 /* Sources-Common */ = {
 			isa = PBXGroup;
 			children = (
+				04C5160912FCC3C000C907EF /* Convenience.h */,
+				04C5175412FDBF6F00C907EF /* ERUtility */,
 				04C4F4F712A3424E001C825C /* logpoints_base_macros.h */,
 				04C4F4F812A3424E001C825C /* logpoints_default_macros.h */,
 				04C4F4F912A3424E001C825C /* logpoints_default_kinds.h */,
@@ -298,6 +327,10 @@
 				0473CEE112458BB4004FAD1E /* CrossPlatform_Target.h in Headers */,
 				042214041200584D0011C415 /* CrossPlatform.h in Headers */,
 				0473D1EF1246BE2B004FAD1E /* ERAboutWindowController.h in Headers */,
+				04C5172512FD8E6D00C907EF /* ERUtility.h in Headers */,
+				04C5160A12FCC3C000C907EF /* Convenience.h in Headers */,
+				04C5175912FDBFC400C907EF /* NSBundle_ERResourceExtensions.h in Headers */,
+				04C5175B12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +416,9 @@
 				0473CEDC12458509004FAD1E /* CrossPlatform_Images.m in Sources */,
 				0473CEDF12458509004FAD1E /* CrossPlatform_NSValue_CGGeometry.m in Sources */,
 				0473D1F01246BE2B004FAD1E /* ERAboutWindowController.m in Sources */,
+				04C5172612FD8E6D00C907EF /* ERUtility.m in Sources */,
+				04C5175A12FDBFC400C907EF /* NSBundle_ERResourceExtensions.m in Sources */,
+				04C5175C12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,9 +520,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				ER_VERSION = 1.1.11r0;
-				ER_VERSION_BUNDLE = 0111.10.0;
-				ER_VERSION_HEX = 0x0111100;
+				ER_VERSION = 1.1.11r2;
+				ER_VERSION_BUNDLE = 0111.10.2;
+				ER_VERSION_HEX = 0x0111102;
 				ER_VERSION_INFO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -532,9 +568,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				ER_VERSION = 1.1.11r0;
-				ER_VERSION_BUNDLE = 0111.10.0;
-				ER_VERSION_HEX = 0x0111100;
+				ER_VERSION = 1.1.11r2;
+				ER_VERSION_BUNDLE = 0111.10.2;
+				ER_VERSION_HEX = 0x0111102;
 				ER_VERSION_INFO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;

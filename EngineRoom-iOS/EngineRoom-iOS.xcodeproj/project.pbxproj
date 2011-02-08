@@ -42,6 +42,13 @@
 		04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB012D2872100E06235 /* logpoints_default_macros.h */; };
 		04290AC212D289E300E06235 /* logpoints_default_kinds.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB212D2872100E06235 /* logpoints_default_kinds.h */; };
 		04AA592512D6B8F00097656D /* er_symbols.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04AA591D12D6B8B90097656D /* er_symbols.h */; };
+		04C5194512FE54EF00C907EF /* ERUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5194012FE54EF00C907EF /* ERUtility.m */; };
+		04C5194612FE54EF00C907EF /* NSBundle_ERResourceExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5194212FE54EF00C907EF /* NSBundle_ERResourceExtensions.m */; };
+		04C5194712FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5194412FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */; };
+		04C5194A12FE552E00C907EF /* Convenience.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04C5193D12FE546A00C907EF /* Convenience.h */; };
+		04C5194B12FE552E00C907EF /* ERUtility.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04C5193F12FE54EF00C907EF /* ERUtility.h */; };
+		04C5194C12FE552E00C907EF /* NSBundle_ERResourceExtensions.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04C5194112FE54EF00C907EF /* NSBundle_ERResourceExtensions.h */; };
+		04C5194D12FE552E00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04C5194312FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +59,10 @@
 			dstPath = include/EngineRoom;
 			dstSubfolderSpec = 16;
 			files = (
+				04C5194A12FE552E00C907EF /* Convenience.h in Copy Headers */,
+				04C5194B12FE552E00C907EF /* ERUtility.h in Copy Headers */,
+				04C5194C12FE552E00C907EF /* NSBundle_ERResourceExtensions.h in Copy Headers */,
+				04C5194D12FE552E00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Copy Headers */,
 				04290AC012D289E300E06235 /* logpoints_base_macros.h in Copy Headers */,
 				04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */,
 				04290AC212D289E300E06235 /* logpoints_default_kinds.h in Copy Headers */,
@@ -122,6 +133,13 @@
 		04290AB212D2872100E06235 /* logpoints_default_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_kinds.h; sourceTree = "<group>"; };
 		04290AB312D2872100E06235 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
 		04AA591D12D6B8B90097656D /* er_symbols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_symbols.h; sourceTree = "<group>"; };
+		04C5193D12FE546A00C907EF /* Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convenience.h; sourceTree = "<group>"; };
+		04C5193F12FE54EF00C907EF /* ERUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERUtility.h; sourceTree = "<group>"; };
+		04C5194012FE54EF00C907EF /* ERUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERUtility.m; sourceTree = "<group>"; };
+		04C5194112FE54EF00C907EF /* NSBundle_ERResourceExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundle_ERResourceExtensions.h; sourceTree = "<group>"; };
+		04C5194212FE54EF00C907EF /* NSBundle_ERResourceExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundle_ERResourceExtensions.m; sourceTree = "<group>"; };
+		04C5194312FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPropertyListSerialization_ERBackPortExtensions.h; sourceTree = "<group>"; };
+		04C5194412FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPropertyListSerialization_ERBackPortExtensions.m; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libEngineRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngineRoom.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -150,6 +168,8 @@
 		04221547120072320011C415 /* Sources-Common */ = {
 			isa = PBXGroup;
 			children = (
+				04C5193D12FE546A00C907EF /* Convenience.h */,
+				04C5193E12FE547D00C907EF /* ERUtility */,
 				04290AAF12D2872100E06235 /* logpoints_base_macros.h */,
 				04290AB012D2872100E06235 /* logpoints_default_macros.h */,
 				04290AB212D2872100E06235 /* logpoints_default_kinds.h */,
@@ -198,6 +218,19 @@
 				04221549120072700011C415 /* CrossPlatform.m */,
 			);
 			name = CrossPlatform;
+			sourceTree = "<group>";
+		};
+		04C5193E12FE547D00C907EF /* ERUtility */ = {
+			isa = PBXGroup;
+			children = (
+				04C5193F12FE54EF00C907EF /* ERUtility.h */,
+				04C5194012FE54EF00C907EF /* ERUtility.m */,
+				04C5194112FE54EF00C907EF /* NSBundle_ERResourceExtensions.h */,
+				04C5194212FE54EF00C907EF /* NSBundle_ERResourceExtensions.m */,
+				04C5194312FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */,
+				04C5194412FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */,
+			);
+			path = ERUtility;
 			sourceTree = "<group>";
 		};
 		0867D691FE84028FC02AAC07 /* EngineRoom-iOS */ = {
@@ -286,6 +319,9 @@
 				04221578120073CA0011C415 /* EngineRoomController.m in Sources */,
 				04290AB412D2872100E06235 /* CrossPlatform_Images.m in Sources */,
 				04290AB512D2872100E06235 /* CrossPlatform_NSValue_CGGeometry.m in Sources */,
+				04C5194512FE54EF00C907EF /* ERUtility.m in Sources */,
+				04C5194612FE54EF00C907EF /* NSBundle_ERResourceExtensions.m in Sources */,
+				04C5194712FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
