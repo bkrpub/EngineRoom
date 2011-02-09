@@ -16,7 +16,7 @@ Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](EngineRoom
 
 EngineRoom is primarily targeted at Objective-C developers on Mac OS X and iOS with some support for C on GNU/Linux and Solaris.
 
-The OS X version is most actively maintained. The iOS version is usable but needs more work.  
+The OS X version is maintained very actively. The iOS version is usable but needs more work.  
 Linux and Solaris are working but lack support code because I do not currently use them.  
 A windows port (and maintainer) would be very welcome, please contact me if you are interested.  
 I try to provide support for (Objective-)C++ but I don't use the language.
