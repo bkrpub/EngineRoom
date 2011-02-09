@@ -163,7 +163,7 @@ I try to provide support for (Objective-)C++ but I don't actively use the langua
      * Uli Kusterer @ [Uli's Blog](http://zathras.de/angelweb/blog.htm)
     (I should visit more conferences to meet you...)
 
-  * Michael Markowski @ [artifacts, fine software](http://artifacts.de/) for input and test driving EngineRoom in a large commercial project as well as in AFCache.
+  * Michael Markowski @ [artifacts, fine software](http://artifacts.de/) for input, enthusiasm and agreeing to test-drive in a large commercial project as well as in [AFCache](https://github.com/artifacts/AFCache).
 
   * Pezhman Givy, Carsten M&uuml;ller and Kay R&ouml;pke for listening to and commenting
  my ramblings about this project since 2007.
