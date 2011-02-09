@@ -10,6 +10,8 @@ working on applications of all sizes.
 
 Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](EngineRoom/blob/master/LICENSE.txt).
 
+*The documentation is far from complete. Working on it. Real artists ship. :-)*
+
 ## State of the audience
 
 EngineRoom is primarily targeted at Objective-C developers on Mac OS X and iOS with some support for C on GNU/Linux and Solaris.
@@ -121,19 +123,21 @@ I try to provide support for (Objective-)C++ but I don't use the language.
   EngineRoom (mostly the LogPoints part) has support for embedding itself
   in a project. This is useful if you build a framework which profits from
   configurable logging, but you don't know if the final application
-  will link use EngineRoom. You can build your framework so that it 
+  will use EngineRoom too. You can build your framework so that it 
   embeds a copy of LogPoints (using symbol prefixes). At runtime,
   it will check if the host application is linked against EngineRoom.
   If so, it will use that version (and its configuration), otherwise
   it falls back to its own copy.
 
-  For an example see [AFCache](https://github.com/artifacts/AFCache), 
+  This feature was just born and is not yet documented,
+  for an example see [AFCache](https://github.com/artifacts/AFCache), 
   a feature-rich embeddable HTTP cache for iOS and OSX applications.
   The embed feature is still steaming from the presses.
   To use it with AFCache, checkout AFCache and EngineRoom at the
   same directory level, use a shared build directory, drag the AFCache
   Project into your project and then proceed as described under "Usage"
   but use the AFCache-EngineRoom target.
+  
 
 ## Usage 
 
@@ -179,6 +183,6 @@ I try to provide support for (Objective-)C++ but I don't use the language.
   * Thanks for the ride!
 
   
-*This is far from complete. Real artists ship.*
+
 
 
