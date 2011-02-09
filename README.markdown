@@ -39,7 +39,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
                 YYYY-mm-dd HH:MM:SS.sss Application [pid:tid] title: Action! tag: 100 bounds: {{10,20},{30,40}}
 
 
-  * **Log messages should be powerful tools to modern cavemen, complementing debuggers**
+  * **Log messages should be powerful tools to modern cavemen, complementing debuggers.**
 
     * More is better, as long as you see only what **you** want **right now**.  
 
@@ -67,7 +67,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
       
       The Info.plist option provides for some fascinating abuses of this feature.
 
-  * **Developers should be able (if desired) to ship fully instrumented builds without sacrificing performance**
+  * **Developers should be able (if desired) to ship fully instrumented builds without sacrificing performance.**
 
     * The time required to decide which messages are enabled
     is spent once when the filter expression is set. 
@@ -78,7 +78,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
     browsing the LogPoint list (# column in screenshot) offers a quick  
     impression on hotspots, complementing Instruments and other tools.
 
-  * **Toolkits should be able adapt to developers needs
+  * **Toolkits should be able adapt to developers needs, not force their way upon them.
 
     * Large projects may require more metadata (i.e. keywords) to classify messages,
     small projects may want to avoid the overhead.
@@ -138,6 +138,9 @@ I try to provide support for (Objective-)C++ but I don't use the language.
   Project into your project and then proceed as described under "Usage"
   but use the AFCache-EngineRoom target.
   
+  The Debug configuration has optimization enabled. This is because am 
+  a friend of -Wuninitialized and clang does not support it with -O0.
+  They are working on it.
 
 ## Usage 
 
