@@ -105,11 +105,3 @@ In Xcode, double click on the opening bracket of <file:lineno> and
 hit Cmd-Shift-Opt-D (Open this quickly).
 (This does not work if a Find Panel is active - close it)
 
-Performance:
-Since EngineRoom is under active development, 
-it has all optimization turned off for the Debug Configuration.
-
-
-Credit: 
-http://ancientbuho.posterous.com/xcode-logging-trick-quickly-open-a-logs-locat
-

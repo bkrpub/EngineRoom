@@ -161,6 +161,8 @@ I try to provide support for (Objective-)C++ but I don't use the language.
   * Steven Fuerst for publishing the technique to detect the number of arguments passed to a macro
    in an [article on overloading in C](http://locklessinc.com/articles/overloading/).
 
+  * ancientbuho for [unearthing](http://ancientbuho.posterous.com/xcode-logging-trick-quickly-open-a-logs-locat) how to make Xcode follow locations in log messages.
+
   * Among many others, for generously taking time to share their knowledge and pieces of carefully crafted code:
 
      * Matt Gallagher @ [Cocoa with love](http://cocoawithlove.com/)
