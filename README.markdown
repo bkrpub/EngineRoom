@@ -78,7 +78,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
     browsing the LogPoint list (# column in screenshot) offers a quick  
     impression on hotspots, complementing Instruments and other tools.
 
-  * **Toolkits should be able adapt to developers needs, not force their way upon them.
+  * **Toolkits should be able adapt to developers needs instead of forcing their way.**
 
     * Large projects may require more metadata (i.e. keywords) to classify messages,
     small projects may want to avoid the overhead.
