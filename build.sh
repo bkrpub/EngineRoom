@@ -1,10 +1,10 @@
 #!/bin/bash
 
-VERSION="1.1.0"
+VERSION="1.1.11r2"
 
 CONFIGURATIONS="Release"
 IOS_SDKS="iphoneos iphonesimulator"
-IOS_VERSION="4.0"
+IOS_VERSION=""
 
 set -e
 set -x
