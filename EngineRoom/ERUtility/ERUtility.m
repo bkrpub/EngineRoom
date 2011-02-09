@@ -84,7 +84,6 @@ NSDictionary *ERDictionaryWithKeysAndObjects(id *array, NSUInteger count)
 
 + (NSURL *) exportPropertyListItem: (id) item baseURL: (NSURL *) baseURL basename: (NSString *) basename type: (NSString *) type options: (NSDictionary *) options error: (NSError **) outError
 {
-	NSString *bundleIdentifier = [options valueForKey: ERUtilityOptionExportOpenWithBundleIdentifier];
 	NSNumber *baseTypesAsPropertyList = [options valueForKey: ERUtilityOptionExportBaseTypesAsPropertyList];
 	NSString *dateFormat = [options valueForKey: ERUtilityOptionExportDateFormat];
 
@@ -114,6 +113,8 @@ NSDictionary *ERDictionaryWithKeysAndObjects(id *array, NSUInteger count)
 		success = [data writeToURL: URL options: NSDataWritingAtomic error: outError];
 
 #if TARGET_OS_OSX
+		NSString *bundleIdentifier = [options valueForKey: ERUtilityOptionExportOpenWithBundleIdentifier];
+			
 		if( YES == success && nil != bundleIdentifier ) {
 			NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
 			
