@@ -8,7 +8,7 @@ The most prominent (and mature) component is **LogPoints**,
 a logging facility designed to provide comfort to developers 
 working on applications of all sizes.
 
-Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](LICENSE.txt).
+Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](blob/LICENSE.txt).
 
 ## State of the audience
 
@@ -20,7 +20,7 @@ The Linux and Solaris versions are lacking support code because I don't actively
 A windows port (and maintainer) would be very welcome, please contact me if you are interested.  
 I try to provide support for (Objective-)C++ but I don't actively use the language.
 
-![Icon](https://github.com/bkrpub/EngineRoom/raw/master/Resources/screenshot_free.png "Screenshot of LogPoint selector") 
+![Icon](raw/master/Resources/screenshot_free.png "Screenshot of LogPoint selector") 
 
 ## LogPoints design decisions
 
@@ -134,7 +134,7 @@ I try to provide support for (Objective-)C++ but I don't actively use the langua
 
 ## Usage 
 
- See [HOWTO.txt](HOWTO.txt) for usage instructions.
+ See [HOWTO.txt](blob/HOWTO.txt) for usage instructions.
 
 
 ## Planned features
@@ -163,7 +163,7 @@ I try to provide support for (Objective-)C++ but I don't actively use the langua
      * Uli Kusterer @ [Uli's Blog](http://zathras.de/angelweb/blog.htm)
     (I should visit more conferences to meet you...)
 
-  * Michael Markowski @ [artifacts, fine software](http://artifacts.de/) for input and agreeing to test drive EngineRoom in a large commercial project.
+  * Michael Markowski @ [artifacts, fine software](http://artifacts.de/) for input and test driving EngineRoom in a large commercial project as well as in AFCache.
 
   * Pezhman Givy, Carsten M&uuml;ller and Kay R&ouml;pke for listening to and commenting
  my ramblings about this project since 2007.
@@ -171,11 +171,11 @@ I try to provide support for (Objective-)C++ but I don't actively use the langua
   * Sven Gohdes @ [T42](http://t42.de/) for discussion, cunningly constructed all-night
  code-compatible playlists and improving my writing.
 
-  * My family for loving someone who spends ridiculous amounts of time stuff like this.
+  * My family for loving someone who spends ridiculous amounts of time on stuff like this.
 
   * Thanks for the ride!
 
   
-*This documentation is far from complete. Real artists ship.*
+*This is far from complete. Real artists ship.*
 
 
