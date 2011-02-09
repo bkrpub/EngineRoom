@@ -8,7 +8,7 @@ The most prominent (and mature) component is **LogPoints**,
 a logging facility designed to provide comfort to developers 
 working on applications of all sizes.
 
-Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](blob/LICENSE.txt).
+Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](EngineRoom/blob/master/LICENSE.txt).
 
 ## State of the audience
 
@@ -20,7 +20,7 @@ The Linux and Solaris versions are lacking support code because I don't actively
 A windows port (and maintainer) would be very welcome, please contact me if you are interested.  
 I try to provide support for (Objective-)C++ but I don't actively use the language.
 
-![Icon](raw/master/Resources/screenshot_free.png "Screenshot of LogPoint selector") 
+![Icon](/bkrpub/EngineRoom/raw/master/Resources/screenshot_free.png "Screenshot of LogPoint selector") 
 
 ## LogPoints design decisions
 
@@ -134,7 +134,7 @@ I try to provide support for (Objective-)C++ but I don't actively use the langua
 
 ## Usage 
 
- See [HOWTO.txt](blob/HOWTO.txt) for usage instructions.
+ See [HOWTO.txt](/bkrpub/EngineRoom/blob/master/HOWTO.txt) for usage instructions.
 
 
 ## Planned features
