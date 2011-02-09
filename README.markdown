@@ -1,122 +1,178 @@
 
+# EngineRoom
+
+A toolkit addressing basic, recurring needs when using C based languages.
+
+The most prominent (and mature) component is **LogPoints**,  
+a logging facility designed to provide comfort to developers 
+working on applications of all sizes.
+
+Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](LICENSE.txt).
+
+## State of the audience
+
+EngineRoom is primarily targeted at Objective-C developers on Mac OS X.
+
+The iOS version is usable but needs more work.  
+LogPoints work with gcc, clang (and sun cc) on Darwin, ELF-based GNU/Linux and Solaris.  
+The Linux and Solaris versions are lacking support code because I don't actively use them.  
+A windows port (and maintainer) would be very welcome, please contact me if you are interested.  
+I try to provide basic support for (Objective-)C++ but I don't actively use the language.
+
 ![Icon](https://github.com/bkrpub/EngineRoom/raw/master/Resources/screenshot_free.png "Screenshot of LogPoint selector") 
 
-**EngineRoom** is a toolkit addressing basic, recurring needs when
-writing applications in C based languages.
+## LogPoints design decisions
 
-The most mature part is a logging facility designed after many years of
-using and trying to improve various logging mechanisms.
+  * **Creating a well formed log message should require less effort than a sloppy one.**
 
-EngineRoom is targeted at *ix development with a focus on OS X and iOS.
+    * what you type is what you get - no (mandatory) format strings, labels or casts,
+    number of arguments and (in ObjC) types are detected:
+	       	      
+            lpdebug( sender.title, sender.tag, self.bounds );
+                HH:MM:SS.sss DEBUG 1 -[MyView myMethod:] sender.title: Action! ~ sender.tag: 100 $64 self.bounds: {{10,20},{30,40}} SubClassOfMyView:0xc0c0babe <MyView.m:42>
 
-The logging core has compiler and object file dependencies,
-it works with gcc, clang (and sun cc) on Darwin, ELF-based GNU/Linux and Solaris.
-The Linux and Solaris versions are pretty raw at the moment.
+	    (verbosity configurable at runtime) instead of
 
-The iOS port is usable but needs more work.
-
-LogPoints are built on three basic ideas:
-
-* **Creating a well formed log message should require less effort than a sloppy one.**
-
-        lpdebug(anInt, aRect, anObject); /* ObjC */
-            HH:MM:SS.sss DEBUG 1 -[Class sel] anInt: 42 $0x2a ~ aRect: {{0,0}{0,0}} anObject: description realClass:addr <file:line>
-
-	(with the format being configurable at runtime) instead of
-
-        NSLog(@"%ld %@ %@", (long)anInt, NSStringFromRect(aRect), anObject);
-            YYYY-mm-dd HH:MM:SS.sss Application [pid:tid] 42 {{0,0}{0,0}} description 
-
-* **Log messages are powerful tools which complement debuggers.**
-
-  More is better, but only if you can restrict output to what **you** are interested in **right now**.
-
-  * Log levels are not sufficient to achieve this goal
-
-  * LogPoints are selectively enabled using filter expressions
-  which can target implicit metadata like file/class/function/line,
-  explicit metadata (optional keywords) or (static) parts of the message itself.
-  This avoids code bureaucracy and still provides for much flexibility in selecting messages.
-
-* **A developer should be able (if desired) to ship a fully instrumented build without sacrificing performance**
-
-  * The time required to decide which messages are enabled
-  is spent once when the filter expression is set. 
-  Afterwards, the overhead is a test of one bit.
-  On a 2.5GHz MacBook Pro this is ~1ns per disabled logpoint.
+            NSLog(@"title: %@ tag: %ld bounds: %@", sender.title, (long)sender.tag, NSStringFromRect(self.bounds));
+                YYYY-mm-dd HH:MM:SS.sss Application [pid:tid] title: Action! tag: 100 bounds: {{10,20},{30,40}}
 
 
-* **The guts**	       
-	  
+  * **Log messages are powerful tools for modern cavemen, complementing debuggers**
+
+    * More is better, as long as you see only what **you** want **right now**.  
+
+    * Log levels are useful classifications but not sufficient.
+
+    * LogPoints are selectively enabled using filter expressions
+    which can target implicit metadata like file/class/function/line,
+    explicit metadata (optional keywords, kind, label) or (static) parts of the message itself.
+    This avoids code bureaucracy and still provides for much flexibility in selecting messages.
+    Filters (on OSX) use NSPredicate syntax or convenient shorthand (see screenshot).  
+    Silence is golden - debug messages (by default :-) default to "off".
+
+    * The GUI seen above is incorporated into an application simply by adding one object
+    to MainMenu.xib.
+
+    * Each team member selects her own set of messages,  
+    working sets can be selected using GUI tools (a rough implementation is provided),
+    saved to user defaults and shared in form of predicates or shorthand.  
+    Default predicates can be stored in an applications Info.plist.  
+    Simplifies working with others, including beta testers and power users.
+
+    * Runtime configuration can be used to selectively enable code paths:
+
+              if( lpkswitch("showBounds") ) { NSFrameRect(self.bounds); }
+      
+      The Info.plist option provides for some fascinating abuses of this feature.
+
+  * **Developers should be able (if desired) to ship fully instrumented builds without sacrificing performance**
+
+    * The time required to decide which messages are enabled
+    is spent once when the filter expression is set. 
+    Afterwards, the overhead is a test of one bit.
+    On a 2.5GHz MacBook Pro this is ~1ns per disabled logpoint.
+
+    * As an option, LogPoint passes can be counted even if disabled,  
+    browsing the LogPoint list (# column in screenshot) offers a quick  
+    impression on hotspots, complementing Instruments and other tools.
+
+  * **The requirements for a logging toolkit are a function of the project and the people**
+
+    * Large projects may require more metadata (i.e.) keywords in messages,
+    small projects may want to avoid the overhead.
+
+    * Developers tend to have strong preferences about logging macros and output.
+
+    * Therefore, LogPoints strives to be adaptable. It doesn't enforce a particular 
+    macro style. While it offers a lot of convenience magic, you are free to ignore
+    it and use it on a lower level. LogPoints provides a set of basic macros as an API. 
+    From there, the macros you actually use are generated by a heavily parameterized
+    perl script. The recurrent aspects of creating (even the API) headers containing lots
+    of variants are automated so you can easily experiment to find a style that suits your needs.  
+    A (hopefully) sensible default setting is provided. 
+    This is nonetheless strongly influenced by my taste, please let me 
+    know if you listen to a different drummer.
+
+
+## Implementation details
+
   LogPoint macros are expanded to code that creates a static structure
   containing metadata and (besides others) an enabled flag.
 
-  Because these structures are placed in a separate linker segment
-  they can be located and manipulated at runtime.
-  
+  These structures are placed in a separate linker segment
+  and therefore locatable and manipulatable at runtime,
+  allowing one to even treat them as objects (as seen in the screenshot above).
+
+  The logging core is compiler and object format dependent because it
+  creates object file sections and analyzes the binary object file at runtime.  
+  There is no need to keep the symbol table around and the activating code
+  can even be loaded as a plugin if desired.
+
   This mechanism is implemented for OS X / iOS Mach-O format and for 
   ELF on Linux and Solaris, in both 32 and 64bit variants.
 
-This is achieved by creating a static structure in a separate linker segment
-for each LogPoint which can then be accessed at runtime.
+  The OS X version was originally written for 10.3 and is generally targeted
+  at 10.5 now. Some 10.6 features have crept in but this is easily 
+  fixed. With the advent of the AppStore and 10.7 at the horizon
+  I currently do not plan to spend much time to support <10.6.
+
+  EngineRoom (mostly the LogPoints part) has support for embedding itself
+  in a project. This is useful if you build a framework which profits from
+  configurable logging, but you don't know if the final application
+  will link use EngineRoom. You can build your framework so that it 
+  embeds a copy of LogPoints (using symbol prefixes). At runtime,
+  it will check if the host application is linked against EngineRoom.
+  If so, it will use that version (and its configuration), otherwise
+  it falls back to its own copy.
+
+  For an example see [AFCache](https://github.com/artifacts/AFCache), 
+  a feature-rich embeddable HTTP cache for iOS and OSX applications.
+  The feature is still steaming, you may have to check out the "bip" branch.
+
+## Usage 
+
+ See [HOWTO.txt](HOWTO.txt) for usage instructions.
 
 
+## Planned features
 
-extensive use of the dynamism and introspective capabilities of Objective-C.
+ * interfacing to [NSLogger](https://github.com/fpillet/NSLogger),
+ a very powerful logging tool on its own is one of the next steps.  
+ NSLogger has an impressive implementation of remote logging, a 
+ feature that was long planned for EngineRoom.
 
-The logging component was ported to GNU/Linux and Solaris (gcc and sun cc) as well
-but is not currently maintained.
+ * explore possible interactions with [Log4Cocoa](http://log4cocoa.sourceforge.net/),
+ which provides a detailed backend.
 
-EngineRoom targets *ix environments using gcc or clang compilers
-with emphasis on OS X and iOS development.
+ * an improved GUI
 
+## Credits
 
-* **Roadmap**
+  * Steven Fuerst for publishing the technique to detect the number of arguments passed to a macro
+   in an [article on overloading in C](http://locklessinc.com/articles/overloading/).
 
- * an [NSLogger](http://foo) backend is one of the next steps
+  * Among many others, for generously taking time to share their knowledge and pieces of carefully crafted code:
 
-The basic idea is to make the log message a first class citizen.
-LogPoints are data structures which can be manipulated (i.e. enabled / disabled) at runtime.
+     * Matt Gallagher @ [Cocoa with love](http://cocoawithlove.com/)
 
+     * Mike Ash @ [NSBlog](http://www.mikeash.com/pyblog/) - Buy the Friday Q&A book!
 
-Debug messages are off by default - developers enabled those they currently need by
-specifying a filter.
+     * Uli Kusterer @ [Uli's Blog](http://zathras.de/angelweb/blog.htm)
+    (I should visit more conferences to meet you...)
 
+  * Michael Markowski @ [artifacts, fine software](http://artifacts.de/) for input and agreeing to test drive EngineRoom in a large commercial project.
 
-See HOWTO.txt for usage instructions.
+  * Pezhman Givy, Carsten M&uuml;ller and Kay R&ouml;pke for listening to and commenting
+ my ramblings about this project since 2007.
 
+  * Sven Gohdes @ [T42](http://t42.de/) for discussion, cunningly constructed all-night
+ code-compatible playlists and improving my writing.
 
-Now for the commercials:
+  * My family for loving someone who spends ridiculous amounts of time stuff like this.
 
-	       * just type what you want to see - no (mandatory) format strings, %ld's and casts to long
+  * Thanks for the ride!
 
-	       	      Number of arguments and their types can be detected and formatted accordingly:
-	       	      
-		        NSWindow *mainWindow = [NSApp mainWindow];
-
-			lpdebug( mainWindow.title, mainWindow.frame, [[NSApp orderedDocuments] count] );
-
-
-	       * no tools needed, one framework, one #import
-
-	* team friendly
-
-	       * silence is golden - debug messages default to "off"
-
-	       * every developer enables his own set of messages
-
-	       * working sets can be passed on in form of predicates and written to user defaults
-
-	* dynamic
-
-	       * messages (called logpoints) are data structures - objects even - your app can manipulate them
-
-	       * runtime switchable using predicates on class, method, file, keywords and more
-
-	       * conditional code execution based on enabled logpoints (i.e. debug drawing)
-
-	* high performance - designed to be able to ship fully instrumented builds to testers (or end users)
-
-	       * overhead for a runtime-disabled message is a single bit test a ~1ns on a 2.5GHz MacBook Pro
+  
+*This documentation is far from complete. Real artists ship.*
 
 

@@ -40,7 +40,7 @@
 
 /*
  * expands to the number of arguments (up to 20) it was given
- * returns 1 for 1 AND zero arguments, see ER_COUNT_ARGS_PLUS1 for a solutionBundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease
+ * returns 1 for 1 AND zero arguments, see ER_COUNT_ARGS_PLUS1 for a solution
  * credit for the technique goes to Steven Fuerst 
  * http://locklessinc.com/articles/overloading/ 
  */
