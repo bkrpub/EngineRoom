@@ -129,7 +129,11 @@ I try to provide support for (Objective-)C++ but I don't use the language.
 
   For an example see [AFCache](https://github.com/artifacts/AFCache), 
   a feature-rich embeddable HTTP cache for iOS and OSX applications.
-  The feature is still steaming, you may have to check out the "bip" branch.
+  The embed feature is still steaming from the presses.
+  To use it with AFCache, checkout AFCache and EngineRoom at the
+  same directory level, use a shared build directory, drag the AFCache
+  Project into your project and then proceed as described under "Usage"
+  but use the AFCache-EngineRoom target.
 
 ## Usage 
 
