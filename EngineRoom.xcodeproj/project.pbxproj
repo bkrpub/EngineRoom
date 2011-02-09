@@ -130,7 +130,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# shell script goes here\nset -e\nset -x\nenv\nexit 0\n./build.sh\n";
+			shellScript = "./build.sh\nexit $?\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
