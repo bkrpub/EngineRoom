@@ -80,7 +80,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
 
   * **The requirements for a logging toolkit are a function of the project and the people**
 
-    * Large projects may require more metadata (i.e.) keywords in messages,
+    * Large projects may require more metadata (i.e. keywords) to classify messages,
     small projects may want to avoid the overhead.
 
     * Developers tend to have strong preferences about logging macros and output.
