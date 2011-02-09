@@ -55,4 +55,6 @@ done
 
 cd ..
 
+echo 
+echo Build results in 
 echo "$BUILD_DIR"

@@ -1,7 +1,8 @@
 
-# EngineRoom
+EngineRoom
+==========
 
-A toolkit addressing basic, recurring needs when using C based languages.
+## A toolkit addressing basic, recurring needs when using C based languages.
 
 The most prominent (and mature) component is **LogPoints**,  
 a logging facility designed to provide comfort to developers 
@@ -11,13 +12,13 @@ Copyright (c) 2007-2011 Bjoern Kriews and contributors, [BSD License](LICENSE.tx
 
 ## State of the audience
 
-EngineRoom is primarily targeted at Objective-C developers on Mac OS X.
+EngineRoom is primarily targeted at Objective-C developers on Mac OS X and iOS  
+with some support for C on GNU/Linux and Solaris.
 
 The iOS version is usable but needs more work.  
-LogPoints work with gcc, clang (and sun cc) on Darwin, ELF-based GNU/Linux and Solaris.  
 The Linux and Solaris versions are lacking support code because I don't actively use them.  
 A windows port (and maintainer) would be very welcome, please contact me if you are interested.  
-I try to provide basic support for (Objective-)C++ but I don't actively use the language.
+I try to provide support for (Objective-)C++ but I don't actively use the language.
 
 ![Icon](https://github.com/bkrpub/EngineRoom/raw/master/Resources/screenshot_free.png "Screenshot of LogPoint selector") 
 
@@ -110,6 +111,8 @@ I try to provide basic support for (Objective-)C++ but I don't actively use the 
 
   This mechanism is implemented for OS X / iOS Mach-O format and for 
   ELF on Linux and Solaris, in both 32 and 64bit variants.
+
+  LogPoints are tested with gcc, clang and Sun Studio cc.
 
   The OS X version was originally written for 10.3 and is generally targeted
   at 10.5 now. Some 10.6 features have crept in but this is easily 
