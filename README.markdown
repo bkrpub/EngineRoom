@@ -178,7 +178,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
   * Sven Gohdes @ [T42](http://t42.de/) for discussion, cunningly constructed all-night
  code-compatible playlists and for improving my writing.
 
-  * My family for loving someone who spends ridiculous amounts of time on stuff like this.
+  * My family for loving someone who invests ridiculous amounts of time in stuff like this.
 
   * Thanks for the ride!
 
