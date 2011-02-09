@@ -23,7 +23,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
 
 ![Icon](/bkrpub/EngineRoom/raw/master/Resources/screenshot_free.png "Screenshot of LogPoint selector") 
 
-## LogPoints design decisions
+## LogPoints design goals
 
   * **Creating a well formed log message should require less effort than a sloppy one.**
 
@@ -39,7 +39,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
                 YYYY-mm-dd HH:MM:SS.sss Application [pid:tid] title: Action! tag: 100 bounds: {{10,20},{30,40}}
 
 
-  * **Log messages are powerful tools for modern cavemen, complementing debuggers**
+  * **Log messages should be powerful tools to modern cavemen, complementing debuggers**
 
     * More is better, as long as you see only what **you** want **right now**.  
 
@@ -78,7 +78,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
     browsing the LogPoint list (# column in screenshot) offers a quick  
     impression on hotspots, complementing Instruments and other tools.
 
-  * **The requirements for a logging toolkit are a function of the project and the people**
+  * **Toolkits should be able adapt to developers needs
 
     * Large projects may require more metadata (i.e. keywords) to classify messages,
     small projects may want to avoid the overhead.
