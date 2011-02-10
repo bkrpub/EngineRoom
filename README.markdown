@@ -172,6 +172,8 @@ I try to provide support for (Objective-)C++ but I don't use the language.
 
      * Mike Ash @ [NSBlog](http://www.mikeash.com/pyblog/) - Buy the Friday Q&A book!
 
+     * Dave De Long @ [Fun with Objective-C](http://funwithobjc.tumblr.com/) - Wonderful stuff!
+
      * Uli Kusterer @ [Uli's Blog](http://zathras.de/angelweb/blog.htm)
     (I should visit more conferences to meet you...)
 

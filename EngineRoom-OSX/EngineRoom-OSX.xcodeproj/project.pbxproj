@@ -37,6 +37,8 @@
 		0422157C120073E60011C415 /* EngineRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422157A120073E60011C415 /* EngineRoomController.m */; };
 		0445B9E312833F3E00CE2063 /* logpoints_nslog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0445B9E212833F3E00CE2063 /* logpoints_nslog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0445BB891284147800CE2063 /* er_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0445BB881284147800CE2063 /* er_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		044CF61A1303455300F0E861 /* ERValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 044CF6181303455300F0E861 /* ERValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		044CF61B1303455300F0E861 /* ERValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 044CF6191303455300F0E861 /* ERValueTransformer.m */; };
 		0473CED912458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED212458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CEDA12458509004FAD1E /* CrossPlatform_Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED312458509004FAD1E /* CrossPlatform_Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0473CEDB12458509004FAD1E /* CrossPlatform_Images.h in Headers */ = {isa = PBXBuildFile; fileRef = 0473CED412458509004FAD1E /* CrossPlatform_Images.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -101,6 +103,8 @@
 		0422157A120073E60011C415 /* EngineRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineRoomController.m; sourceTree = "<group>"; };
 		0445B9E212833F3E00CE2063 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
 		0445BB881284147800CE2063 /* er_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_macros.h; sourceTree = "<group>"; };
+		044CF6181303455300F0E861 /* ERValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERValueTransformer.h; sourceTree = "<group>"; };
+		044CF6191303455300F0E861 /* ERValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERValueTransformer.m; sourceTree = "<group>"; };
 		0473CED212458509004FAD1E /* CrossPlatform_NSString_CGGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_NSString_CGGeometry.h; sourceTree = "<group>"; };
 		0473CED312458509004FAD1E /* CrossPlatform_Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Utilities.h; sourceTree = "<group>"; };
 		0473CED412458509004FAD1E /* CrossPlatform_Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPlatform_Images.h; sourceTree = "<group>"; };
@@ -188,6 +192,8 @@
 		04C5175412FDBF6F00C907EF /* ERUtility */ = {
 			isa = PBXGroup;
 			children = (
+				044CF6181303455300F0E861 /* ERValueTransformer.h */,
+				044CF6191303455300F0E861 /* ERValueTransformer.m */,
 				04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */,
 				04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */,
 				04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */,
@@ -331,6 +337,7 @@
 				04C5160A12FCC3C000C907EF /* Convenience.h in Headers */,
 				04C5175912FDBFC400C907EF /* NSBundle_ERResourceExtensions.h in Headers */,
 				04C5175B12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Headers */,
+				044CF61A1303455300F0E861 /* ERValueTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +426,7 @@
 				04C5172612FD8E6D00C907EF /* ERUtility.m in Sources */,
 				04C5175A12FDBFC400C907EF /* NSBundle_ERResourceExtensions.m in Sources */,
 				04C5175C12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m in Sources */,
+				044CF61B1303455300F0E861 /* ERValueTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
