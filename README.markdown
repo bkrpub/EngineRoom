@@ -55,7 +55,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
     * The GUI seen above is incorporated into an application simply by adding one object
     to MainMenu.xib.
 
-    * Each team member selects her own set of messages,  
+    * Each team member selects her own set of messages,
     working sets can be selected using GUI tools (a rough implementation is provided),
     saved to user defaults and shared in form of predicates or shorthand.  
     Default predicates can be stored in an applications Info.plist.  
@@ -78,7 +78,7 @@ I try to provide support for (Objective-)C++ but I don't use the language.
     browsing the LogPoint list (# column in screenshot) offers a quick  
     impression on hotspots, complementing Instruments and other tools.
 
-  * **Toolkits should be able adapt to developers needs instead of forcing their way.**
+  * **Toolkits should be able to adapt to developers needs instead of forcing their way.**
 
     * Large projects may require more metadata (i.e. keywords) to classify messages,
     small projects may want to avoid the overhead.
@@ -130,9 +130,8 @@ I try to provide support for (Objective-)C++ but I don't use the language.
   it falls back to its own copy.
 
   This feature was just born and is not yet documented,
-  for an example see [AFCache](https://github.com/artifacts/AFCache), 
-  a feature-rich embeddable HTTP cache for iOS and OSX applications.
-  The embed feature is still steaming from the presses.
+  for an example see [AFCache](https://github.com/artifacts/AFCache),
+  a feature-rich embeddable HTTP cache for iOS and OSX applications.  
   To use it with AFCache, checkout AFCache and EngineRoom at the
   same directory level, use a shared build directory, drag the AFCache
   Project into your project and then proceed as described under "Usage"
