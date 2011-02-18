@@ -2,6 +2,8 @@
 #ifndef __ER_CONVENIENCE_H__
 #define __ER_CONVENIENCE_H__ 1
 
+#import <EngineRoom/ERUtility.h>
+
 #pragma mark -
 #pragma mark Localization
 

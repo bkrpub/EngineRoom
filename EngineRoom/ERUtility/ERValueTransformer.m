@@ -1,6 +1,7 @@
 
 #import "ERValueTransformer.h"
 
+#import "Convenience.h"
 #import "logpoints_default.h"
 #import "logpoints_nslog.h"
 
@@ -26,21 +27,20 @@ static void __attribute__((constructor)) construct_ERValueTransformer(void)
 @implementation ERValueTransformer
 
 + (Class) transformedValueClass { 
-    lpkassertf("valueTransformerError", nil, "abstract");
-    return nil;
+    return [NSObject class];
 }
 
 + (BOOL)allowsReverseTransformation { return NO; }
 
 - (id) reverseTransformedValue: (id) value
 {
-    lpkassertf("valueTransformerError", nil, "abstract");
-    return nil;
+	lpkwarning("valueTransformerTest", value);
+    return value;
 }
 
 - (id) transformedValue: (id) value { 
-    lpkassertf("valueTransformerError", nil, "abstract");
-    return nil;
+	lpkwarning("valueTransformerTest", value);
+    return value;
 }
 
 - (void) registerWithName: (NSString *) name
@@ -62,6 +62,91 @@ static void __attribute__((constructor)) construct_ERValueTransformer(void)
             shortName = [shortName substringToIndex: [shortName length] - (sizeof("Transformer")-1)];
              
     [[[[self alloc] init] autorelease] registerWithName: shortName];
+}
+
+
+#define ER_SET_NSERROR_POSIX(errorPtr, code, reasonFormat, ...) ER_SET_NSERROR_REASON((errorPtr), NSPOSIXErrorDomain, (code), reasonFormat, ## __VA_ARGS__) 
+#define ER_CHECK_NSERROR_POSIX(assertion, errorPtr, code, reasonFormat, ...) ER_CHECK_NSERROR_REASON((assertion), (errorPtr), NSPOSIXErrorDomain, (code), reasonFormat, ## __VA_ARGS__) 
+#define ER_CHECK_NSERROR_POSIX_RETURN_NO(assertion, errorPtr, code, reasonFormat, ...) ER_CHECK_NSERROR_REASON_RETURN_NO((assertion), (errorPtr), NSPOSIXErrorDomain, (code), reasonFormat, ## __VA_ARGS__) 
+#define ER_CHECK_NSERROR_POSIX_RETURN_NIL(assertion, errorPtr, code, reasonFormat, ...) ER_CHECK_NSERROR_REASON_RETURN_NIL((assertion), (errorPtr), NSPOSIXErrorDomain, (code), reasonFormat, ## __VA_ARGS__) 
+
+
++ (NSValueTransformer *) transformerWithDictionary: (NSDictionary *) dict error: (NSError **) outError
+{
+	NSString *vtClassName = [dict objectForKey: kERValueTransformerClassKey];
+
+	ER_CHECK_NSERROR_POSIX_RETURN_NIL( 0 != [vtClassName length], outError, EINVAL, @"errorVTDefinition %@ has no '%@' key", dict, kERValueTransformerClassKey);
+
+	Class vtClass = NSClassFromString(vtClassName);
+
+	ER_CHECK_NSERROR_POSIX_RETURN_NIL( Nil != vtClass, outError, ENOENT, @"errorClassNotFoundForVTDefinition %@", dict);
+	
+	NSValueTransformer *vt = [[[vtClass alloc] init] autorelease];
+	
+	ER_CHECK_NSERROR_POSIX_RETURN_NIL( nil != vt, outError, ENOSYS, @"errorCouldNotCreateVT %@", dict);
+	
+	for(NSString *key in dict) {
+		if( YES == [key hasPrefix: kERValueTransformerKeyPrefix] ) {
+			continue;
+		}
+		
+		[vt setValue: [dict objectForKey: key] forKey: key];
+	}
+
+	return vt;
+}
+
++ (BOOL) registerNamedTransformers: (NSDictionary *) namedTransformers error: (NSError **) outError
+{
+	for(NSString *vtName in namedTransformers) {
+		id transformerDescription = [namedTransformers objectForKey: vtName];
+		
+		ER_CHECK_NSERROR_POSIX_RETURN_NO( 0 != [vtName length], outError, EINVAL, @"errorVTDefinition %@ has no name", transformerDescription);
+
+		NSValueTransformer *vt = [NSValueTransformer valueTransformerForName: vtName];
+		
+		ER_CHECK_NSERROR_POSIX_RETURN_NO( nil == vt, outError, EEXIST, @"errorVTNameAlreadyExists '%@'", vtName);
+
+
+
+		if( [transformerDescription isKindOfClass: [NSString class]] ) {
+			transformerDescription = ER_DICT(
+												kERValueTransformerClassKey,
+												NSStringFromClass([ERNumberExpressionTransformer class]),
+												@"predicate", 
+												transformerDescription
+			);
+		}
+			
+		vt = [self transformerWithDictionary: transformerDescription error: outError];
+ 
+		if( nil == vt ) {
+			return NO;
+		}
+		
+		[NSValueTransformer setValueTransformer: vt forName: vtName];
+	}
+	
+	return YES;
+}
+
++ (BOOL) registerTransformersFromBundles: (NSArray *) bundlesToSearch error: (NSError **) outError
+{
+	if( nil == bundlesToSearch ) {
+		bundlesToSearch = ER_ARRAY([NSBundle bundleForClass: self], [NSBundle mainBundle]);
+	}
+
+	for(NSBundle *bundle in bundlesToSearch) {
+		NSDictionary *namedTransformers = [bundle objectForInfoDictionaryKey: kERValueTransformersInfoPlistKey];
+		if( nil != namedTransformers ) {
+			lpkdebug("valueTransformerSetup", [bundle bundleIdentifier], namedTransformers);
+			if( NO == [ERValueTransformer registerNamedTransformers: [bundle objectForInfoDictionaryKey: kERValueTransformersInfoPlistKey] error: outError] ) {
+				return NO;
+			}
+		}
+	}
+
+	return YES;
 }
 
 #if ERVALUETRANSFORMERAUTOREGISTRATION
@@ -203,6 +288,150 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 
 @end
 
+@implementation ERExpressionTransformer
+
+@synthesize predicate = m_predicate;
+@synthesize expression = m_expression;
+@synthesize alternateExpression = m_alternateExpression;
+
+// based on a great, simple hack by Dave De Long
+// see http://funwithobjc.tumblr.com/post/1553469975/abusing-nspredicate
+// parses it as "yourstuff = 0" and takes the left side
+// (imposes some restrictions, see BNF description in Predicate Programming Guide)
+- (NSExpression *) expressionWithString: (NSString *) expressionString
+{
+	NSString *fakePredicateFormat = [@"( " stringByAppendingString: [expressionString stringByAppendingString: @" ) = 0 "]];
+	lpdebug(fakePredicateFormat);
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat: fakePredicateFormat];
+	lpdebug(predicate);
+	
+	NSExpression *expression = [(NSComparisonPredicate *)predicate leftExpression];
+
+	return expression;
+}
+
+
+- (void) setPredicate: (id) predicate
+{
+	if([predicate isKindOfClass: [NSString class]]) {
+		predicate = [NSPredicate predicateWithFormat: predicate];
+	}
+
+	[m_predicate autorelease];
+	m_predicate = [predicate retain];
+}
+
+- (void) setExpression: (id) expression
+{
+	if([expression isKindOfClass: [NSString class]]) {
+		expression = [self expressionWithString: expression];
+	}
+	
+	[m_expression autorelease];
+	m_expression = [expression retain];
+}
+
+- (void) setAlternateExpression: (id) alternateExpression
+{
+	if([alternateExpression isKindOfClass: [NSString class]]) {
+		alternateExpression = [self expressionWithString: alternateExpression];
+	}
+	
+	[m_alternateExpression autorelease];
+	m_alternateExpression = [alternateExpression retain];
+}
+
+- (id) transformedValue: (id) value
+{	
+	BOOL predicateResult = YES;
+	id result = nil;
+	
+	NSPredicate *predicate = self.predicate;
+	NSExpression *expression = self.expression;
+	NSExpression *alternateExpression = self.alternateExpression;
+
+	if( nil != predicate ) {
+		predicateResult = [predicate evaluateWithObject: value];
+	}
+
+	if( nil == expression && nil == alternateExpression ) {
+		result = [NSNumber numberWithBool: predicateResult];
+	} else {
+		
+		NSExpression *selectedExpression = predicateResult ? expression : alternateExpression;
+		
+		if ( nil == selectedExpression ) {
+			result = [NSNumber numberWithBool: predicateResult ? YES : NO];
+		} else {
+			result = [selectedExpression expressionValueWithObject: value context: nil];
+		}
+	}
+	
+    return result;
+}
+
+- (NSString *) description
+{
+    return [NSString stringWithFormat: @"%@(predicate: %@ expression: %@ alternateExpression: %@)", 
+			NSStringFromClass([self class]), self.predicate, self.expression, self.alternateExpression];
+}
+
+
+- (void) dealloc
+{
+    [m_predicate release];
+	[m_expression release];
+	[m_alternateExpression release];
+    [super dealloc];
+}
+
+
+@end
+
+@implementation ERNumberExpressionTransformer
+
++ (Class) transformedValueClass
+{
+	return [NSNumber class];
+}
+
+- (id) transformedValue: (id) value
+{
+	id result = [super transformedValue: value];
+
+	if( NO == [result isKindOfClass: [NSNumber class]]) {
+		result = [result respondsToSelector: @selector(stringValue)] ? [result stringValue] : [result description];
+		result = [NSNumber numberWithDouble: [result doubleValue]];
+	}
+		
+	return result;
+}
+
+@end
+
+@implementation ERStringExpressionTransformer
+
++ (Class) transformedValueClass
+{
+	return [NSString class];
+}
+
+- (id) transformedValue: (id) value
+{
+	id result = [super transformedValue: value];
+
+	if( NO == [result isKindOfClass: [NSString class]]) {
+		result = [result respondsToSelector: @selector(stringValue)] ? [result stringValue] : [result description];
+	}
+		
+	return result;
+}
+
+@end
+
+
+#if 0
 @implementation ERPredicateEvaluatorTransformer
 
 + (void) registerWithName: (NSString *) name predicate: (NSPredicate *) predicate;
@@ -316,7 +545,7 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 // some expressions don't work, i.e. an identifier without a comparison
 - (id) initWithExpressionFormat: (NSString *) format arguments: (va_list) args
 {
-	NSString *fakePredicateFormat = [@"( " stringByAppendingString: [format stringByAppendingString: @" ) = 0"]];
+	NSString *fakePredicateFormat = [@"( " stringByAppendingString: [format stringByAppendingString: @" ) = 0 "]];
 	lpdebug(fakePredicateFormat);
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat: fakePredicateFormat arguments: args];
@@ -363,6 +592,7 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 }
 
 @end
+#endif
 
 @implementation NSNumber ( ERExpressionExtensions )
 

@@ -24,5 +24,35 @@
 	<string>${ER_VERSION_BUNDLE}</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
+	<key>ERValueTransformers</key>
+	<dict>
+		<key>ERLessThanZero</key>
+		<string>SELF &lt; 0</string>
+		<key>ERLessThanOrEqualToZero</key>
+		<string>SELF &lt;= 0</string>
+		<key>ERGreaterThanZero</key>
+		<string>SELF &gt; 0</string>
+		<key>ERGreaterThanOrEqualToZero</key>
+		<string>SELF &gt;= 0</string>
+		<key>EREqualToZero</key>
+		<string>SELF == 0</string>
+		<key>EREqualToOne</key>
+		<string>SELF == 1</string>
+		<key>ERNotEqualToZero</key>
+		<string>SELF != 0</string>
+		<key>ERNotEqualToOne</key>
+		<string>SELF != 1</string>
+		<key>ERDataSizeBaseTen</key>
+		<dict>
+			<key>#class</key>
+			<string>ERStringExpressionTransformer</string>
+			<key>predicate</key>
+			<string>SELF.length &lt; 1000000</string>
+			<key>expression</key>
+			<string>FUNCTION( FUNCTION( SELF.length / 1000, &apos;stringValue&apos; ), &apos;stringByAppendingString:&apos;, &apos;kB&apos; )</string>
+			<key>alternateExpression</key>
+			<string>FUNCTION( FUNCTION( SELF.length / 1000000, &apos;stringValue&apos; ), &apos;stringByAppendingString:&apos;, &apos;MB&apos; )</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

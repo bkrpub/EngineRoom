@@ -3,10 +3,26 @@
 
 // this stuff is still under quarantine
 
+#define kERValueTransformersInfoPlistKey @"ERValueTransformers"
+
+#define kERValueTransformerKeyPrefix @"#"
+
+#define kERValueTransformerClassKey @"#class"
+//#define kERValueTransformerNameKey  @"#name"
+
 
 @interface ERValueTransformer : NSValueTransformer {}
 
 + (void) registerSelf;
+
+// allocates kERValueTransformerClassKey, sets remaining attributes not prefixed with #
++ (NSValueTransformer *) transformerWithDictionary: (NSDictionary *) dict error: (NSError **) outError;
+
++ (BOOL) registerNamedTransformers: (NSDictionary *) namedTransformers error: (NSError **) outError;
+
+// uses mainBundle and ER bundle if bundles is nil 
++ (BOOL) registerTransformersFromBundles: (NSArray *) bundles error: (NSError **) outError;
+
 
 - (void) registerWithName: (NSString *) name;
 
@@ -37,6 +53,31 @@
 
 @end
 
+@interface ERExpressionTransformer : ERValueTransformer {
+	NSPredicate *m_predicate;
+	NSExpression *m_expression;
+	NSExpression *m_alternateExpression;
+}
+
+@property(nonatomic, retain) id predicate;
+@property(nonatomic, retain) id expression;
+@property(nonatomic, retain) id alternateExpression;
+
+// use only expressions which form a valid predicate in the form: ( expression ) = 0 
+- (NSExpression *) expressionWithString: (NSString *) expressionString;
+
+
+@end
+
+
+@interface ERNumberExpressionTransformer : ERExpressionTransformer {}
+@end
+
+@interface ERStringExpressionTransformer : ERExpressionTransformer {}
+@end
+
+
+#if 0
 @interface ERPredicateEvaluatorTransformer : ERToNumberTransformer {
     NSPredicate *m_predicate;
 }
@@ -69,7 +110,7 @@
 - (id) initWithExpressionFormat: (NSString *) format arguments: (va_list) args;
 
 @end
-
+#endif
 
 
 @interface ERLogarithmicTransformer : ERNumberToDoubleTransformer {

@@ -528,9 +528,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				ER_VERSION = 1.1.13r0;
-				ER_VERSION_BUNDLE = 0111.30.0;
-				ER_VERSION_HEX = 0x0111300;
+				ER_VERSION = 1.1.13r1;
+				ER_VERSION_BUNDLE = 0111.30.1;
+				ER_VERSION_HEX = 0x0111301;
 				ER_VERSION_LIBRARY = 1.1.13;
 				ER_VERSION_VOODOO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease and see er_macros.h if you change the version number";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -577,9 +577,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				ER_VERSION = 1.1.13r0;
-				ER_VERSION_BUNDLE = 0111.30.0;
-				ER_VERSION_HEX = 0x0111300;
+				ER_VERSION = 1.1.13r1;
+				ER_VERSION_BUNDLE = 0111.30.1;
+				ER_VERSION_HEX = 0x0111301;
 				ER_VERSION_LIBRARY = 1.1.13;
 				ER_VERSION_VOODOO = "Bundle: MMmf.fr.r Hex: 0xMMmffrr MAJORMAJOR.minor.fixfixreleaserelease and see er_macros.h if you change the version number";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
