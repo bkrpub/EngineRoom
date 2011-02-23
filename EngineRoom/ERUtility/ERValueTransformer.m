@@ -383,6 +383,11 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 	BOOL predicateResult = YES;
 	id result = nil;
 
+	if( nil == value ) {
+		lpkwarning("valueTransformer", "nilValue");
+		return nil;
+	}
+	
 	static NSMutableDictionary *staticBindings = nil;
 	
 	if( nil == staticBindings ) {
