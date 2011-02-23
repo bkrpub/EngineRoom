@@ -293,6 +293,11 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 @synthesize predicate = m_predicate;
 @synthesize expression = m_expression;
 @synthesize alternateExpression = m_alternateExpression;
+@synthesize reversePredicate = m_reversePredicate;
+@synthesize reverseExpression = m_reverseExpression;
+@synthesize reverseAlternateExpression = m_reverseAlternateExpression;
+
++ (BOOL)allowsReverseTransformation { return YES; }
 
 // based on a great, simple hack by Dave De Long
 // see http://funwithobjc.tumblr.com/post/1553469975/abusing-nspredicate
@@ -342,19 +347,57 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 	m_alternateExpression = [alternateExpression retain];
 }
 
-- (id) transformedValue: (id) value
+- (void) setReversePredicate: (id) predicate
+{
+	if([predicate isKindOfClass: [NSString class]]) {
+		predicate = [NSPredicate predicateWithFormat: predicate];
+	}
+	
+	[m_reversePredicate autorelease];
+	m_reversePredicate = [predicate retain];
+}
+
+- (void) setReverseExpression: (id) expression
+{
+	if([expression isKindOfClass: [NSString class]]) {
+		expression = [self expressionWithString: expression];
+	}
+	
+	[m_reverseExpression autorelease];
+	m_reverseExpression = [expression retain];
+}
+
+- (void) setReverseAlternateExpression: (id) alternateExpression
+{
+	if([alternateExpression isKindOfClass: [NSString class]]) {
+		alternateExpression = [self expressionWithString: alternateExpression];
+	}
+	
+	[m_reverseAlternateExpression autorelease];
+	m_reverseAlternateExpression = [alternateExpression retain];
+}
+
+
+- (id) transformValue: (id) value predicate: (NSPredicate *) predicate expression: (NSExpression *) expression alternateExpression: (NSExpression *) alternateExpression
 {	
 	BOOL predicateResult = YES;
 	id result = nil;
+
+	static NSMutableDictionary *staticBindings = nil;
 	
-	NSPredicate *predicate = self.predicate;
-	NSExpression *expression = self.expression;
-	NSExpression *alternateExpression = self.alternateExpression;
-
-	if( nil != predicate ) {
-		predicateResult = [predicate evaluateWithObject: value];
+	if( nil == staticBindings ) {
+		staticBindings = [ER_DICT(
+								 @"NSString", [NSString class],
+								 @"NSNumber", [NSNumber class],
+								 @"NSDate", [NSDate class],
+								 @"NSApp", NSApp,								 
+								 ) mutableCopy];
 	}
-
+	
+	if( nil != predicate ) {
+		predicateResult = [predicate evaluateWithObject: value substitutionVariables: staticBindings];
+	}
+	
 	if( nil == expression && nil == alternateExpression ) {
 		result = [NSNumber numberWithBool: predicateResult];
 	} else {
@@ -364,17 +407,31 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 		if ( nil == selectedExpression ) {
 			result = [NSNumber numberWithBool: predicateResult ? YES : NO];
 		} else {
-			result = [selectedExpression expressionValueWithObject: value context: nil];
+			result = [selectedExpression expressionValueWithObject: value context: staticBindings];
 		}
 	}
 	
     return result;
 }
 
+
+- (id) transformedValue: (id) value
+{	
+	return [self transformValue: value predicate: self.predicate expression: self.expression alternateExpression: self.alternateExpression];
+}
+
+- (id)reverseTransformedValue:(id)value;
+{
+	return [self transformValue: value predicate: self.reversePredicate expression: self.reverseExpression alternateExpression: self.reverseAlternateExpression];
+}
+
 - (NSString *) description
 {
     return [NSString stringWithFormat: @"%@(predicate: %@ expression: %@ alternateExpression: %@)", 
-			NSStringFromClass([self class]), self.predicate, self.expression, self.alternateExpression];
+			NSStringFromClass([self class]), 
+			self.predicate, self.expression, self.alternateExpression,
+			self.reversePredicate, self.reverseExpression, self.reverseAlternateExpression
+			];
 }
 
 
@@ -383,6 +440,9 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
     [m_predicate release];
 	[m_expression release];
 	[m_alternateExpression release];
+    [m_reversePredicate release];
+	[m_reverseExpression release];
+	[m_reverseAlternateExpression release];
     [super dealloc];
 }
 
@@ -584,7 +644,20 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 
 - (id) transformedValue: (id) value
 {
-	id result = [m_expression expressionValueWithObject: value context: nil];
+	static NSMutableDictionary *staticBindings = nil;
+	
+	if( nil == staticBindings ) {
+		staticBindings = [ERDICT(
+						  @"NSString", [NSString class],
+ 						  @"NSNumber", [NSNumber class],
+  						  @"NSDate", [NSDate class],
+  						  @"NSApp", NSApp,								 
+								 ) mutableCopy];
+	}
+	
+	lpwarning(staticBindings);
+	
+	id result = [m_expression expressionValueWithObject: value context: staticBindings];
 //#warning move NSData (and NSError) test into LogPoints
 	NSString *debugValue = [value isKindOfClass: [NSData class]] ? [NSString stringWithFormat: @"[Data, %ld bytes]", [(NSData*)value length]] : [value description];
 	lpkdebug("valueTransformation", debugValue, result);	
@@ -631,6 +704,10 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 	return [self boolValue] ? ifTrue : ifFalse;
 }
 
+- (id) er_formatDouble: (id) formatString 
+{
+	return [NSString stringWithFormat: formatString, [self doubleValue]];
+}
 
 @end
 

@@ -57,11 +57,18 @@
 	NSPredicate *m_predicate;
 	NSExpression *m_expression;
 	NSExpression *m_alternateExpression;
+	NSPredicate *m_reversePredicate;
+	NSExpression *m_reverseExpression;
+	NSExpression *m_reverseAlternateExpression;
 }
 
 @property(nonatomic, retain) id predicate;
 @property(nonatomic, retain) id expression;
 @property(nonatomic, retain) id alternateExpression;
+
+@property(nonatomic, retain) id reversePredicate;
+@property(nonatomic, retain) id reverseExpression;
+@property(nonatomic, retain) id reverseAlternateExpression;
 
 // use only expressions which form a valid predicate in the form: ( expression ) = 0 
 - (NSExpression *) expressionWithString: (NSString *) expressionString;
