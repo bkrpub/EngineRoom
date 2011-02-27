@@ -53,6 +53,8 @@ ER_CHECK_NSERROR_REASON_RETURN_NIL((cond), (errorPtr), NSPOSIXErrorDomain, EINVA
 
 #define ER_ARRAY(...) [NSArray arrayWithObjects: ER_IDARRAY(__VA_ARGS__) count: ER_IDCOUNT(__VA_ARGS__)]
 
+#define ER_SET(...) [NSSet setWithObjects: ER_IDARRAY(__VA_ARGS__) count: ER_IDCOUNT(__VA_ARGS__)]
+
 // function is in ERUtility.m
 #define ER_DICT(...) ERDictionaryWithKeysAndObjects(ER_IDARRAY(__VA_ARGS__), ER_IDCOUNT(__VA_ARGS__) / 2)
 
