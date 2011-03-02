@@ -33,6 +33,10 @@
 
 #if TARGET_OS_OSX
 - (void) traceResponderChain: (id) currentResponder position: (NSInteger *) position;
+
+- (IBAction) logKeyWindowUndoStack: (id) sender;
+- (IBAction) logMainWindowUndoStack: (id) sender;
+
 - (IBAction) logResponderChain: (id) sender;
 
 - (void) installInMenuItem: (NSMenuItem *) menuItem;

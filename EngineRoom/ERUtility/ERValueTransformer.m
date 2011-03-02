@@ -34,12 +34,12 @@ static void __attribute__((constructor)) construct_ERValueTransformer(void)
 
 - (id) reverseTransformedValue: (id) value
 {
-	lpkwarning("valueTransformerTest", value);
+	lpktrace("valueTransformerTest", value);
     return value;
 }
 
 - (id) transformedValue: (id) value { 
-	lpkwarning("valueTransformerTest", value);
+	lpktrace("valueTransformerTest", value);
     return value;
 }
 
@@ -384,7 +384,7 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 	id result = nil;
 
 	if( nil == value ) {
-		lpkwarning("valueTransformer", "nilValue");
+		lpkdebug("valueTransformer", "nilValue");
 		return nil;
 	}
 	
@@ -658,9 +658,8 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
   						  @"NSDate", [NSDate class],
   						  @"NSApp", NSApp,								 
 								 ) mutableCopy];
+		lpkdebug("valueTransformerSetup", staticBindings);
 	}
-	
-	lpwarning(staticBindings);
 	
 	id result = [m_expression expressionValueWithObject: value context: staticBindings];
 //#warning move NSData (and NSError) test into LogPoints

@@ -55,6 +55,42 @@
 	}
 }
 
+- (void) logResponderUndoStack: (NSResponder *) responder
+{
+	NSString *invisibilityCloak = [[@"_" stringByAppendingString: @"undo"] stringByAppendingString: @"Stack"];
+	SEL undoStackSelector = NSSelectorFromString(invisibilityCloak);
+
+	NSUndoManager *undoManager = [responder undoManager];
+	
+	while( nil == undoManager ) {
+		responder = [responder nextResponder];
+		undoManager = [responder undoManager];
+	}
+
+	if( nil == undoManager ) {
+		NSLog(@"no undoManager found in responder chain");
+		[self logResponderChain: self];
+		return;
+	}
+
+	if( NULL == undoStackSelector || NO == [undoManager respondsToSelector: undoStackSelector] ) {
+		NSLog(@"%@ not available on undoManager", invisibilityCloak);
+		return;
+	} 
+	
+	NSLog(@"undo stack of %@'s undoManager: \n%@", [responder class], [undoManager performSelector: undoStackSelector]);
+}
+
+- (IBAction) logKeyWindowUndoStack: (id) sender
+{
+	[self logResponderUndoStack: [NSApp keyWindow]];
+}
+
+- (IBAction) logMainWindowUndoStack: (id) sender
+{
+	[self logResponderUndoStack: [NSApp mainWindow]];
+}
+
 - (IBAction) logResponderChain: (id) sender
 {
 		NSInteger position = 1;

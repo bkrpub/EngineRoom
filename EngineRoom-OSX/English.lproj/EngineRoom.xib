@@ -104,6 +104,24 @@
 						<reference key="NSOnImage" ref="377903801"/>
 						<reference key="NSMixedImage" ref="1008150243"/>
 					</object>
+					<object class="NSMenuItem" id="757024703">
+						<reference key="NSMenu" ref="890984491"/>
+						<string key="NSTitle">Log key window undo stack</string>
+						<string key="NSKeyEquiv">u</string>
+						<int key="NSKeyEquivModMask">1835008</int>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="377903801"/>
+						<reference key="NSMixedImage" ref="1008150243"/>
+					</object>
+					<object class="NSMenuItem" id="304848098">
+						<reference key="NSMenu" ref="890984491"/>
+						<string key="NSTitle">Log main window undo stack</string>
+						<string key="NSKeyEquiv">U</string>
+						<int key="NSKeyEquivModMask">1835008</int>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="377903801"/>
+						<reference key="NSMixedImage" ref="1008150243"/>
+					</object>
 					<object class="NSMenuItem" id="271777748">
 						<reference key="NSMenu" ref="890984491"/>
 						<bool key="NSIsDisabled">YES</bool>
@@ -200,6 +218,22 @@
 					</object>
 					<int key="connectionID">31</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">logKeyWindowUndoStack:</string>
+						<reference key="source" ref="683571623"/>
+						<reference key="destination" ref="757024703"/>
+					</object>
+					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">logMainWindowUndoStack:</string>
+						<reference key="source" ref="683571623"/>
+						<reference key="destination" ref="304848098"/>
+					</object>
+					<int key="connectionID">37</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -240,6 +274,8 @@
 							<reference ref="874671391"/>
 							<reference ref="938998186"/>
 							<reference ref="271777748"/>
+							<reference ref="757024703"/>
+							<reference ref="304848098"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Menu (⎈)</string>
@@ -307,12 +343,24 @@
 						<reference key="object" ref="938998186"/>
 						<reference key="parent" ref="890984491"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">32</int>
+						<reference key="object" ref="757024703"/>
+						<reference key="parent" ref="890984491"/>
+						<string key="objectName">Menu Item (Log </string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">34</int>
+						<reference key="object" ref="304848098"/>
+						<reference key="parent" ref="890984491"/>
+						<string key="objectName">Menu Item (Log </string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="-3.ImportedFromIB2"/>
-				<string key="1.IBEditorWindowLastContentRect">{{24, 571}, {241, 153}}</string>
+				<string key="1.IBEditorWindowLastContentRect">{{24, 531}, {315, 193}}</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1.ImportedFromIB2"/>
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -331,6 +379,10 @@
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="3.ImportedFromIB2"/>
+				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="YES" key="32.ImportedFromIB2"/>
+				<string key="34.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="YES" key="34.ImportedFromIB2"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="4.ImportedFromIB2"/>
 				<boolean value="YES" key="6.ImportedFromIB2"/>
@@ -340,7 +392,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">31</int>
+			<int key="maxID">37</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -404,17 +456,25 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EngineRoomController</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">logResponderChain:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">logResponderChain:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="logKeyWindowUndoStack:">id</string>
+						<string key="logMainWindowUndoStack:">id</string>
+						<string key="logResponderChain:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="logKeyWindowUndoStack:">
+							<string key="name">logKeyWindowUndoStack:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="logMainWindowUndoStack:">
+							<string key="name">logMainWindowUndoStack:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="logResponderChain:">
 							<string key="name">logResponderChain:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">engineRoomMenu</string>
 						<string key="NS.object.0">NSMenu</string>
