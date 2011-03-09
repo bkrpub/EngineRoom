@@ -6,10 +6,10 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ERUtility.h"
+#import <EngineRoom/ERUtility.h>
 
-#import "Convenience.h"
-#import "logpoints_default.h"
+#import <EngineRoom/Convenience.h>
+#import <EngineRoom/logpoints_default.h>
 
 NSString *ERUtilityBundleIdentifierWorkspace = @"com.apple.finder";
 
