@@ -54,13 +54,13 @@
 
 #if LOGPOINT_ENABLE_ASSERT
 
-#define lpcassertf(cond, fmt, ...)        ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); abort(); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } __lpRet; })
+#define lpcassertf(cond, fmt, ...)        ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
-#define lpkcassertf(keys, cond, fmt, ...) ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); abort(); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } __lpRet; })
+#define lpkcassertf(keys, cond, fmt, ...) ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
-#define lpassertf(cond, fmt, ...)         ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); abort(); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } __lpRet; })
+#define lpassertf(cond, fmt, ...)         ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
-#define lpkassertf(keys, cond, fmt, ...)  ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); abort(); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } __lpRet; })
+#define lpkassertf(keys, cond, fmt, ...)  ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
 #else
 /* ! LOGPOINT_ENABLE_ASSERT */

@@ -75,7 +75,7 @@ sub default_macros( $ ) {
 		}
 
 		if( $name = $names->{ assert_printf } ) {
-		    push @cOnOff,    qq<#define $name(${inKeys}cond, fmt, ...) \a ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = ${base}_${ctx}_printf$v($kindFlags, $kindConstant, $outKeys, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } __lpRet; })>;
+		    push @cOnOff,    qq<#define $name(${inKeys}cond, fmt, ...) \a ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = ${base}_${ctx}_printf$v($kindFlags, $kindConstant, $outKeys, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })>;
 		}
 
 		
