@@ -54,21 +54,33 @@
 
 #if LOGPOINT_ENABLE_ASSERT
 
-#define lpcassertf(cond, fmt, ...)        ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+#define lpcassertf(cond, fmt, ...)        ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, "(" #cond ")", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
-#define lpkcassertf(keys, cond, fmt, ...) ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+#define lpcassert(cond, ...)              ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_auto_multiple_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, "(" #cond ")", ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
-#define lpassertf(cond, fmt, ...)         ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+#define lpkcassertf(keys, cond, fmt, ...) ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), "(" #cond ")", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
-#define lpkassertf(keys, cond, fmt, ...)  ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+#define lpkcassert(keys, cond, ...)       ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_c_auto_multiple_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), "(" #cond ")", ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+
+#define lpassertf(cond, fmt, ...)         ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, "(" #cond ")", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+
+#define lpassert(cond, ...)               ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_auto_multiple_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, kLogPointKeysNone, "(" #cond ")", ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+
+#define lpkassertf(keys, cond, fmt, ...)  ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_printf_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), "(" #cond ")", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
+
+#define lpkassert(keys, cond, ...)        ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = lplog_objc_auto_multiple_v1(LOGPOINT_FLAGS_ASSERT, kLogPointKindAssert, (keys), "(" #cond ")", ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })
 
 #else
 /* ! LOGPOINT_ENABLE_ASSERT */
 
 #define lpcassertf(cond, fmt, ...)        LOGPOINT_ZERO
+#define lpcassert(cond, ...)              LOGPOINT_ZERO
 #define lpkcassertf(keys, cond, fmt, ...) LOGPOINT_ZERO
+#define lpkcassert(keys, cond, ...)       LOGPOINT_ZERO
 #define lpassertf(cond, fmt, ...)         LOGPOINT_ZERO
+#define lpassert(cond, ...)               LOGPOINT_ZERO
 #define lpkassertf(keys, cond, fmt, ...)  LOGPOINT_ZERO
+#define lpkassert(keys, cond, ...)        LOGPOINT_ZERO
 
 #endif
 /* LOGPOINT_ENABLE_ASSERT */

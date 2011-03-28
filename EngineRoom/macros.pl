@@ -75,7 +75,11 @@ sub default_macros( $ ) {
 		}
 
 		if( $name = $names->{ assert_printf } ) {
-		    push @cOnOff,    qq<#define $name(${inKeys}cond, fmt, ...) \a ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = ${base}_${ctx}_printf$v($kindFlags, $kindConstant, $outKeys, #cond ":", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })>;
+		    push @cOnOff,    qq<#define $name(${inKeys}cond, fmt, ...) \a ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = ${base}_${ctx}_printf$v($kindFlags, $kindConstant, $outKeys, "(" #cond ")", kLogPointFormatInfoNone, (fmt), ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })>;
+		}
+
+		if( $name = $names->{ assert_auto_multiple } ) {
+		    push @cOnOff,    qq<#define $name(${inKeys}cond, ...) \a ({ LOGPOINT *__lpRet = NULL; if( ! (cond) ) { __lpRet = ${base}_${ctx}_auto_multiple$v($kindFlags, $kindConstant, $outKeys, "(" #cond ")", ## __VA_ARGS__); if( __lpRet ) { if( LOGPOINT_IS_ASSERT( *__lpRet ) ) { NSLog(@"ASSERTION - HARD - FIXME" ); } else { NSLog(@"ASSERTION - SOFT - FIXME"); } } } logPointReturnFromMacro(__lpRet); })>;
 		}
 
 		
@@ -412,7 +416,7 @@ sub main() {
 		
 		'assert' => {
 		    assert_printf => 'lp%K%C%Lf',
-		    #auto_multiple => 'lp%K%C%L',
+		    assert_auto_multiple => 'lp%K%C%L',
 		    #auto_rvalue => 'lp%K%C%L_expr',
 		    #auto_return => 'return_lp%K%C%L',
 		},

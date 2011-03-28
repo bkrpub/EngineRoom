@@ -41,7 +41,7 @@
 #endif
 
 static char ER_SYMBOL_EMBEDDED_NAME(_logPointLogFormatDefault)[] = 
-"%#W|%T|.%#.3U %?%< %k %N %S %>[%K%<]%< %s%< %#O%<:%O%< <%f:%e>";
+"%#W|%T|.%#.3U %?%< %k %N %S %>[%K%<]%< %B%< %s%< %#O%<:%O%< <%f:%e>";
 
 /* private - might be replaced by thread-local stuff */
 static LOGPOINT_INVOKER    _logPointInvoker    = ER_SYMBOL_EMBEDDED_NAME(logPointInvokerDefault);
