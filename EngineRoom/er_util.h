@@ -129,10 +129,10 @@
 // also: http://www.cocoabuilder.com/archive/message/cocoa/2008/8/7/215098
 
 
-#define UTIL_AUTORELEASE_CF_AS_ID(cf) ({ CFTypeRef __utilcf = (CFTypeRef) (cf); __utilcf ? [(id) CFMakeCollectable( __utilcf ) autorelease] : nil; })
+#define UTIL_AUTORELEASE_CF_AS_ID(cf) ({ CFTypeRef __utilARcf = (CFTypeRef) (cf); __utilARcf ? [(id) CFMakeCollectable( __utilARcf ) autorelease] : nil; })
 
 // I am still not entirely sure if this is right:
-#define UTIL_RETAIN_CF(cf) ({ CFTypeRef __utilcf = (CFTypeRef) (cf); __utilcf ? ( __typeof__((cf)) ) [(id) CFMakeCollectable( __utilcf ) retain] : NULL; })
+#define UTIL_RETAIN_CF(cf) ({ CFTypeRef __utilRTcf = (CFTypeRef) (cf); __utilRTcf ? ( __typeof__((cf)) ) [(id) CFMakeCollectable( __utilRTcf ) retain] : NULL; })
 
 #define UTIL_AUTORELEASE_CF(cf) ( ( __typeof__((cf)) ) UTIL_AUTORELEASE_CF_AS_ID(cf) )
 

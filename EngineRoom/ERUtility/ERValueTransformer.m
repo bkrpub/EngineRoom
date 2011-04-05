@@ -1,9 +1,12 @@
 
-#import "ERValueTransformer.h"
+#import <EngineRoom/ERValueTransformer.h>
 
-#import "Convenience.h"
-#import "logpoints_default.h"
-#import "logpoints_nslog.h"
+#import <EngineRoom/Convenience.h>
+#import <EngineRoom/ERColor.h>
+#import <EngineRoom/CrossPlatform_Utilities.h>
+
+#import <EngineRoom/logpoints_default.h>
+#import <EngineRoom/logpoints_nslog.h>
 
 #if ERVALUETRANSFORMERAUTOREGISTRATION
 
@@ -11,7 +14,6 @@
 
 /* think: palette with editable  predicates, mini language, ...  on instances of transformers */
 
-/*
 static void __attribute__((constructor)) construct_ERValueTransformer(void) 
 {
     lpkdebugf("valueTransformerSetup", "ERValueTransformer setup");
@@ -20,9 +22,7 @@ static void __attribute__((constructor)) construct_ERValueTransformer(void)
     [pool release];
     lpkdebugf("valueTransformerSetup", "ERValueTransformer setup done");
 }
-*/
 #endif 
-
 
 @implementation ERValueTransformer
 
