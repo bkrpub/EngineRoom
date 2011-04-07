@@ -136,6 +136,10 @@
 
 #define UTIL_AUTORELEASE_CF(cf) ( ( __typeof__((cf)) ) UTIL_AUTORELEASE_CF_AS_ID(cf) )
 
+#define ER_AUTORELEASE_CF(cf)       UTIL_AUTORELEASE_CF(cf)
+#define ER_AUTORELEASE_CF_AS_ID(cf) UTIL_AUTORELEASE_CF_AS_ID(cf)
+#define ER_RETAIN_CF(cf)            UTIL_RETAIN_CF(cf)
+
 #endif
 
 

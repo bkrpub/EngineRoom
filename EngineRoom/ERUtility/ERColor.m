@@ -65,7 +65,7 @@ CGColorRef CreateCGColorFromGenericRGBAString(NSString *genericRGBAString)
 	NSCAssert( 4 == sscanf([genericRGBAString UTF8String], "#%02lx%02lx%02lx%02lx", &hexComps[0], &hexComps[1], &hexComps[2], &hexComps[3]), @"color strings must match #rrggbbaa" );
 
 	for( int i = 0 ; i < 4 ; ++i) { 
-		comps[i] = hexComps[i] / 255.0;	
+		comps[i] = (CGFloat) ( hexComps[i] / 255.0 );	
 	}
 
 	return CGColorCreateGenericRGB(comps[0], comps[1], comps[2], comps[3]);
