@@ -41,6 +41,14 @@
 		04290AC012D289E300E06235 /* logpoints_base_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AAF12D2872100E06235 /* logpoints_base_macros.h */; };
 		04290AC112D289E300E06235 /* logpoints_default_macros.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB012D2872100E06235 /* logpoints_default_macros.h */; };
 		04290AC212D289E300E06235 /* logpoints_default_kinds.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04290AB212D2872100E06235 /* logpoints_default_kinds.h */; };
+		047DA182135CF59600B20CDD /* ERColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DA17B135CF59600B20CDD /* ERColor.m */; };
+		047DA183135CF59600B20CDD /* ERColorTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DA17D135CF59600B20CDD /* ERColorTransformer.m */; };
+		047DA184135CF59600B20CDD /* ERValueConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DA17F135CF59600B20CDD /* ERValueConverter.m */; };
+		047DA185135CF59600B20CDD /* ERValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 047DA181135CF59600B20CDD /* ERValueTransformer.m */; };
+		047DA186135CF5B400B20CDD /* ERColor.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 047DA17A135CF59600B20CDD /* ERColor.h */; };
+		047DA187135CF5B400B20CDD /* ERColorTransformer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 047DA17C135CF59600B20CDD /* ERColorTransformer.h */; };
+		047DA188135CF5B400B20CDD /* ERValueConverter.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 047DA17E135CF59600B20CDD /* ERValueConverter.h */; };
+		047DA189135CF5B400B20CDD /* ERValueTransformer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 047DA180135CF59600B20CDD /* ERValueTransformer.h */; };
 		04AA592512D6B8F00097656D /* er_symbols.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 04AA591D12D6B8B90097656D /* er_symbols.h */; };
 		04C5194512FE54EF00C907EF /* ERUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5194012FE54EF00C907EF /* ERUtility.m */; };
 		04C5194612FE54EF00C907EF /* NSBundle_ERResourceExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5194212FE54EF00C907EF /* NSBundle_ERResourceExtensions.m */; };
@@ -61,6 +69,10 @@
 			files = (
 				04C5194A12FE552E00C907EF /* Convenience.h in Copy Headers */,
 				04C5194B12FE552E00C907EF /* ERUtility.h in Copy Headers */,
+				047DA186135CF5B400B20CDD /* ERColor.h in Copy Headers */,
+				047DA187135CF5B400B20CDD /* ERColorTransformer.h in Copy Headers */,
+				047DA188135CF5B400B20CDD /* ERValueConverter.h in Copy Headers */,
+				047DA189135CF5B400B20CDD /* ERValueTransformer.h in Copy Headers */,
 				04C5194C12FE552E00C907EF /* NSBundle_ERResourceExtensions.h in Copy Headers */,
 				04C5194D12FE552E00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Copy Headers */,
 				04290AC012D289E300E06235 /* logpoints_base_macros.h in Copy Headers */,
@@ -132,6 +144,14 @@
 		04290AB112D2872100E06235 /* logpoints_default_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_policy.h; sourceTree = "<group>"; };
 		04290AB212D2872100E06235 /* logpoints_default_kinds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_kinds.h; sourceTree = "<group>"; };
 		04290AB312D2872100E06235 /* logpoints_nslog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_nslog.h; sourceTree = "<group>"; };
+		047DA17A135CF59600B20CDD /* ERColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERColor.h; sourceTree = "<group>"; };
+		047DA17B135CF59600B20CDD /* ERColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERColor.m; sourceTree = "<group>"; };
+		047DA17C135CF59600B20CDD /* ERColorTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERColorTransformer.h; sourceTree = "<group>"; };
+		047DA17D135CF59600B20CDD /* ERColorTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERColorTransformer.m; sourceTree = "<group>"; };
+		047DA17E135CF59600B20CDD /* ERValueConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERValueConverter.h; sourceTree = "<group>"; };
+		047DA17F135CF59600B20CDD /* ERValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERValueConverter.m; sourceTree = "<group>"; };
+		047DA180135CF59600B20CDD /* ERValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERValueTransformer.h; sourceTree = "<group>"; };
+		047DA181135CF59600B20CDD /* ERValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERValueTransformer.m; sourceTree = "<group>"; };
 		04AA591D12D6B8B90097656D /* er_symbols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_symbols.h; sourceTree = "<group>"; };
 		04C5193D12FE546A00C907EF /* Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convenience.h; sourceTree = "<group>"; };
 		04C5193F12FE54EF00C907EF /* ERUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERUtility.h; sourceTree = "<group>"; };
@@ -223,6 +243,14 @@
 		04C5193E12FE547D00C907EF /* ERUtility */ = {
 			isa = PBXGroup;
 			children = (
+				047DA17A135CF59600B20CDD /* ERColor.h */,
+				047DA17B135CF59600B20CDD /* ERColor.m */,
+				047DA17C135CF59600B20CDD /* ERColorTransformer.h */,
+				047DA17D135CF59600B20CDD /* ERColorTransformer.m */,
+				047DA17E135CF59600B20CDD /* ERValueConverter.h */,
+				047DA17F135CF59600B20CDD /* ERValueConverter.m */,
+				047DA180135CF59600B20CDD /* ERValueTransformer.h */,
+				047DA181135CF59600B20CDD /* ERValueTransformer.m */,
 				04C5193F12FE54EF00C907EF /* ERUtility.h */,
 				04C5194012FE54EF00C907EF /* ERUtility.m */,
 				04C5194112FE54EF00C907EF /* NSBundle_ERResourceExtensions.h */,
@@ -322,6 +350,10 @@
 				04C5194512FE54EF00C907EF /* ERUtility.m in Sources */,
 				04C5194612FE54EF00C907EF /* NSBundle_ERResourceExtensions.m in Sources */,
 				04C5194712FE54EF00C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m in Sources */,
+				047DA182135CF59600B20CDD /* ERColor.m in Sources */,
+				047DA183135CF59600B20CDD /* ERColorTransformer.m in Sources */,
+				047DA184135CF59600B20CDD /* ERValueConverter.m in Sources */,
+				047DA185135CF59600B20CDD /* ERValueTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

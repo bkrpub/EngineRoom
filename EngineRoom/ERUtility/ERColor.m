@@ -24,6 +24,7 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 #import <EngineRoom/EngineRoom.h>
 #import <EngineRoom/er_util.h>
 
+#if TARGET_OS_OSX
 NSString *GenericRGBAStringFromColor(NSColor *color)
 {
 	if( nil == color ) {
@@ -38,6 +39,7 @@ NSString *GenericRGBAStringFromColor(NSColor *color)
 	
 	return [NSString stringWithFormat: @"#%02lx%02lx%02lx%02lx", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2]), (long)(0xff * comps[3])];
 }
+#endif
 
 NSString *GenericRGBAStringFromCGColor(CGColorRef cgColor)
 {
@@ -50,8 +52,6 @@ NSString *GenericRGBAStringFromCGColor(CGColorRef cgColor)
 	const CGFloat *comps = CGColorGetComponents( cgColor );
 	return [NSString stringWithFormat: @"#%02lx%02lx%02lx%02lx", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2]), (long)(0xff * comps[3])];
 }
-
-
 
 CGColorRef CreateCGColorFromGenericRGBAString(NSString *genericRGBAString)
 {
@@ -68,7 +68,18 @@ CGColorRef CreateCGColorFromGenericRGBAString(NSString *genericRGBAString)
 		comps[i] = (CGFloat) ( hexComps[i] / 255.0 );	
 	}
 
-	return CGColorCreateGenericRGB(comps[0], comps[1], comps[2], comps[3]);
+	CGColorRef cgColor;
+
+#if TARGET_OS_OSX
+	cgColor = CGColorCreateGenericRGB(comps[0], comps[1], comps[2], comps[3]);
+#elif TARGET_OS_IPHONE
+	cgColor = [UIColor colorWithRed: comps[0] green: comps[1] blue: comps[2] alpha: comps[3]].CGColor;
+	CGColorRetain(cgColor); // returned color is autoreleased
+#else
+#error unsupported architecture
+#endif
+	
+	return cgColor;
 }
 
 // result is autoreleased (or made collectable)
@@ -94,7 +105,9 @@ CGColorRef CGColorFromGenericRGBAString(NSString *genericRGBAString)
 	ERColor *copy = [[[self class] allocWithZone: zone] init];
 	
 	copy->m_CGColor = ( NULL == self->m_CGColor ) ? NULL : CGColorRetain(self->m_CGColor);
+#if TARGET_OS_OSX
 	copy->m_NSColor = [self->m_NSColor retain];
+#endif
 	copy->m_genericRGBAString = [self->m_genericRGBAString retain];
 	
 	return copy;

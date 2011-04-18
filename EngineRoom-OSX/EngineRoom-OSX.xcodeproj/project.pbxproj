@@ -70,6 +70,8 @@
 		04C5175A12FDBFC400C907EF /* NSBundle_ERResourceExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */; };
 		04C5175B12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C5175C12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */; };
+		04DFAD6A135CE69500E56F27 /* ERColorTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 04DFAD68135CE69500E56F27 /* ERColorTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04DFAD6B135CE69500E56F27 /* ERColorTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DFAD69135CE69500E56F27 /* ERColorTransformer.m */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -139,6 +141,8 @@
 		04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundle_ERResourceExtensions.m; sourceTree = "<group>"; };
 		04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPropertyListSerialization_ERBackPortExtensions.h; sourceTree = "<group>"; };
 		04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPropertyListSerialization_ERBackPortExtensions.m; sourceTree = "<group>"; };
+		04DFAD68135CE69500E56F27 /* ERColorTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERColorTransformer.h; sourceTree = "<group>"; };
+		04DFAD69135CE69500E56F27 /* ERColorTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERColorTransformer.m; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 			children = (
 				044C0BAE134B1DC9006624D8 /* ERColor.h */,
 				044C0BAF134B1DC9006624D8 /* ERColor.m */,
+				04DFAD68135CE69500E56F27 /* ERColorTransformer.h */,
+				04DFAD69135CE69500E56F27 /* ERColorTransformer.m */,
 				044CF6181303455300F0E861 /* ERValueTransformer.h */,
 				044CF6191303455300F0E861 /* ERValueTransformer.m */,
 				044C0BB2134B4FB3006624D8 /* ERValueConverter.h */,
@@ -356,6 +362,7 @@
 				044CF61A1303455300F0E861 /* ERValueTransformer.h in Headers */,
 				044C0BB0134B1DC9006624D8 /* ERColor.h in Headers */,
 				044C0BB4134B4FB4006624D8 /* ERValueConverter.h in Headers */,
+				04DFAD6A135CE69500E56F27 /* ERColorTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +454,7 @@
 				044CF61B1303455300F0E861 /* ERValueTransformer.m in Sources */,
 				044C0BB1134B1DC9006624D8 /* ERColor.m in Sources */,
 				044C0BB5134B4FB4006624D8 /* ERValueConverter.m in Sources */,
+				04DFAD6B135CE69500E56F27 /* ERColorTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

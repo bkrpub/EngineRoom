@@ -395,7 +395,9 @@ static NSNumber *number_bool_yes = nil, *number_bool_no = nil;
 								 @"NSString", [NSString class],
 								 @"NSNumber", [NSNumber class],
 								 @"NSDate", [NSDate class],
+#if TARGET_OS_OSX
 								 @"NSApp", NSApp,								 
+#endif
 								 ) mutableCopy];
 	}
 	
