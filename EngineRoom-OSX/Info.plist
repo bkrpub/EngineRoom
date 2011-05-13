@@ -49,9 +49,9 @@
 			<key>predicate</key>
 			<string>SELF &lt; 1000000</string>
 			<key>expression</key>
-			<string>FUNCTION( SELF / 1000, &apos;er_formatDouble:&apos;, &apos;%.1fkB&apos; )</string>
+			<string>FUNCTION( SELF / 1000.0, &apos;er_formatDouble:&apos;, &apos;%.1fkB&apos; )</string>
 			<key>alternateExpression</key>
-			<string>FUNCTION( SELF / 1000000, &apos;er_formatDouble:&apos;, &apos;%.2fMB&apos; )</string>
+			<string>FUNCTION( SELF / 1000000.0, &apos;er_formatDouble:&apos;, &apos;%.2fMB&apos; )</string>
 		</dict>
 	</dict>
 </dict>
