@@ -42,16 +42,16 @@
 		<string>SELF != 0</string>
 		<key>ERNotEqualToOne</key>
 		<string>SELF != 1</string>
-		<key>ERDataSizeBaseTen</key>
+		<key>ERSizeBaseTen</key>
 		<dict>
 			<key>#class</key>
 			<string>ERStringExpressionTransformer</string>
 			<key>predicate</key>
-			<string>SELF.length &lt; 1000000</string>
+			<string>SELF &lt; 1000000</string>
 			<key>expression</key>
-			<string>FUNCTION( FUNCTION( SELF.length / 1000, &apos;stringValue&apos; ), &apos;stringByAppendingString:&apos;, &apos;kB&apos; )</string>
+			<string>FUNCTION( FUNCTION( SELF / 1000, &apos;stringValue&apos; ), &apos;stringByAppendingString:&apos;, &apos;kB&apos; )</string>
 			<key>alternateExpression</key>
-			<string>FUNCTION( FUNCTION( SELF.length / 1000000, &apos;stringValue&apos; ), &apos;stringByAppendingString:&apos;, &apos;MB&apos; )</string>
+			<string>FUNCTION( FUNCTION( SELF / 1000000, &apos;stringValue&apos; ), &apos;stringByAppendingString:&apos;, &apos;MB&apos; )</string>
 		</dict>
 	</dict>
 </dict>
