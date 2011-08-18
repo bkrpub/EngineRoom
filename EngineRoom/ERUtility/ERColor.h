@@ -47,8 +47,12 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 - (NSString *) genericRGBAString;
 - (void) setGenericRGBAString: (NSString *) genericRGBAString;
 
+- (NSString *) genericRGBString;
+
 - (CGColorRef) CGColor;
 - (void) setCGColor: (CGColorRef) CGColor;
+
+- (CGFloat)alphaValue;
 
 #if TARGET_OS_OSX
 - (NSColor *) NSColor;

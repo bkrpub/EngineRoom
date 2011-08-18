@@ -235,6 +235,17 @@ CGColorRef CGColorFromGenericRGBAString(NSString *genericRGBAString)
 	return [[m_genericRGBAString retain] autorelease];
 }
 
+// returns a hex string without alpha value, e.g. for use in CSS
+- (NSString *) genericRGBString
+{
+	if ([m_genericRGBAString length] < 9) return nil;
+	return [m_genericRGBAString substringToIndex: 7]; // cut off alpha value
+}
+
+- (CGFloat)alphaValue {
+	CGColorRef cgColor = [self CGColor];
+	return CGColorGetAlpha(cgColor);
+}
 
 - (void) setGenericRGBAString: (NSString *) genericRGBAString
 {
