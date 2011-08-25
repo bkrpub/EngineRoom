@@ -86,7 +86,11 @@ tracerAnalyzeFile(UTIL_MACH_HEADER *mhp, const char *imagePath, intptr_t slide, 
 {
 	size_t imageLength;
 	void *image = util_map_image(imagePath, &imageLength);
-	
+
+	if( NULL == image ) {
+        tracerReturnWithMessage(TRACER_FAILURE, "skipping unmappable imagePath '%s'", imagePath);
+    }
+        
 	uint32_t firstMagic = * (uint32_t *) image;
 	
 	struct mach_header *mhp32 = NULL;
