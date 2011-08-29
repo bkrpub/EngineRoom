@@ -85,7 +85,12 @@ int UTIL_NO_INSTRUMENT
 tracerAnalyzeFile(UTIL_MACH_HEADER *mhp, const char *imagePath, intptr_t slide, TRACER_SYMBOL_WORKER symbolAction, void *symbolActionInfo, uint64_t options)
 {
 	size_t imageLength;
-	void *image = util_map_image(imagePath, &imageLength);
+
+    if( NULL == imagePath || 0 == strcmp(imagePath, "cl_kernels") ) {
+        tracerReturnWithMessage(TRACER_FAILURE, "skipping known unmappable imagePath '%s'", imagePath);
+    }
+
+    void *image = util_map_image(imagePath, &imageLength);
 
 	if( NULL == image ) {
         tracerReturnWithMessage(TRACER_FAILURE, "skipping unmappable imagePath '%s'", imagePath);
@@ -332,7 +337,8 @@ tracerWalkSymbolTables( TRACER_SYMBOL_WORKER symbolAction, void *symbolActionInf
 		
 		const UTIL_MACH_HEADER *mhp = (const UTIL_MACH_HEADER *) _dyld_get_image_header( i );
 		
-		ret = tracerAnalyzeFile(mhp, imagePath, slide, symbolAction, symbolActionInfo, options);
+		/* ret = don't stop */ 
+        tracerAnalyzeFile(mhp, imagePath, slide, symbolAction, symbolActionInfo, options);
 		
 		tracerDebugMachO("Image %d: %s mh %p slide: %p ret: %d ", i, imagePath, (void*)mhp, (void*)slide, ret);
     }
