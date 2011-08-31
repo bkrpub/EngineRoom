@@ -37,6 +37,11 @@ NSDictionary *ERDictionaryWithKeysAndObjects(id *array, NSUInteger count)
 
 @implementation ERUtility
 
++ (NSString *) XMLCompatibleUUIDString
+{
+    NSString *UUIDString = [self UUIDString];
+    return UUIDString ? [@"U" stringByAppendingString: UUIDString] : nil;
+}
 
 + (NSString *) UUIDString;
 {

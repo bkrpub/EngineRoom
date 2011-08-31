@@ -25,6 +25,8 @@ extern NSDictionary *ERDictionaryWithKeysAndObjects(id *array, NSUInteger count)
 
 }
 
++ (NSString *) XMLCompatibleUUIDString;
+
 + (NSString *) UUIDString;
 
 + (NSURL *) exportPropertyListItem: (id) item baseURL: (NSURL *) baseURL basename: (NSString *) basename type: (NSString *) type options: (NSDictionary *) options error: (NSError **) outError;
