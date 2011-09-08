@@ -19,8 +19,6 @@
 	if( nil != type ) {
 		URL = [URL URLByAppendingPathExtension: type];	
 	}
-
-    NSLog(@"URL %@", URL);
     
 	return [NSData dataWithContentsOfURL: URL options: dataOptions error: outError];
 }
