@@ -59,6 +59,8 @@
 		049299E712D682DB0056392E /* er_symbols.h in Headers */ = {isa = PBXBuildFile; fileRef = 049299E612D682DB0056392E /* er_symbols.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04AA5A8912D6C09D0097656D /* logpoints.c in Headers */ = {isa = PBXBuildFile; fileRef = 042213FE1200584D0011C415 /* logpoints.c */; settings = {ATTRIBUTES = (Public, ); }; };
 		04AA5A8A12D6C09D0097656D /* logpoints.m in Headers */ = {isa = PBXBuildFile; fileRef = 042214001200584D0011C415 /* logpoints.m */; settings = {ATTRIBUTES = (Public, ); }; };
+		04B305641418F5650023AA11 /* NSObject_ERBundleExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B305621418F5650023AA11 /* NSObject_ERBundleExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04B305651418F5650023AA11 /* NSObject_ERBundleExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B305631418F5650023AA11 /* NSObject_ERBundleExtensions.m */; };
 		04B89F82134BA4760018CC3D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B89F81134BA4760018CC3D /* QuartzCore.framework */; };
 		04C4F4FA12A3424E001C825C /* logpoints_base_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F712A3424E001C825C /* logpoints_base_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C4F4FB12A3424E001C825C /* logpoints_default_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04C4F4F812A3424E001C825C /* logpoints_default_macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -130,6 +132,8 @@
 		0473D1F41246BF64004FAD1E /* AboutIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AboutIcon.png; path = ../Resources/AboutIcon.png; sourceTree = SOURCE_ROOT; };
 		0490DD7F124D576B0057D874 /* logpoints_default_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_policy.h; sourceTree = "<group>"; };
 		049299E612D682DB0056392E /* er_symbols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_symbols.h; sourceTree = "<group>"; };
+		04B305621418F5650023AA11 /* NSObject_ERBundleExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObject_ERBundleExtensions.h; sourceTree = "<group>"; };
+		04B305631418F5650023AA11 /* NSObject_ERBundleExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObject_ERBundleExtensions.m; sourceTree = "<group>"; };
 		04B89F81134BA4760018CC3D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		04C4F4F712A3424E001C825C /* logpoints_base_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_base_macros.h; sourceTree = "<group>"; };
 		04C4F4F812A3424E001C825C /* logpoints_default_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_macros.h; sourceTree = "<group>"; };
@@ -215,10 +219,12 @@
 				044CF6191303455300F0E861 /* ERValueTransformer.m */,
 				044C0BB2134B4FB3006624D8 /* ERValueConverter.h */,
 				044C0BB3134B4FB3006624D8 /* ERValueConverter.m */,
-				04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */,
+				04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */,
 				04C5175812FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.m */,
 				04C5175512FDBFC400C907EF /* NSBundle_ERResourceExtensions.h */,
-				04C5175712FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h */,
+				04C5175612FDBFC400C907EF /* NSBundle_ERResourceExtensions.m */,
+				04B305621418F5650023AA11 /* NSObject_ERBundleExtensions.h */,
+				04B305631418F5650023AA11 /* NSObject_ERBundleExtensions.m */,
 				04C5172312FD8E6D00C907EF /* ERUtility.h */,
 				04C5172412FD8E6D00C907EF /* ERUtility.m */,
 			);
@@ -359,6 +365,7 @@
 				04C5160A12FCC3C000C907EF /* Convenience.h in Headers */,
 				04C5175912FDBFC400C907EF /* NSBundle_ERResourceExtensions.h in Headers */,
 				04C5175B12FDBFC400C907EF /* NSPropertyListSerialization_ERBackPortExtensions.h in Headers */,
+				04B305641418F5650023AA11 /* NSObject_ERBundleExtensions.h in Headers */,
 				044CF61A1303455300F0E861 /* ERValueTransformer.h in Headers */,
 				044C0BB0134B1DC9006624D8 /* ERColor.h in Headers */,
 				044C0BB4134B4FB4006624D8 /* ERValueConverter.h in Headers */,
@@ -458,6 +465,7 @@
 				044C0BB1134B1DC9006624D8 /* ERColor.m in Sources */,
 				044C0BB5134B4FB4006624D8 /* ERValueConverter.m in Sources */,
 				04DFAD6B135CE69500E56F27 /* ERColorTransformer.m in Sources */,
+				04B305651418F5650023AA11 /* NSObject_ERBundleExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,7 @@
 {
 	ER_PRECONDITION_NSERROR_RETURN_NIL(name != nil, outError);
 	
-	NSURL *resourceURL = [[NSBundle mainBundle] resourceURL];
+	NSURL *resourceURL = [self resourceURL];
 	
 	NSURL *URL = [resourceURL URLByAppendingPathComponent: name];
 
@@ -20,6 +20,8 @@
 		URL = [URL URLByAppendingPathExtension: type];	
 	}
 
+    NSLog(@"URL %@", URL);
+    
 	return [NSData dataWithContentsOfURL: URL options: dataOptions error: outError];
 }
 

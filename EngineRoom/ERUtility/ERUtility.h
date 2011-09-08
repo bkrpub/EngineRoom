@@ -11,6 +11,7 @@
 // categories, all methods prefixed with er_
 #import <EngineRoom/NSPropertyListSerialization_ERBackPortExtensions.h>
 #import <EngineRoom/NSBundle_ERResourceExtensions.h>
+#import <EngineRoom/NSObject_ERBundleExtensions.h>
 
 extern NSString *ERUtilityBundleIdentifierWorkspace;
 
