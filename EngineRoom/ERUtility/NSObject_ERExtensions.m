@@ -1,13 +1,6 @@
-//
-//  ERBundleExtensions.m
-//  EngineRoom-OSX
-//
-//  Created by Bjoern Kriews on 9/8/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
-#import "NSObject_ERBundleExtensions.h"
-#import "NSBundle_ERResourceExtensions.h"
+#import "NSObject_ERExtensions.h"
+#import "NSBundle_ERExtensions.h"
 
 @implementation NSObject (ERBundleExtensions)
 

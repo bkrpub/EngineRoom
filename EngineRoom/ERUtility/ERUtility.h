@@ -9,9 +9,9 @@
 #import <EngineRoom/CrossPlatform.h>
 
 // categories, all methods prefixed with er_
-#import <EngineRoom/NSPropertyListSerialization_ERBackPortExtensions.h>
-#import <EngineRoom/NSBundle_ERResourceExtensions.h>
-#import <EngineRoom/NSObject_ERBundleExtensions.h>
+#import <EngineRoom/NSPropertyListSerialization_ERExtensions.h>
+#import <EngineRoom/NSBundle_ERExtensions.h>
+#import <EngineRoom/NSObject_ERExtensions.h>
 
 extern NSString *ERUtilityBundleIdentifierWorkspace;
 
