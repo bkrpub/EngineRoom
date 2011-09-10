@@ -794,7 +794,7 @@ static const char *logPointPriorityNames[] = { "EMERGENCY", "ALERT", "CRITICAL",
 
 ER_SYMBOL_VISIBLE_EMBEDDED const char * ER_SYMBOL_EMBEDDED_NAME( logPointPriorityNameFromNumber )(lp_uint_t priority)
 {
-  return priority < 0 || priority >= (long) (sizeof(logPointPriorityNames)/sizeof(logPointPriorityNames[0])) ? "BAD_PRIORITY" : logPointPriorityNames[priority];
+  return priority >= (long) (sizeof(logPointPriorityNames)/sizeof(logPointPriorityNames[0])) ? "BAD_PRIORITY" : logPointPriorityNames[priority];
 }
 
 ER_SYMBOL_VISIBLE_EMBEDDED lp_uint_t ER_SYMBOL_EMBEDDED_NAME( logPointPriorityNumberFromName )(const char *name)

@@ -45,7 +45,7 @@
     return [[NSBundle mainBundle] pathForResource: name ofType: type];
 }
 
-- (NSString *) pathForMainOrClassResource: (NSString *) name ofType: (NSString *) type
+- (NSString *) er_pathForMainOrClassResource: (NSString *) name ofType: (NSString *) type
 {
     NSString *path = [self er_pathForMainResource: name ofType: type];
     return path ? path : [self er_pathForClassResource: name ofType: type];
