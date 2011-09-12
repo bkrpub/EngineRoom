@@ -87,7 +87,8 @@ tracerAnalyzeFile(UTIL_MACH_HEADER *mhp, const char *imagePath, intptr_t slide, 
 	size_t imageLength;
 
     if( NULL == imagePath || 0 == strcmp(imagePath, "cl_kernels") ) {
-        tracerReturnWithMessage(TRACER_FAILURE, "skipping known unmappable imagePath '%s'", imagePath);
+        return TRACER_FAILURE;
+        //tracerReturnWithMessage(TRACER_FAILURE, "skipping known unmappable imagePath '%s'", imagePath);
     }
 
     void *image = util_map_image(imagePath, &imageLength);
