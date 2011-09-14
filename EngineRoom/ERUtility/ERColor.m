@@ -24,8 +24,24 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 #import <EngineRoom/EngineRoom.h>
 #import <EngineRoom/er_util.h>
 
+
+NSString *ERRGBStringFromComponents(const CGFloat *comps, BOOL includeAlpha)
+{
+     return includeAlpha ? 
+    [NSString stringWithFormat: @"#%02lx%02lx%02lx%02lx", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2]), (long)(0xff * comps[3])] :
+    [NSString stringWithFormat: @"#%02lx%02lx%02lx", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2])];   
+}
+
+NSString *ERRGBCSSStringFromComponents(const CGFloat *comps, BOOL includeAlpha)
+{
+    	return includeAlpha ? 
+    [NSString stringWithFormat: @"rgba(%ld,%ld,%ld,%.2lf)", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2]), (double) comps[3]] : 
+    [NSString stringWithFormat: @"rgb(%ld,%ld,%ld)", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2])]; 
+}
+
+
 #if TARGET_OS_OSX
-NSString *GenericRGBAStringFromColor(NSColor *color)
+NSString *GenericRGBStringFromColor(NSColor *color, BOOL includeAlpha)
 {
 	if( nil == color ) {
 		return nil;
@@ -36,12 +52,30 @@ NSString *GenericRGBAStringFromColor(NSColor *color)
 	CGFloat comps[4] = {0,0,0,0};
 	
 	[genericRGBColor getComponents: comps];
-	
-	return [NSString stringWithFormat: @"#%02lx%02lx%02lx%02lx", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2]), (long)(0xff * comps[3])];
+
+	return ERRGBStringFromComponents(comps, includeAlpha);
 }
+
+
+NSString *GenericRGBCSSStringFromColor(NSColor *color, BOOL includeAlpha)
+{
+	if( nil == color ) {
+		return nil;
+	}
+    
+	NSColor *genericRGBColor = [color colorUsingColorSpace: [NSColorSpace genericRGBColorSpace]];
+    
+	CGFloat comps[4] = {0,0,0,0};
+	
+	[genericRGBColor getComponents: comps];
+	
+    return ERRGBCSSStringFromComponents(comps, includeAlpha);
+}
+
+
 #endif
 
-NSString *GenericRGBAStringFromCGColor(CGColorRef cgColor)
+NSString *GenericRGBStringFromCGColor(CGColorRef cgColor, BOOL includeAlpha)
 {
 	if( NULL == cgColor ) {
 		return nil;
@@ -50,8 +84,23 @@ NSString *GenericRGBAStringFromCGColor(CGColorRef cgColor)
 	NSCAssert( 4 == CGColorGetNumberOfComponents(cgColor),  @"colors with comp# != 4 not supported");
 
 	const CGFloat *comps = CGColorGetComponents( cgColor );
-	return [NSString stringWithFormat: @"#%02lx%02lx%02lx%02lx", (long)(0xff * comps[0]), (long)(0xff * comps[1]), (long)(0xff * comps[2]), (long)(0xff * comps[3])];
+
+	return ERRGBStringFromComponents(comps, includeAlpha);
 }
+
+NSString *GenericRGBCSSStringFromCGColor(CGColorRef cgColor, BOOL includeAlpha)
+{
+	if( NULL == cgColor ) {
+		return nil;
+	}
+    
+	NSCAssert( 4 == CGColorGetNumberOfComponents(cgColor),  @"colors with comp# != 4 not supported");
+    
+	const CGFloat *comps = CGColorGetComponents( cgColor );
+    
+    return ERRGBCSSStringFromComponents(comps, includeAlpha);
+}
+
 
 CGColorRef CreateCGColorFromGenericRGBAString(NSString *genericRGBAString)
 {
@@ -242,6 +291,19 @@ CGColorRef CGColorFromGenericRGBAString(NSString *genericRGBAString)
 	return [m_genericRGBAString substringToIndex: 7]; // cut off alpha value
 }
 
+// returns "rgb(r,g,b)"
+- (NSString *) genericRGBCSSString
+{
+    return GenericRGBCSSStringFromCGColor([self CGColor], NO);
+}
+
+// returns "rgba(r,g,b,a)"
+- (NSString *) genericRGBACSSString
+{
+    return GenericRGBCSSStringFromCGColor([self CGColor], YES);
+}
+
+
 - (CGFloat)alphaValue {
 	CGColorRef cgColor = [self CGColor];
 	return CGColorGetAlpha(cgColor);
@@ -281,7 +343,7 @@ CGColorRef CGColorFromGenericRGBAString(NSString *genericRGBAString)
 	NSColor *color = (nil == cgColor) ? nil : [NSColor colorWithCIColor: [CIColor colorWithCGColor: cgColor]];
 	[self updateNSColor: color];
 
-	[self updateGenericRGBAString: GenericRGBAStringFromColor(color)];
+	[self updateGenericRGBAString: GenericRGBStringFromColor(color, YES)];
 #else
 #if MAINTAINER_WARNINGS
 	#warning BK: I don't know of a way to convert a CGColorRef to another colorspace on iPhone
@@ -302,7 +364,7 @@ CGColorRef CGColorFromGenericRGBAString(NSString *genericRGBAString)
 		return;
 	}
 
-	NSString *genericRGBAString = GenericRGBAStringFromColor(color);
+	NSString *genericRGBAString = GenericRGBStringFromColor(color, YES);
 
 	CGColorRef cgColor = NULL;
 
