@@ -5,6 +5,7 @@
 
 #import "NSPropertyListSerialization_ERExtensions.h"
 
+NSString *kERBundleBuildConfiguration = @"ERBundleBuildConfiguration";
 
 @implementation NSBundle (ERResourceExtensions)
 
@@ -37,22 +38,34 @@
 
 - (NSString *) er_machineReadableVersionString
 {
-    NSString *shortVersion = [self objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    NSString *version = [self objectForInfoDictionaryKey: (id)kCFBundleVersionKey];
-    NSString *name = [self objectForInfoDictionaryKey: (id)kCFBundleIdentifierKey];
-   
-   return [NSString stringWithFormat: @"%@%s%@%s%@", 
-           name, shortVersion ? "-" : "", shortVersion ?: @"", version ? "-" : "", version ?: @""];
+    NSString *shortVersion = [self objectForInfoDictionaryKey: @"CFBundleShortVersionString"] ?: (id)@"noShortVersion";
+    NSString *version = [self objectForInfoDictionaryKey: (id)kCFBundleVersionKey] ?: (id)@"noVersion";
+    NSString *name = [self objectForInfoDictionaryKey: (id)kCFBundleNameKey] ?: (id)@"noName";
+    
+       NSString *config = [self objectForInfoDictionaryKey: (id)kERBundleBuildConfiguration];
+    
+   return [NSString stringWithFormat: @"%@-%@%s%@-%@", 
+           name, 
+           shortVersion,
+           config ? "-" : "", config ?: @"",
+           version
+           ];
 }
 
 - (NSString *) er_humanReadableVersionString
 {
-    NSString *shortVersion = [self objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    NSString *version = [self objectForInfoDictionaryKey: (id)kCFBundleVersionKey];
-    NSString *name = [self objectForInfoDictionaryKey: (id)kCFBundleNameKey];
+    NSString *shortVersion = [self objectForInfoDictionaryKey: @"CFBundleShortVersionString"] ?: (id)@"noShortVersion";
+    NSString *version = [self objectForInfoDictionaryKey: (id)kCFBundleVersionKey] ?: (id)@"noVersion";
+    NSString *name = [self objectForInfoDictionaryKey: (id)kCFBundleNameKey] ?: (id)@"noName";
     
-   return [NSString stringWithFormat: @"%@%s%@%s%@%s", 
-           name, shortVersion ? " " : "", shortVersion ?: @"", version ? " (" : "", version ?: @"", version ? ")" : ""];
+    NSString *config = [self objectForInfoDictionaryKey: (id)kERBundleBuildConfiguration];
+    
+   return [NSString stringWithFormat: @"%@ %@ (%@%s%@)", 
+           name, 
+           shortVersion,
+           config ?: @"", config ? " " : "",
+           version
+           ];
 }
 
 @end

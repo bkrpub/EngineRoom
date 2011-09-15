@@ -1,6 +1,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *kERBundleBuildConfiguration;
+
 @interface NSBundle (ResourceExtensions)
 
 - (NSData *) er_dataResource: (NSString *) name ofType: (NSString *) type options: (NSUInteger) dataOptions error: (NSError **) outError;
