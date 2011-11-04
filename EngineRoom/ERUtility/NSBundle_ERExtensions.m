@@ -1,9 +1,9 @@
 
 #import "Convenience.h"
 
-#import "NSBundle_ERExtensions.h"
+#import <EngineRoom/NSBundle_ERExtensions.h>
 
-#import "NSPropertyListSerialization_ERExtensions.h"
+#import <EngineRoom/NSPropertyListSerialization_ERExtensions.h>
 
 NSString *kERBundleBuildConfiguration = @"ERBundleBuildConfiguration";
 

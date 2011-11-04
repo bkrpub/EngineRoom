@@ -1,6 +1,6 @@
 
-#import "NSObject_ERExtensions.h"
-#import "NSBundle_ERExtensions.h"
+#import <EngineRoom/NSObject_ERExtensions.h>
+#import <EngineRoom/NSBundle_ERExtensions.h>
 
 @implementation NSObject (ERBundleExtensions)
 

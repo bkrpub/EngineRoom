@@ -45,7 +45,7 @@ ENGINE_ROOM_GLOBAL(NSString *kEngineRoomInstallMenuUserDefaultsKey, @"engineRoom
 	EngineRoomController *m_engineRoomController;
 
 	NSUserDefaults *m_standardUserDefaults;
-	NSUserDefaults *m_engineRoomUserDefaults;
+	NSDictionary *m_engineRoomDefaults;
 }
 
 + (id) sharedEngineRoom;

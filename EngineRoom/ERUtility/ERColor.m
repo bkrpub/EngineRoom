@@ -348,7 +348,7 @@ CGColorRef CGColorFromGenericRGBAString(NSString *genericRGBAString)
 #if MAINTAINER_WARNINGS
 	#warning BK: I don't know of a way to convert a CGColorRef to another colorspace on iPhone
 #endif
-	[self updateGenericRGBAString: (nil == cgColor) ? nil : GenericRGBAStringFromCGColor(cgColor)];
+	[self updateGenericRGBAString: (nil == cgColor) ? nil : GenericRGBStringFromCGColor(cgColor, YES)];
 #endif
 }
 

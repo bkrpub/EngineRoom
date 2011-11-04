@@ -71,7 +71,7 @@ void __attribute__ ((constructor)) engineRoomConstructor(void)
                 sharedEngineRoom = self;
 
 				m_standardUserDefaults = [[NSUserDefaults standardUserDefaults] retain];
-				m_engineRoomUserDefaults = [[m_standardUserDefaults persistentDomainForName: [[NSBundle bundleForClass: [self class]] bundleIdentifier]] retain];
+				m_engineRoomDefaults = [[m_standardUserDefaults persistentDomainForName: [[NSBundle bundleForClass: [self class]] bundleIdentifier]] retain];
             }
         }
     }
@@ -110,7 +110,7 @@ void __attribute__ ((constructor)) engineRoomConstructor(void)
 
 - (id) configurationValueForKey: (NSString *) key
 {
-	id globalValue = [m_engineRoomUserDefaults valueForKey: key];
+	id globalValue = [m_engineRoomDefaults valueForKey: key];
 	return globalValue ? globalValue : [m_standardUserDefaults valueForKey: key];
 }
 
