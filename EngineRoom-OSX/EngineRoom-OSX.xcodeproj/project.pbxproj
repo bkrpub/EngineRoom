@@ -57,6 +57,7 @@
 		0473D1F51246BF64004FAD1E /* AboutIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0473D1F41246BF64004FAD1E /* AboutIcon.png */; };
 		0490DD80124D576B0057D874 /* logpoints_default_policy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0490DD7F124D576B0057D874 /* logpoints_default_policy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		049299E712D682DB0056392E /* er_symbols.h in Headers */ = {isa = PBXBuildFile; fileRef = 049299E612D682DB0056392E /* er_symbols.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04A0D8DB1479A7AA00585DD5 /* ERCGUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 04A0D8DA1479A7AA00585DD5 /* ERCGUtilities.h */; };
 		04AA5A8912D6C09D0097656D /* logpoints.c in Headers */ = {isa = PBXBuildFile; fileRef = 042213FE1200584D0011C415 /* logpoints.c */; settings = {ATTRIBUTES = (Public, ); }; };
 		04AA5A8A12D6C09D0097656D /* logpoints.m in Headers */ = {isa = PBXBuildFile; fileRef = 042214001200584D0011C415 /* logpoints.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		04B305641418F5650023AA11 /* NSObject_ERExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B305621418F5650023AA11 /* NSObject_ERExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -132,6 +133,7 @@
 		0473D1F41246BF64004FAD1E /* AboutIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AboutIcon.png; path = ../Resources/AboutIcon.png; sourceTree = SOURCE_ROOT; };
 		0490DD7F124D576B0057D874 /* logpoints_default_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logpoints_default_policy.h; sourceTree = "<group>"; };
 		049299E612D682DB0056392E /* er_symbols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_symbols.h; sourceTree = "<group>"; };
+		04A0D8DA1479A7AA00585DD5 /* ERCGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERCGUtilities.h; sourceTree = "<group>"; };
 		04B305621418F5650023AA11 /* NSObject_ERExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObject_ERExtensions.h; sourceTree = "<group>"; };
 		04B305631418F5650023AA11 /* NSObject_ERExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObject_ERExtensions.m; sourceTree = "<group>"; };
 		04B89F81134BA4760018CC3D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -211,6 +213,7 @@
 		04C5175412FDBF6F00C907EF /* ERUtility */ = {
 			isa = PBXGroup;
 			children = (
+				04A0D8DA1479A7AA00585DD5 /* ERCGUtilities.h */,
 				044C0BAE134B1DC9006624D8 /* ERColor.h */,
 				044C0BAF134B1DC9006624D8 /* ERColor.m */,
 				04DFAD68135CE69500E56F27 /* ERColorTransformer.h */,
@@ -370,6 +373,7 @@
 				044C0BB0134B1DC9006624D8 /* ERColor.h in Headers */,
 				044C0BB4134B4FB4006624D8 /* ERValueConverter.h in Headers */,
 				04DFAD6A135CE69500E56F27 /* ERColorTransformer.h in Headers */,
+				04A0D8DB1479A7AA00585DD5 /* ERCGUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

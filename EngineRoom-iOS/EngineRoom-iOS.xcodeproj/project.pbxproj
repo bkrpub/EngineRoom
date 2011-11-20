@@ -58,6 +58,7 @@
 		048FE95A14618E2400BC2546 /* logpoints_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 04221556120072700011C415 /* logpoints_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		048FE95B14618E2400BC2546 /* logpoints.h in Headers */ = {isa = PBXBuildFile; fileRef = 04221558120072700011C415 /* logpoints.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		048FE95C14618E2400BC2546 /* tracer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0422155B120072700011C415 /* tracer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04A0D8D514799F4400585DD5 /* ERCGUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 04A0D8D414799F4400585DD5 /* ERCGUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C5194512FE54EF00C907EF /* ERUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C5194012FE54EF00C907EF /* ERUtility.m */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -114,6 +115,7 @@
 		047DA17F135CF59600B20CDD /* ERValueConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERValueConverter.m; sourceTree = "<group>"; };
 		047DA180135CF59600B20CDD /* ERValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERValueTransformer.h; sourceTree = "<group>"; };
 		047DA181135CF59600B20CDD /* ERValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERValueTransformer.m; sourceTree = "<group>"; };
+		04A0D8D414799F4400585DD5 /* ERCGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERCGUtilities.h; sourceTree = "<group>"; };
 		04AA591D12D6B8B90097656D /* er_symbols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = er_symbols.h; sourceTree = "<group>"; };
 		04C5193D12FE546A00C907EF /* Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convenience.h; sourceTree = "<group>"; };
 		04C5193F12FE54EF00C907EF /* ERUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERUtility.h; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				047DA181135CF59600B20CDD /* ERValueTransformer.m */,
 				04C5193F12FE54EF00C907EF /* ERUtility.h */,
 				04C5194012FE54EF00C907EF /* ERUtility.m */,
+				04A0D8D414799F4400585DD5 /* ERCGUtilities.h */,
 			);
 			path = ERUtility;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				048FE95A14618E2400BC2546 /* logpoints_types.h in Headers */,
 				048FE95B14618E2400BC2546 /* logpoints.h in Headers */,
 				048FE95C14618E2400BC2546 /* tracer.h in Headers */,
+				04A0D8D514799F4400585DD5 /* ERCGUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

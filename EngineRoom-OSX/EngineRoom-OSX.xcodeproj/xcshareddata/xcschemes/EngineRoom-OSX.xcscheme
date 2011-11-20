@@ -16,7 +16,7 @@
                BlueprintIdentifier = "8DC2EF4F0486A6940098B216"
                BuildableName = "EngineRoom.framework"
                BlueprintName = "EngineRoom-OSX"
-               ReferencedContainer = "container:../../../../../../Volumes/_artifacts/vc/EngineRoom/EngineRoom-OSX/EngineRoom-OSX.xcodeproj">
+               ReferencedContainer = "container:EngineRoom-OSX.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
